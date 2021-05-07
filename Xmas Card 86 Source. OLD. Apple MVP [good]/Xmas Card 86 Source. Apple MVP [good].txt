@@ -1,0 +1,3025 @@
+-------------------------------------------- SCREEN 000
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+141 149 THRU                            
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 001
+( LOAD FILE 0            <10/28/86>141) 
+\ opening scene 1                       
+                                        
+PAGE ." LOADING OPENING SCENE 1"        
+                                        
+  GDISK                                 
+  151 LOAD \ pictures                   
+  152 LOAD \ music                      
+  155 LOAD \ text                       
+                                        
+  3 CODEINIT                            
+  157 LOAD \ Code: opening scene 1      
+  STORECODE                             
+  163 LOAD \ Code: closing scene        
+  STORECODE                             
+  169 LOAD \ code: card scene           
+  STORECODE                             
+                                        
+  PDISK                                 
+  0 !FILE                               
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 002
+( LOAD FILE 1            <10/26/86>142) 
+\ opening scene 2                       
+                                        
+PAGE ." LOADING OPENING SCENE 2"        
+                                        
+  GDISK                                 
+  170 LOAD \ pictures                   
+  171 LOAD \ music                      
+  172 LOAD \ text                       
+                                        
+  2 CODEINIT                            
+  173 LOAD \ Code: opening scene 1      
+  STORECODE                             
+  175 LOAD \ Code: card scene           
+  STORECODE                             
+                                        
+  PDISK                                 
+  1 !FILE                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 003
+( LOAD FILE 2            <10/24/86>143) 
+\ opening scene 3                       
+                                        
+PAGE ." LOADING OPENING SCENE 3"        
+                                        
+  GDISK                                 
+  180 LOAD \ pictures                   
+  181 LOAD \ music                      
+  182 LOAD \ text                       
+                                        
+  1 CODEINIT                            
+  183 LOAD \ Code: opening scene 1      
+  STORECODE                             
+                                        
+  PDISK                                 
+  2 !FILE                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 004
+( LOAD FILE 3            <10/24/86>144) 
+\ basic menu                            
+                                        
+PAGE ." LOADING MENU SCENE 1"           
+                                        
+  GDISK                                 
+  191 LOAD \ pictures                   
+  192 LOAD \ music                      
+  193 LOAD \ text                       
+                                        
+  1 CODEINIT                            
+  194 LOAD \ Code: opening scene 1      
+  STORECODE                             
+                                        
+  PDISK                                 
+  3 !FILE                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 005
+( LOAD FILE 4            <10/26/86>145) 
+\ regular menu                          
+                                        
+PAGE ." LOADING MENU SCENE 2"           
+                                        
+  GDISK                                 
+  201 LOAD \ pictures                   
+  202 LOAD \ music                      
+  205 LOAD \ text                       
+                                        
+  10 CODEINIT                           
+  207 LOAD STORECODE \ Set scene,bend   
+  208 LOAD STORECODE \ Print Y/N box    
+  209 LOAD STORECODE \ Shake/ ask 1     
+  210 LOAD STORECODE \ Shake/ ask 2     
+  211 LOAD STORECODE \ Shake/ ask 3     
+  213 LOAD STORECODE \ ask card maker   
+  212 LOAD STORECODE \ Shake/ ask 4     
+  214 LOAD STORECODE \ like 1, no music 
+  215 LOAD STORECODE \ erase Y/N box    
+  216 LOAD STORECODE \ card scene       
+  PDISK                                 
+  4 !FILE                               
+                                        
+-------------------------------------------- SCREEN 006
+( LOAD FILE 5            <10/24/86>146) 
+\ toy parade                            
+                                        
+PAGE ." LOADING TOY PARADE"             
+                                        
+  GDISK                                 
+  220 LOAD \ pictures                   
+  221 LOAD \ music                      
+  222 LOAD \ text                       
+                                        
+  3 CODEINIT                            
+  223 LOAD         \ set up question    
+  STORECODE                             
+  224 LOAD         \ do the parade      
+  STORECODE                             
+  226 LOAD         \ card scene         
+  STORECODE                             
+                                        
+  PDISK                                 
+  5 !FILE                               
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 007
+( LOAD FILE 6            <10/24/86>147) 
+\ bears                                 
+PAGE ." LOADING DANCING BEARS"          
+  GDISK                                 
+  230 LOAD \ pictures                   
+  231 LOAD \ music                      
+  235 LOAD \ text                       
+                                        
+14 CODEINIT                             
+  236 LOAD STORECODE \ set up scene     
+  237 LOAD STORECODE \ ask question     
+  238 LOAD STORECODE \ dance step 1     
+  239 LOAD STORECODE \ dance step 2     
+  240 LOAD STORECODE \ dance step 3     
+  241 LOAD STORECODE \ dance step 4     
+  242 LOAD STORECODE \ dance step 5     
+  243 LOAD STORECODE \ dance step 6     
+  244 LOAD STORECODE \ dance step 7     
+  245 LOAD STORECODE \ dance step 8     
+  246 LOAD STORECODE \ double spin      
+  247 LOAD STORECODE \ bow step         
+  248 LOAD STORECODE \ card scene       
+  STORECODE                             
+  PDISK 6 !FILE                ( FAH  ) 
+-------------------------------------------- SCREEN 008
+( LOAD FILE 7            <10/25/86>148) 
+EXIT                                    
+\ bears                                 
+PAGE ." LOADING DANCING ELVES PART 1"   
+  GDISK                                 
+  250 LOAD \ pictures                   
+  251 LOAD \ music                      
+  253 LOAD \ text                       
+                                        
+2 CODEINIT                              
+  254 LOAD \ do it                      
+  STORECODE                             
+  259 LOAD \ card scene                 
+  STORECODE                             
+                                        
+                                        
+  PDISK 7 !FILE                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 009
+( LOAD FILE 8            <10/25/86>149) 
+EXIT                                    
+\ bears                                 
+PAGE ." LOADING DANCING ELVES PART 2"   
+  GDISK                                 
+  260 LOAD \ pictures                   
+  261 LOAD \ music                      
+  263 LOAD \ text                       
+                                        
+1 CODEINIT                              
+  264 LOAD \ do it                      
+  STORECODE                             
+                                        
+  PDISK 8 !FILE                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 010
+( LOAD FILE 9            <10/28/86>150) 
+EXIT --- MOVED TO DISK 2 ----           
+\ bbasket ball and cardmaker            
+PAGE ." LOADING BASKET-BALL/CARD MAKER" 
+GDISK                                   
+                                        
+  270 LOAD \ graphics                   
+  271 LOAD \ music                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 011
+( 0: GRAPHICS            <10/28/86>151) 
+                                        
+                                        
+0 MARKINIT                              
+                                        
+  MPIC" WCAN1"                          
+  MPIC" WCAN2"                          
+  MPIC" WTL"                            
+  MPIC" WR"                             
+  MPIC" WBM"                            
+  MPIC" WTM"                            
+  MPIC" SPARK"                          
+  MPIC" SMCHEER"                        
+                                        
+MARKDONE                                
+                                        
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 012
+( 0: MUSIC               <10/28/86>152) 
+                                        
+  1 MUSICINIT                           
+1 STARTTUNE NDEF                        
+G 3 2   E 3 2   C 3 2   B 3 2   A 3 2   
+Db 3 2  E 3 2   G 3 2   F 3 2   D 3 2   
+A 3 2   C 3 2   B 3 2   D 3 2   G 3 2   
+F 3 2   E 3 2   G 2 2   C 3 2   B 3 2   
+A 3 2   C 3 2   F 3 2   E 3 2   D 3 2   
+E 3 2   D 3 2   C 3 2   B 3 2   G 2 2   
+A 3 2   B 3 2   C 3 2   G 2 2   D 3 2   
+G 2 2   E 3 2   G 2 2   F 3 2   G 2 2   
+D 3 2   G 2 2   E 3 2   G 2 2   F 3 2   
+A 4 2   G 3 2   F 3 2   G 3 2   F 3 2   
+E 3 2   D 3 2   Db 3 2  E 3 2   A 4 2   
+G 3 2   F 3 2   E 3 2   D 3 2   C 3 2   
+B 3 2   D 3 2   G 3 2   F 3 2   E 3 2   
+D 3 2   C 3 2   B 3 2   A 3 2   C 3 2   
+F 3 2   E 3 2   D 3 2   E 3 2   D 3 2   
+C 3 2   B 3 2   G 2 2   A 3 2   B 3 2   
+C 3 2   G 2 2   D 3 2   G 2 2   E 3 2   
+G 2 2   F 3 2   G 2 2   G 3 8   G 2 8   
+C 3 16                                  
+-->                            ( FAH  ) 
+-------------------------------------------- SCREEN 013
+( 0: MUSIC               <10/28/86>153) 
+                                        
+\ the verse melody                      
+E 3 4   E 3 4   E 3 4   G 3 4   G 3 6   
+F 3 2   E 3 8   E 3 4   D 3 4   E 3 4   
+G 3 4   E 3 6   D 3 2   C 3 8           
+E 3 4   E 3 4   E 3 4   G 3 4   G 3 6   
+F 3 2   E 3 8   E 3 4   D 3 4   E 3 4   
+G 3 4   E 3 6   D 3 2   C 3 8           
+\ repeat                                
+G 3 2   E 3 2   C 3 2   B 3 2   A 3 2   
+Db 3 2  E 3 2   G 3 2   F 3 2   D 3 2   
+A 3 2   C 3 2   B 3 2   D 3 2   G 3 2   
+F 3 2   E 3 2   G 2 2   C 3 2   B 3 2   
+A 3 2   C 3 2   F 3 2   E 3 2   D 3 2   
+E 3 2   D 3 2   C 3 2   B 3 2   G 2 2   
+A 3 2   B 3 2   C 3 2   G 2 2   D 3 2   
+G 2 2   E 3 2   G 2 2   F 3 2   G 2 2   
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 014
+( 0: MUSIC               <10/28/86>154) 
+                                        
+D 3 2   G 2 2   E 3 2   G 2 2   F 3 2   
+A 4 2   G 3 2   F 3 2   G 3 2   F 3 2   
+E 3 2   D 3 2   Db 3 2  E 3 2   A 4 2   
+G 3 2   F 3 2   E 3 2   D 3 2   C 3 2   
+B 3 2   D 3 2   G 3 2   F 3 2   E 3 2   
+D 3 2   C 3 2   B 3 2   A 3 2   C 3 2   
+F 3 2   E 3 2   D 3 2   E 3 2   D 3 2   
+C 3 2   B 3 2   G 2 2   A 3 2   B 3 2   
+C 3 2   G 2 2   D 3 2   G 2 2   E 3 2   
+G 2 2   F 3 2   G 2 2   G 3 8   G 2 8   
+C 3 16                                  
+                                        
+ENDTUNE                                 
+                                        
+STORETUNE                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 015
+( 0: TEXT                <12/ 2/87>155) 
+                                        
+:$ MESSAGES                             
+  .$ Copyright (c) 1987$        \ 1     
+  .$ I/Openners Inc.$           \ 2     
+  .$ It's Christmas Eve.$       \ 3     
+  .$ But who can sleep.$        \ 4     
+  .$ With visions of presents$  \ 5     
+  .$ Stacked in a heap?$        \ 6     
+  .$ Bows and wrappings...$     \ 7     
+  .$ It's just not right.$      \ 8     
+  .$ Why can't we open them$    \ 9     
+  .$ This very night?$          \ 10    
+  .$ Wait 'til morning,$        \ 11    
+  .$ The grown-ups said,$       \ 12    
+  .$ Then sent me off with$     \ 13    
+  .$ Kisses to bed.$            \ 14    
+  .$ But what if Santa$         \ 15    
+  .$ Forgets about me?$         \ 16    
+  .$ I know...$                 \ 17    
+  .$ I'll tip-toe down and$     \ 18    
+  .$ Check out the tree.$       \ 19    
+                                        
+--> \ more...                  ( FAH  ) 
+-------------------------------------------- SCREEN 016
+( 0: TEXT                <10/28/86>156) 
+                                        
+  .$ from I/Openners$          \ 20     
+  .$ Design$                   \ 21     
+  .$ Lloyd R. Prentice$        \ 22     
+  .$ Illustration$             \ 23     
+  .$ Danny Mydlack$            \ 24     
+  .$ Jim Sullivan$             \ 25     
+  .$ Music$                    \ 26     
+  .$ Greg Lyons$               \ 27     
+  .$ Programming$              \ 28     
+  .$ Fred Haer$                \ 29     
+  .$ Play again? Y/N$          \ 30     
+;$                                      
+                                        
+MESSAGES STORETEXT                      
+FORGET MESSAGES                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 017
+( 0: OPENING SCENE 1     <10/28/86>157) 
+1 STARTCODE                             
+VDINIT CLEAR DALT CLEAR FULLWIN TNORM   
+GRAPHIC 0 72 1                          
+GRAPHIC 0 0 3                           
+GRAPHIC 210 0 4 ( 196 )                 
+GRAPHIC 70 152 5                        
+GRAPHIC 70 0 6 ( 70 )                   
+GRAPHIC 70 60 8                         
+BBAR    75 164 205 190                  
+WBAR    77 165 203 189                  
+BBAR    79 166 201 188                  
+MESSAGE 84 168 1                        
+MESSAGE 92 178 2 VALT                   
+1START 2                                
+ GRAPHIC 0 72 2 WAIT 200                
+ GRAPHIC 0 72 1 WAIT 200 1LOOP          
+GRAPHIC 0 72 2                          
+COPYV                                   
+BBAR    60 60 214 95                    
+GRAPHIC 210 0 4 ( 196 )                 
+GRAPHIC 70 152 5 ( 70 )                 
+VALT                                    
+-->                                     
+-------------------------------------------- SCREEN 018
+( 0: PHRASE 1            <10/28/86>158) 
+                                        
+\ message phrase 1                      
+MUSIC 1                                 
+GRAPHIC 0 72 1 \ WAIT 200               
+COPYV                                   
+MESSAGE  87  60   3                     
+DALT GRAPHIC 0 72 2 DALT                
+MESSAGE  86  74   4                     
+DALT GRAPHIC 0 72 1 DALT                
+MESSAGE  70  88   5                     
+DALT GRAPHIC 0 72 2 DALT                
+MESSAGE  85 102   6                     
+DALT GRAPHIC 0 72 1 VDALT               
+1START 15                               
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200                
+1LOOP                                   
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 019
+( 0: PHRASE 2            <10/28/86>159) 
+                                        
+\ message phrase 2                      
+                                        
+VALT COPYV                              
+MESSAGE  77  60   7                     
+DALT GRAPHIC 0 72 2 DALT                
+MESSAGE  87  74   8                     
+DALT GRAPHIC 0 72 1 DALT                
+MESSAGE  70  88   9                     
+DALT GRAPHIC 0 72 2 DALT                
+MESSAGE  96 102   10                    
+DALT GRAPHIC 0 72 1 VDALT               
+1START 15                               
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200                
+1LOOP                                   
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 020
+( 0: PHRASE 3            <10/28/86>160) 
+                                        
+\ message phrase 3                      
+                                        
+VALT COPYV                              
+MESSAGE  91  60   11                    
+DALT GRAPHIC 0 72 2 DALT                
+MESSAGE  81  74   12                    
+DALT GRAPHIC 0 72 1 DALT                
+MESSAGE  70  88   13                    
+DALT GRAPHIC 0 72 2 DALT                
+MESSAGE  98 102   14                    
+DALT GRAPHIC 0 72 1 VDALT               
+1START 15                               
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200                
+1LOOP                                   
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 021
+( 0: PHRASE 4            <10/28/86>161) 
+                                        
+\ message phrase 3                      
+                                        
+VALT COPYV                              
+MESSAGE  88  50   15                    
+DALT GRAPHIC 0 72 2 DALT                
+MESSAGE  86  64   16 VALT               
+1START 4                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+MESSAGE 116  84   17                    
+1START 4                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+MESSAGE  84 108   18                    
+MESSAGE  86 122   19                    
+1START 12                               
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+                                        
+-->                                     
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 022
+( 0: SPARKLE             <10/28/86>162) 
+                                        
+GRAPHIC 0 72 1                          
+GRAPHIC 182 8  7                        
+WAIT 200                                
+GRAPHIC 0 72 2                          
+GRAPHIC  70   0   6                     
+WAIT 200                                
+GRAPHIC 0 72 1                          
+GRAPHIC 182 8  7                        
+WAIT 200                                
+GRAPHIC 0 72 2                          
+GRAPHIC  70   0   6                     
+WAIT 200                                
+DALT                                    
+GRAPHIC 0 72 2                          
+COPYV                                   
+GRAPHIC 0 72 1                          
+WAIT 200 VALT                           
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 023
+( 0: CLOSING             <10/28/86>163) 
+                                        
+2 STARTCODE                             
+DVPAGE DALT CLEAR FULLWIN               
+GRAPHIC 0 72 1                          
+GRAPHIC 0 0 3                           
+GRAPHIC 210 0 4 ( 196 )                 
+GRAPHIC 70 152 5                        
+GRAPHIC 70 0 6                          
+GRAPHIC 70 55 8                         
+MESSAGE 106 86 20 VALT                  
+MUSIC 1                                 
+1START 10                               
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+                                        
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 024
+( 0: DESIGN BY           <10/28/86>164) 
+                                        
+MESSAGE 80 110 21                       
+WBAR 80 120 120 121                     
+1START 3                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+MESSAGE 95 128 22                       
+1START 7                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+BBAR 80 110 210 138                     
+1START 3                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 025
+( 0: ILLUSTRATED BY      <10/28/86>165) 
+                                        
+MESSAGE 80 110 23 \ illus by            
+WBAR 80 118 148 119                     
+1START 3                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+MESSAGE 95 128 24 \ dan                 
+1START 7                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+BBAR 80 128 210 138                     
+GRAPHIC 0 72 1 WAIT 200                 
+GRAPHIC 0 72 2 WAIT 200                 
+MESSAGE 95 128 25 \ jim                 
+1START 7                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+BBAR 80 110 210 138                     
+1START 3                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+-->                                     
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 026
+( 0: MUSIC BY            <10/28/86>166) 
+                                        
+MESSAGE 80 110 26 \ music               
+WBAR 80 118 113 119                     
+1START 3                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+MESSAGE 95 128 27 \ greg                
+1START 7                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+BBAR 80 110 210 138                     
+1START 3                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 027
+( 0: PROGRAMMING BY      <10/28/86>167) 
+                                        
+MESSAGE 80 110 28 \ programming         
+WBAR 80 120 161 121                     
+1START 3                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+MESSAGE 95 128 29 \ fred                
+1START 7                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+BBAR 80 110 210 138                     
+1START 2                                
+ GRAPHIC 0 72 1 WAIT 200                
+ GRAPHIC 0 72 2 WAIT 200 1LOOP          
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 028
+( 0: PLAY AGAIN          <10/28/86>168) 
+                                        
+                                        
+COPYV                                   
+BBAR 85 171 215 190                     
+WBAR 87 172 213 188                     
+BBAR 89 173 211 187                     
+MESSAGE 100 176 30                      
+VALT                                    
+COPYV                                   
+GRAPHIC 0 72 1                          
+                                        
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 029
+( 0: CARD SCENE          <10/28/86>169) 
+                                        
+3 STARTCODE                             
+  DVPAGE DALT CLEAR FULLWIN             
+  GRAPHIC 0 72 1                        
+  GRAPHIC 0 0 3                         
+  GRAPHIC 210 0 4 ( 196 )               
+  GRAPHIC 70 152 5                      
+  GRAPHIC 70 0 6                        
+  GRAPHIC 66 50 8                       
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 030
+( 1: GRAPHICS            <10/20/86>170) 
+                                        
+1 MARKINIT                              
+                                        
+  MPIC" HEAD"                           
+  MPIC" TCAN1"                          
+  MPIC" BAG1"                           
+  MPIC" BREATH1"                        
+  MPIC" TCAN2"                          
+  MPIC" BAG2"                           
+  MPIC" BREATH2"                        
+\ MPIC" WIN"                            
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 031
+( 1: MUSIC               <10/21/86>171) 
+                                        
+2 MUSICINIT                             
+1 STARTTUNE NDEF 1 1 ' MMULT D!         
+  D 3 45  E 3 17  D 3 40  B 3 90        
+  D 3 45  E 3 17  D 3 40  B 3 90        
+  A 4 60  A 4 30  Gb 3 90 G 3 60        
+  G 3 30  D 3 90                        
+  E 3 60  E 3 30  G 3 45                
+  Gb 3 17 E 3 35  D 3 47                
+  E 3 17  D 3 35  B 3 90                
+\ the 3 lines below may be canned       
+  E 3 60  E 3 30  G 3 45                
+  Gb 3 17 E 3 35  D 3 47                
+  E 3 17  D 3 35  B 3 90                
+  A 4 60  A 4 30  C 4 45  A 4 17        
+  Gb 3 34 G 3 90  B 4 90  G 3 30        
+  D 3 34  B 3 32  D 3 45  C 3 17        
+  A 3 34  G 2 90                        
+ENDTUNE STORETUNE                       
+                                        
+2 STARTTUNE C 1 5                       
+ENDTUNE STORETUNE                       
+                                        
+-------------------------------------------- SCREEN 032
+( 1:TEXT                 <10/21/86>172) 
+                                        
+                                        
+                                        
+:$ MESSAGES                             
+  .$ NO MESSAGES$                       
+;$                                      
+                                        
+MESSAGES STORETEXT                      
+                                        
+FORGET MESSAGES                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 033
+( 1: BREATH              <10/21/86>173) 
+                                        
+1 STARTCODE                             
+DVPAGE DALT CLEAR FULLWIN               
+GRAPHIC 0 0 1                           
+GRAPHIC 168 0 2                         
+GRAPHIC 196 96 3                        
+GRAPHIC 0 96 4                          
+MUSIC 1 VALT COPYV WAIT 200             
+GRAPHIC 168 0 5 VDALT                   
+1START 4                                
+  WAIT 1000 VALT WAIT 1000 VALT         
+  WAIT 1000 VALT WAIT 1000 VALT         
+  WAIT 1000 VALT WAIT 1000 VALT         
+  GRAPHIC 0 96 7 VDALT                  
+  GRAPHIC 0 96 7 VDALT                  
+  WAIT 1000 VALT WAIT 1000 VALT         
+  WAIT 1000 VALT WAIT 1000 VALT         
+  WAIT 1000 VALT WAIT 1000 VALT         
+  GRAPHIC 0 96 4 VDALT                  
+  GRAPHIC 0 96 4 VDALT                  
+1LOOP                                   
+-->                                     
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 034
+( 1: MOVE BAGE           <10/22/86>174) 
+                                        
+                                        
+GRAPHIC 196 96 6                        
+WAIT 1000 VALT WAIT 1000 VALT MUSIC 2   
+WAIT 1000 VALT WAIT 1000 VALT MUSIC 2   
+WAIT 1000 VALT WAIT 1000 VALT MUSIC 2   
+GRAPHIC 0 96 7 VDALT MUSIC 2            
+GRAPHIC 0 96 7 VDALT MUSIC 2            
+WAIT 1000 VALT WAIT 1000 VALT MUSIC 2   
+WAIT 1000 VALT WAIT 1000 VALT MUSIC 2   
+DVPAGE DALT                             
+GRAPHIC 196 96 6                        
+WAIT 1000 VALT WAIT 1000 VALT           
+                                        
+\ set up next scene                     
+DVPAGE DALT CLEAR FULLWIN               
+2GRAPHIC 0 0 1     2GRAPHIC 28 128 2    
+2GRAPHIC 210 16 3  VALT COPYV           
+2GRAPHIC 266 16 4  2GRAPHIC 238 120 5   
+                                        
+ENDCODE                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 035
+( 1: CARD SCENE          <10/26/86>175) 
+                                        
+2 STARTCODE                             
+  DVPAGE DALT CLEAR FULLWIN             
+  GRAPHIC 0 0 1                         
+  GRAPHIC 168 0 2                       
+  GRAPHIC 196 96 3                      
+  GRAPHIC 0 96 4                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 038
+(                        <10/23/86>178) 
+                                        
+: TT <TD> ;                             
+                                        
+: BG                                    
+  HGR SWAP-BSM 0 DPAGE ! 0 VPAGE !      
+  0 0 19 TT   266 0 20 TT               
+  0 184 21 TT 266 184 22 TT             
+  0 8 23 TT 0 88 23 TT                  
+  266 8 24 TT 266 88 24 TT              
+  14 0 25 TT 14 189 25 TT               
+  0 145 26 TT 266 145 27 TT             
+  14 153 25 TT                          
+  14 3 18 TT                            
+  139 LX1 ! 141 LX2 !                   
+  156 LY1 ! 165 LY2 !                   
+  S' wbar CALL                          
+                                        
+  SWAP-BSM ;                            
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 040
+( 2: GRAPHICS            <10/21/86>180) 
+                                        
+2 MARKINIT                              
+                                        
+\ MPIC" WIN"                            
+  MPIC" BIGBAG1"                        
+  MPIC" BIGBAG2"                        
+  MPIC" BIGBAG3"                        
+\ MPIC" BIGTREE"                        
+  MPIC" BTCANA1"                        
+\ MPIC" BTCANA2"                        
+  MPIC" BTCANB1"                        
+\ MPIC" BTCANB2"                        
+  MPIC" PEEK"                           
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 041
+( 2: MUSIC               <10/21/86>181) 
+                                        
+1 MUSICINIT                             
+                                        
+1 STARTTUNE                             
+  D 3 45                                
+ENDTUNE                                 
+                                        
+STORETUNE                               
+                                        
+                                        
+\ no music here,                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 042
+( 2: TEXT                <10/21/86>182) 
+                                        
+                                        
+:$ MESSAGES                             
+  .$ Psst . . . $                       
+  .$ Don't wake Santa,$                 
+  .$ For heaven's sake.$                
+  .$ He fell asleep on$                 
+  .$ His cookie break.$                 
+  .$ But how about...$                  
+  .$ While he's asleep...$              
+  .$ We open the bag$                   
+  .$ And sneak a peek?$                 
+;$                                      
+                                        
+MESSAGES STORETEXT                      
+                                        
+FORGET MESSAGES                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 043
+( 2: PSST                <10/22/86>183) 
+                                        
+1 STARTCODE                             
+DVPAGE DALT CLEAR FULLWIN               
+2GRAPHIC 0 0 1                          
+2GRAPHIC 210 16 3                       
+2GRAPHIC 28 128 2                       
+VALT COPYV                              
+2GRAPHIC 266 16 4                       
+2GRAPHIC 238 120 5                      
+                                        
+1START 5                                
+  WAIT 600 VALT WAIT 600 VALT 1LOOP     
+                                        
+WBUB  60 80 150 95 TINV                 
+MESSAGE 72 87  1                        
+WRHOOK 80 95  101 20 10 VALT            
+                                        
+1START 10 WAIT 400                      
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  WAIT 400 2GRAPHIC 266 16 4            
+  2GRAPHIC 238 120 5 1LOOP              
+-->                                     
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 044
+( 2: DON'T WAKE          <10/22/86>184) 
+                                        
+DALT                                    
+2GRAPHIC 266 16 4 2GRAPHIC 238 120 5    
+\ copy screen w/ no Psst.               
+VALT COPYV DALT                         
+GRAPHIC 266 16 4 GRAPHIC 238 120 5      
+WAIT 400 2GRAPHIC 266 16 4              
+2GRAPHIC 238 120 5                      
+                                        
+DALT GRAPHIC 42 96 6 GRAPHIC 266 16 4   
+GRAPHIC 238 120 5 VALT                  
+WAIT 400 2GRAPHIC 266 16 4              
+2GRAPHIC 238 120 5                      
+                                        
+COPYV                                   
+WBUB 50 40 185 85                       
+WRHOOK 60 76 85 14 6                    
+  DALT GRAPHIC 266 16 4                 
+  GRAPHIC 238 120 5 DALT                
+                                        
+                                        
+-->                                     
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 045
+( 2: DON'T WAKE          <10/22/86>185) 
+                                        
+                                        
+MESSAGE 58 45 2                         
+MESSAGE 58 56 3                         
+VALT                                    
+1START 9 WAIT 400                       
+  2GRAPHIC 266 16 4 2GRAPHIC 238 120 5  
+  WAIT 400 GRAPHIC 266 16 4             
+  GRAPHIC 238 120 5 1LOOP               
+COPYV DALT                              
+2GRAPHIC 266 16 4 2GRAPHIC 238 120 5    
+DALT MESSAGE 58 67 4                    
+     MESSAGE 58 78 5 VALT               
+GRAPHIC 266 16 4 GRAPHIC 238 120 5      
+                                        
+1START 20 WAIT 400                      
+  2GRAPHIC 266 16 4 2GRAPHIC 238 120 5  
+  WAIT 400 GRAPHIC 266 16 4             
+  GRAPHIC 238 120 5 1LOOP               
+                                        
+-->                                     
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 046
+( 2: BUT HOW ABOUT...    <10/22/86>186) 
+                                        
+\ erase last bubble                     
+BBUB 50 40 185 85                       
+BRHOOK 60 76 85 14 6                    
+2GRAPHIC 266 16 4 2GRAPHIC 238 120 5    
+1START 4 WAIT 400                       
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  WAIT 400 2GRAPHIC 266 16 4            
+  2GRAPHIC 238 120 5 1LOOP              
+                                        
+\ draw new bubble                       
+WBUB 50 40 185 85                       
+WRHOOK 60 76 85 14 6                    
+1START 4 WAIT 400                       
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  WAIT 400 2GRAPHIC 266 16 4            
+  2GRAPHIC 238 120 5 1LOOP              
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 047
+( 2: BUT HOW ABOUT...    <10/22/86>187) 
+                                        
+                                        
+MESSAGE 58 45 6                         
+1START 4 WAIT 400                       
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  WAIT 400 2GRAPHIC 266 16 4            
+  2GRAPHIC 238 120 5 1LOOP              
+                                        
+MESSAGE 58 56 7                         
+1START 4 WAIT 400                       
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  WAIT 400 2GRAPHIC 266 16 4            
+  2GRAPHIC 238 120 5 1LOOP              
+                                        
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 048
+( 2: BUT HOW ABOUT...    <10/22/86>188) 
+                                        
+                                        
+COPYV DALT                              
+GRAPHIC 266 16 4 GRAPHIC 238 120 5      
+DALT MESSAGE 58 67 8 WAIT 200           
+DALT                                    
+2GRAPHIC 266 16 4 2GRAPHIC 238 120 5    
+DALT MESSAGE 58 78 9 WAIT 200           
+GRAPHIC 266 16 4 GRAPHIC 238 120 5      
+WAIT 400 VALT                           
+1START 20 WAIT 400                      
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  WAIT 400 2GRAPHIC 266 16 4            
+  2GRAPHIC 238 120 5 1LOOP              
+                                        
+\ redraw original scene                 
+DVPAGE DALT CLEAR                       
+2GRAPHIC 0 0 1                          
+2GRAPHIC 210 16 3                       
+2GRAPHIC 28 128 2                       
+VALT                                    
+-->                                     
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 049
+( 2: RUSTLE              <10/22/86>189) 
+                                        
+1START 3  WAIT 400                      
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  WAIT 400 2GRAPHIC 266 16 4            
+  2GRAPHIC 238 120 5 1LOOP              
+1START 4                                
+  GRAPHIC 14 128 1                      
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  GRAPHIC 14 128 2                      
+  2GRAPHIC 266 16 4 2GRAPHIC 238 120 5  
+  GRAPHIC 14 128 3                      
+  GRAPHIC 266 16 4 GRAPHIC 238 120 5    
+  GRAPHIC 14 128 2                      
+  2GRAPHIC 266 16 4 2GRAPHIC 238 120 5  
+1LOOP                                   
+GRAPHIC 14 128 1                        
+GRAPHIC 266 16 4 GRAPHIC 238 120 5      
+COPYV                                   
+2GRAPHIC 266 16 4 2GRAPHIC 238 120 5    
+VALT                                    
+ENDCODE                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 050
+( 3: MENU BASIC NOTES    <10/22/86>190) 
+                                        
+EXIT --------- notes ------------ EXIT  
+                                        
+This fill will be load into bank 2      
+of the RAM card at the start of the     
+program this will allow the basic       
+menu screen to always be available      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 051
+( 3: GRAPHICS            <10/21/86>191) 
+                                        
+3 MARKINIT                              
+                                        
+  MPIC" WIN2"                           
+  MPIC" MBAG"                           
+  MPIC" MTREE"                          
+  MPIC" BTCANA2"                        
+  MPIC" BTCANB2"                        
+                                        
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 052
+( 3: MUSIC               <10/22/86>192) 
+\ no music here                         
+                                        
+1 MUSICINIT                             
+                                        
+1 STARTTUNE NDEF                        
+  ENDTUNE                               
+                                        
+STORETUNE                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 053
+( 3: TEXT                <10/22/86>193) 
+                                        
+:$ NO                                   
+   .$ NONE$                             
+;$                                      
+                                        
+NO STORETEXT                            
+                                        
+FORGET NO                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 054
+( 3: CODE                <10/22/86>194) 
+                                        
+1 STARTCODE                             
+                                        
+DVPAGE DALT CLEAR FULLWIN               
+DGRAPHIC 0 0 1                          
+DGRAPHIC 28 128 2                       
+DGRAPHIC 210 16 3                       
+VALT COPYV                              
+DGRAPHIC 266 16 4                       
+DGRAPHIC 238 120 5                      
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 060
+( 4: MENU NOTES          <10/22/86>200) 
+                                        
+EXIT --------- notes ------------ EXIT  
+                                        
+The menu routine words are divided      
+into parts, each routine having the     
+following purposes                      
+                                        
+1 -- Draws scene, starts music,         
+     then draws bend elf.               
+2 -- Prints Y/N box                     
+3 -- Shake/ask present 1 (bears)        
+4 -- Shake/ask present 2 (parade)       
+5 -- Shake/ask present 3 (bball)        
+6 -- Shake/ask present 4 (elves)        
+7 -- ask card marker                    
+8 -- same as 1, no music                
+                                        
+A code word mainmenu is responsible     
+for running the routines in the proper  
+order                                   
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 061
+( 4: GRAPHICS            <10/21/86>201) 
+                                        
+4 MARKINIT                              
+                                        
+  MPIC" BTCANA1"                        
+  MPIC" BTCANB1"                        
+  MPIC" BEND"                           
+  MPIC" ELF1"                           
+  MPIC" ELF2"                           
+  MPIC" DISK2"                          
+  MPIC" PACK2A"  MPIC" PACK2B"          
+  MPIC" PACK3A"  MPIC" PACK3B"          
+\ MPIC" PACK4A"  MPIC" PACK4B"          
+  MPIC" EYES"                           
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 062
+( 4: MUSIC               <10/21/86>202) 
+                                        
+1 MUSICINIT                             
+1 STARTTUNE NDEF                        
+\ joy to the                            
+  G 3 8   Gb 3 6  E 3 2   D 3 12        
+  C 3 4   B 3 8   A 3 8   G 2 12        
+\ deck the halls                        
+  D 3 4   E 3 2   C 3 2   B 3 2         
+  C 3 2   A 3 2   C 3 2   B 3 2         
+  A 3 2   D 3 2   B 3 2   A 3 2         
+  B 3 2   G 2 2   B 3 2   A 3 2         
+  G 2 2   A 3 2   B 3 2   C 3 2         
+  A 3 2   B 3 6   A 3 2   G 2 4         
+  Gb 2 4  G 2 8                         
+\ something or other                    
+  D 3 6   C 3 2                         
+  B 3 4   A 3 4   G 2 4   A 3 4         
+  B 3 4   G 2 4   A 3 2   B 3 2         
+  C 3 2   A 3 2   B 3 2   C 3 2         
+  D 3 2   B 3 2   Db 3 2  D 3 2         
+  E 3 2   Db 3 2                        
+                                        
+-->                            ( FAH  ) 
+-------------------------------------------- SCREEN 063
+( 4: MUSIC cont          <10/21/86>203) 
+                                        
+\ good king                             
+  D 3 4   D 3 4                         
+  D 3 4   E 3 4   D 3 4   D 3 4         
+  A 3 8   B 3 4   A 3 4   B 3 4         
+  Db 3 4  D 3 8   D 3 8   D 3 4         
+  D 3 4   D 3 4   E 3 4   D 3 4         
+  D 3 4   A 3 8   B 3 4   A 3 4         
+  B 3 4   Db 3 4  D 3 8   D 3 4         
+  B 4 2   A 4 2   G 3 2   B 4 2         
+  Gb 3 2  B 4 2   E 3 4   A 4 2         
+  G 3 2   Gb 3 2  A 4 2   E 3 2         
+  A 4 2   D 3 4   G 3 2   Gb 3 2        
+  E 3 2   G 3 2   D 3 2   Gb 3 2        
+  Db 3 2  E 3 2   B 3 2   D 3 2         
+  Db 3 2  E 3 2   B 3 2   E 3 2         
+  A 3 8                                 
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 064
+( 4: MUSIC cont          <10/21/86>204) 
+                                        
+  A 3 4   D 3 4   D 3 6                 
+  Db 3 2  D 3 4   Gb 3 4  Gb 3 4        
+  E 3 4   A 4 4   A 4 4   A 4 6         
+  G 3 2   Gb 3 4  E 3 4   Gb 3 8        
+  B 4 4   B 4 4   B 4 6   A 4 2         
+  G 3 4   Gb 3 4  G 3 8   E 3 4         
+  Gb 3 2  G 3 2   A 4 6   D 3 2         
+  D 3 4   E 3 4                         
+  D 3 6   A 3 2   A 3 2   A 3 2         
+  B 3 6   B 3 6   Db 3 6 A 3 6 B 3 12   
+  D 3 6   A 3 2   A 3 2   A 3 2         
+  B 3 6   B 3 6   Db 3 6 A 3 6 B 3 12   
+  G 3 4   A 4 2   G 3 4                 
+  Gb 3 2  E 3 2   D 3 2   Db 3 4        
+  E 3 2   A 4 4   B 4 2   A 4 4         
+  G 3 2   Gb 3 4  E 3 2   D 3 4         
+  Gb 3 2  B 4 3   B 4 3   B 4 3         
+  B 4 3   A 4 10  G 3 3   Gb 3 6        
+  E 3 6   D 3 12                        
+                                        
+ENDTUNE                                 
+STORETUNE                      ( FAH  ) 
+-------------------------------------------- SCREEN 065
+( 4: TEXT                <10/24/86>205) 
+                                        
+:$ MESSAGES                             
+ \ -- DANCING BEAR MESSAGES --          
+.$ Sounds like dancing feet.$      \ 1  
+.$ Want to open this treat?$       \ 2  
+ \ -- TOY PARADE MESSAGES --            
+.$ I can't decipher this name.$    \ 3  
+.$ Maybe it's a computer game?$         
+ \ -- BASKETBALL --                     
+.$ Something's bouncing in this box.$   
+.$ Is it from the Celtics or the Sox?$  
+ \ -- DANCING ELVES --                  
+.$ Now what do we find?$           \ 7  
+.$ Want to open it? Santa$         \ 8  
+.$ won't mind.$                    \ 9  
+                                        
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 066
+( 4: TEXT cont..         <10/26/86>206) 
+                                        
+\ -- CARDMAKER --                       
+.$ A card-maker! Lucky you!$      \ 10  
+.$ Like to make cards for a$      \ 11  
+.$ friend or two?$                \ 12  
+\ -- PROMPTS --                         
+.$ Press 'Y' or 'N'$              \ 13  
+                                        
+;$                                      
+                                        
+                                        
+MESSAGES STORETEXT                      
+                                        
+FORGET MESSAGES                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 067
+( 4: BASIC SCENE         <10/23/86>207) 
+\ draw basic scene, then bend elf       
+                                        
+1 STARTCODE                             
+DVPAGE DALT CLEAR FULLWIN               
+2GRAPHIC 0 0 1                          
+2GRAPHIC 28 128 2                       
+2GRAPHIC 210 16 3 VALT                  
+MUSIC 1                                 
+1START 5 2GRAPHIC 266 16 4              
+  2GRAPHIC 238 120 5 WAIT 600           
+  GRAPHIC 266 16 1                      
+  GRAPHIC 238 120 2 WAIT 600 1LOOP      
+COPYV DALT                              
+2GRAPHIC 266 16 4                       
+2GRAPHIC 238 120 5                      
+DALT GRAPHIC 84 80 3 VALT               
+                                        
+GRAPHIC 266 16 1                        
+GRAPHIC 238 120 2 WAIT 600              
+2GRAPHIC 266 16 4                       
+2GRAPHIC 238 120 5                      
+                                        
+ENDCODE                        ( FAH  ) 
+-------------------------------------------- SCREEN 068
+( 4: PRINT Y/N BOX       <10/23/86>208) 
+                                        
+2 STARTCODE                             
+                                        
+\ now print the box                     
+COPYV TNORM                             
+BBAR 65 171 185 190                     
+WBAR 67 172 183 188                     
+BBAR 69 173 181 187                     
+DALT 2GRAPHIC 266 16 4                  
+2GRAPHIC 238 120 5                      
+DALT MESSAGE  80 176 13                 
+\ set up page flipping to animate       
+\ the candles                           
+VALT COPYV 2GRAPHIC 266 16 4            
+2GRAPHIC 238 120 5                      
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 069
+( 4: SHAKE 1             <10/24/86>209) 
+                                        
+3 STARTCODE                             
+                                        
+COPYV DALT GRAPHIC 266 16 1             
+GRAPHIC 238 120 2                       
+DALT GRAPHIC 42 48 4 VALT               
+\ set up shake by page flipping         
+DALT GRAPHIC 42 48 5                    
+1START 4 VALT WAIT 600 VALT WAIT 600    
+1LOOP VALT WAIT 600 VALT                
+\ same elf on both pages                
+GRAPHIC 42 48 4 WAIT 200                
+\ draw eyes                             
+VALT WAIT 700 VALT WAIT 700             
+GRAPHIC 70 88 11 DALT GRAPHIC 70 88 11  
+TINV DALT \ put up message              
+BBUB 30 10 210 44 WBUB 32 11 208 41     
+WLHOOK 125 145 46 10 20                 
+DALT GRAPHIC 266 16 1 GRAPHIC 238 120 2 
+DALT MESSAGE 38 20 1 MESSAGE 38 31 2    
+VALT                                    
+                                        
+ENDCODE                                 
+-------------------------------------------- SCREEN 070
+( 4: SHAKE 2             <10/23/86>210) 
+                                        
+4 STARTCODE                             
+                                        
+COPYV DALT GRAPHIC 266 16 1             
+GRAPHIC 238 120 2 DALT                  
+GRAPHIC 42 48 4 GRAPHIC 98 56 7 VALT    
+\ set up shake by page flipping         
+DALT GRAPHIC 42 48 5 GRAPHIC 98 56 8    
+1START 4 VALT WAIT 600 VALT WAIT 600    
+1LOOP VALT WAIT 600 VALT                
+\ same elf on both pages                
+GRAPHIC 42 48 4 GRAPHIC 98 56 7         
+\ draw eyes                             
+VALT WAIT 700 VALT WAIT 700             
+GRAPHIC 70 88 11 DALT GRAPHIC 70 88 11  
+TINV DALT \ put up message              
+BBUB 10 10 220 44 WBUB 12 11 218 41     
+WLHOOK 125 145 46 10 20                 
+DALT GRAPHIC 266 16 1 GRAPHIC 238 120 2 
+DALT MESSAGE 18 20 3 MESSAGE 18 31 4    
+VALT                                    
+                                        
+ENDCODE                                 
+-------------------------------------------- SCREEN 071
+( 4: SHAKE 3             <10/24/86>211) 
+                                        
+5 STARTCODE                             
+                                        
+COPYV DALT GRAPHIC 266 16 1             
+GRAPHIC 238 120 2                       
+DALT GRAPHIC 42 48 4 GRAPHIC 98 56 9    
+VALT \ set up shake by page flipping    
+DALT GRAPHIC 42 48 5 GRAPHIC 98 56 10   
+1START 4 VALT WAIT 600 VALT WAIT 600    
+1LOOP VALT WAIT 600 VALT                
+\ same elf on both pages                
+GRAPHIC 42 48 4 GRAPHIC 98 56 9         
+\ draw eyes                             
+VALT WAIT 700 VALT WAIT 700             
+GRAPHIC 70 88 11 DALT GRAPHIC 70 88 11  
+TINV DALT \ put up message              
+BBUB 10 10 240 44 WBUB 12 11 238 41     
+WLHOOK 125 145 46 10 20                 
+DALT GRAPHIC 266 16 1 GRAPHIC 238 120 2 
+DALT MESSAGE 18 20 5 MESSAGE 18 31 6    
+VALT                                    
+                                        
+ENDCODE                        ( FAH  ) 
+-------------------------------------------- SCREEN 072
+( 4: SHAKE 4             <10/24/86>212) 
+7 STARTCODE                             
+WAIT 100 ENDCODE EXIT                   
+--------------------------------------- 
+COPYV DALT GRAPHIC 266 16 1             
+GRAPHIC 238 120 2                       
+DALT GRAPHIC 42 48 4 GRAPHIC 98 56 11   
+VALT \ set up shake by page flipping    
+DALT GRAPHIC 42 48 5 GRAPHIC 98 56 12   
+1START 4 VALT WAIT 600 VALT WAIT 600    
+1LOOP VALT WAIT 600 VALT                
+\ same elf on both pages                
+GRAPHIC 42 48 4 GRAPHIC 98 56 11        
+\ draw eyes                             
+VALT WAIT 700 VALT WAIT 700             
+GRAPHIC 70 88 11 DALT GRAPHIC 70 88 11  
+TINV DALT \ put up message              
+BBUB 30 5 200 49 WBUB 32 6 198 46       
+WLHOOK 125 145 46 10 20                 
+DALT GRAPHIC 266 16 1 GRAPHIC 238 120 2 
+DALT MESSAGE 38 15 7 MESSAGE 38 26 8    
+MESSAGE 38 37 9 VALT                    
+                                        
+ENDCODE                                 
+-------------------------------------------- SCREEN 073
+( 4: ASK DISK            <10/24/86>213) 
+                                        
+6 STARTCODE                             
+                                        
+COPYV                                   
+DALT GRAPHIC 266 16 1                   
+     GRAPHIC 238 120 2                  
+DALT GRAPHIC 42 48 4                    
+     GRAPHIC 98 56 6                    
+VDALT GRAPHIC 42 48 4                   
+     GRAPHIC 98 56 6                    
+\ draw eyes                             
+VALT WAIT 700 VALT WAIT 700             
+GRAPHIC 70 88 11 DALT GRAPHIC 70 88 11  
+TINV DALT \ put up message              
+BBUB 30 5 210 49 WBUB 32 6 208 46       
+WLHOOK 125 145 46 10 20                 
+DALT GRAPHIC 266 16 1 GRAPHIC 238 120 2 
+DALT MESSAGE 38 15 10 MESSAGE 38 26 11  
+     MESSAGE 38 37 12                   
+VALT                                    
+                                        
+ENDCODE                                 
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 074
+( 4: BASIC SCENE         <10/24/86>214) 
+\ excatly like # 1 except no music      
+                                        
+8 STARTCODE                             
+                                        
+DVPAGE DALT CLEAR FULLWIN               
+2GRAPHIC 0 0 1                          
+2GRAPHIC 28 128 2                       
+2GRAPHIC 210 16 3 VALT                  
+1START 10 2GRAPHIC 266 16 4             
+  2GRAPHIC 238 120 5 WAIT 600           
+  GRAPHIC 266 16 1                      
+  GRAPHIC 238 120 2 WAIT 600 1LOOP      
+COPYV DALT                              
+2GRAPHIC 266 16 4                       
+2GRAPHIC 238 120 5                      
+DALT GRAPHIC 84 80 3 VALT               
+                                        
+GRAPHIC 266 16 1                        
+GRAPHIC 238 120 2 WAIT 600              
+2GRAPHIC 266 16 4                       
+2GRAPHIC 238 120 5                      
+                                        
+ENDCODE                        ( FAH  ) 
+-------------------------------------------- SCREEN 075
+( 4: ERASE Y/N BOX       <10/26/86>215) 
+\                                       
+                                        
+9 STARTCODE                             
+  SETWIN 9 170 27 191                   
+  2GRAPHIC 28 128 2                     
+  DALT                                  
+  2GRAPHIC 28 128 2                     
+  DALT                                  
+  FULLWIN                               
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 076
+( 4: CARD SCENE          <10/26/86>216) 
+                                        
+                                        
+10 STARTCODE                            
+  DVPAGE DALT CLEAR FULLWIN             
+  2GRAPHIC 0 0 1                        
+  2GRAPHIC 28 128 2                     
+  2GRAPHIC 210 16 3                     
+  GRAPHIC 42 48 4                       
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 080
+( 5: GRAPHICS            <10/23/86>220) 
+                                        
+5 MARKINIT                              
+                                        
+  MPIC" COMPUTER"                       
+  MPIC" BRANCH"                         
+  MPIC" JUMP1B"                         
+  MPIC" JUMP2B"                         
+  MPIC" LAND1"                          
+  MPIC" STANDB"                         
+  MPIC" CAR"                            
+  MPIC" BEAR"                           
+  MPIC" BOAT"                           
+  MPIC" DOLL"                           
+  MPIC" KITE"                           
+  MPIC" BUS"                            
+  MPIC" TRUCK"                          
+  MPIC" PLANE"                          
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 081
+( 5: MUSIC               <10/26/86>221) 
+2 MUSICINIT 1 STARTTUNE                 
+NDEF 8 1 ' MMULT D! 0 ' NDEL !          
+  C 3 2  D 3 2  E 3 2  D 3 2  E 3 2     
+  F 3 2  E 3 2  F 3 2  G 3 2  F 3 2     
+  G 3 2  A 4 2  G 3 2  F 3 2  E 3 2     
+  F 3 2  E 3 2  D 3 2  E 3 2  G 3 2     
+  C 3 2  D 3 6  C 3 2  D 3 2  E 3 2     
+  D 3 2  E 3 2  F 3 2  E 3 2  F 3 2     
+  G 3 2  F 3 2  G 3 2  A 4 6  C 4 2     
+  B 4 2  A 4 2  G 3 2  F 3 2  E 3 2     
+  F 3 2  D 3 2  G 3 2  C 3 6            
+  C 3 2  D 3 2  E 3 2  D 3 2  E 3 2     
+  F 3 2  E 3 2  F 3 2  G 3 2  F 3 2     
+  G 3 2  A 4 2  G 3 2  F 3 2  E 3 2     
+  F 3 2  E 3 2  D 3 2  E 3 2  G 3 2     
+  C 3 2  D 3 6  C 3 2  D 3 2  E 3 2     
+  D 3 2  E 3 2  F 3 2  E 3 2  F 3 2     
+  G 3 2  F 3 2  G 3 2  A 4 6  C 4 2     
+  B 4 2  A 4 2  G 3 2  F 3 2  E 3 2     
+  F 3 2  D 3 2  G 3 2  C 3 6            
+ENDTUNE STORETUNE                       
+2 STARTTUNE C 1 1                       
+ENDTUNE STORETUNE              ( FAH  ) 
+-------------------------------------------- SCREEN 082
+( 5: TEXT                <10/23/86>222) 
+                                        
+:$ MESSAGES                             
+\ toys                                  
+   .$ bear$       .$ boat$    \ 1 2     
+   .$ doll$       .$ kite$    \ 3 4     
+   .$ bus$        .$ truck$   \ 5 6     
+   .$ airplane$   .$ car$     \ 7 8     
+\ Anagrams                              
+   .$ erba$       .$ otab$    \ 9 10    
+   .$ lold$       .$ ikte$    \ 11 12   
+   .$ ubs$        .$ kucrt$   \ 13 14   
+   .$ pailnear$   .$ arc$     \ 15 16   
+\ instructions                          
+   .$ To make the computer load,$       
+   .$ unscramble this secret code:$     
+   .$ Type your answer and press$       
+   .$ RETURN.  Press ESC to give up.$   
+;$                                      
+                                        
+MESSAGES STORETEXT                      
+FORGET MESSAGES                         
+                                        
+                                        
+-------------------------------------------- SCREEN 083
+( 5: SETUP TO ASK        <10/23/86>223) 
+                                        
+1 STARTCODE                             
+DVPAGE DALT CLEAR FULLWIN TINV          
+GRAPHIC 126 0 1                         
+GRAPHIC 70  0 2 VALT COPYV              
+GRAPHIC 0 100 3 VDALT WAIT 700          
+GRAPHIC 0 100 4 VDALT                   
+BBAR 0 100 80 180                       
+GRAPHIC 6 110 5 VDALT MUSIC 2 WAIT 900  
+BBAR 0 100 80 180                       
+GRAPHIC 20 116 6                        
+VALT WAIT 700 COPYV                     
+BBUB 05 16 212 99                       
+WBUB 05 17 208 97                       
+WLHOOK 90 110 103 9 20                  
+MESSAGE 10 27 17                        
+MESSAGE 10 39 18                        
+MESSAGE 10 73 19                        
+MESSAGE 10 86 20                        
+\ MESSAGE 20 56 9 \ anagram here        
+VALT ENDCODE                            
+                                        
+                                        
+-------------------------------------------- SCREEN 084
+( 5: DO THE PARADE       <10/23/86>224) 
+                                        
+2 STARTCODE                             
+                                        
+DVPAGE DALT CLEAR FULLWIN TINV          
+GRAPHIC 126 0 1                         
+GRAPHIC 70  0 2                         
+GRAPHIC 20 116 6 VALT MUSIC 1           
+COPYV SETWIN 24 42 34 90                
+GRAPHIC 84  48 7                        
+1START 20 VDALT                         
+  REDRAW 7 ADDFX 6 1LOOP                
+VDALT GRAPHIC 84 48 8                   
+1START 20 VDALT                         
+  REDRAW 8 ADDFX 6 1LOOP                
+VDALT GRAPHIC 84 48 9                   
+1START 21 VDALT                         
+  REDRAW 9 ADDFX 6 1LOOP                
+VDALT GRAPHIC 84 48 10                  
+1START 21 VDALT                         
+  REDRAW 10 ADDFX 6 1LOOP               
+-->                                     
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 085
+( 5: DO THE PARADE CONT..<10/23/86>225) 
+                                        
+                                        
+VDALT GRAPHIC 84 48 11                  
+1START 23 VDALT                         
+  REDRAW 11 ADDFX 6 1LOOP VDALT         
+VDALT GRAPHIC 84 48 12                  
+1START 25 VDALT                         
+  REDRAW 12 ADDFX 6 1LOOP VDALT         
+VDALT GRAPHIC 84 48 13                  
+1START 22 VDALT                         
+  REDRAW 13 ADDFX 6 1LOOP VDALT         
+VDALT GRAPHIC 84 48 14                  
+1START 25 VDALT                         
+  REDRAW 14 ADDFX 6 1LOOP VDALT         
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 086
+( 5: CARD SCENE          <10/26/86>226) 
+                                        
+3 STARTCODE                             
+  DVPAGE DALT CLEAR FULLWIN             
+  GRAPHIC 126 0 1                       
+  GRAPHIC 70  0 2                       
+  GRAPHIC 20 116 6                      
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 090
+( 6: GRAPHICS            <10/26/86>230) 
+                                        
+6 MARKINIT                              
+                                        
+  MPIC" F1"         MPIC" F2"           
+  MPIC" F3"         MPIC" F4"           
+  MPIC" F5"         MPIC" F6"           
+  MPIC" F7"         MPIC" F8"           
+  MPIC" F9"         MPIC" F10"          
+  MPIC" F11"        MPIC" F12"          
+(  MPIC" F13" )     MPIC" F14"          
+(  MPIC" F15" )     MPIC" F16"          
+  MPIC" F12B"    (  MPIC" F13B" )       
+  MPIC" BRANCHES"                       
+  MPIC" BTL"        MPIC" BTR"          
+  MPIC" BBL"        MPIC" BBR"          
+  MPIC" BVER"       MPIC" BRVER"        
+  MPIC" BHOR"                           
+  MPIC" BLM"        MPIC" BRM"          
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 091
+( 6: MUSIC               <10/23/86>231) 
+                                        
+11 MUSICINIT                            
+NDEF 10 1 ' MMULT D! 0 ' NDEL !         
+1 STARTTUNE \ step 1 - spin             
+  G 2 1  A 3 1  B 3 1  C 3 1            
+  D 3 1  C 3 1  B 3 1  A 3 1            
+ENDTUNE STORETUNE                       
+                                        
+2 STARTTUNE \ step 9 - double spin      
+  G 2 1  Gb 2 1 G 2 1  A 3 1  G 2 1     
+  A 3 1  B 3 1  A 3 1  B 3 1  C 3 1     
+  B 3 1  C 3 1  D 3 1  C 3 1  B 3 1     
+ENDTUNE STORETUNE                       
+                                        
+3 STARTTUNE \ step 2 - kick right       
+  G 2 3  B 3 3  D 3 3  G 3 3            
+  D 3 3  B 3 3                          
+ENDTUNE STORETUNE                       
+                                        
+-->                                     
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 092
+( 6: MUSIC cont          <10/24/86>232) 
+                                        
+                                        
+4 STARTTUNE \ Step 3 - kick left        
+  G 2 3  C 3 3   E 3 3   G 3 3          
+  E 3 3  C 3 3                          
+ENDTUNE STORETUNE                       
+                                        
+5 STARTTUNE \ Step 4 - split left       
+  G 2 2  Gb 2 2  E 2 2   D 2 2          
+  C 2 2  D 2 2   E 2 2                  
+ENDTUNE STORETUNE                       
+                                        
+6 STARTTUNE \ step 5 - split right      
+  G 2 2  E 2 2   C 2 2   E 2 2          
+  D 2 2  E 2 2   Gb 2 2  A 3 2          
+ENDTUNE STORETUNE                       
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 093
+( 6: MUSIC cont.         <10/24/86>233) 
+                                        
+                                        
+7 STARTTUNE \ Step 6 - prance           
+  B 3 3  A 3 1  G 2 3  D 3 1            
+  C 3 3  B 3 1  A 3 3                   
+ENDTUNE STORETUNE                       
+                                        
+8 STARTTUNE \ Step 7 - houla left       
+  G 2 3  B 3 1  A 3 3  D 3 1            
+  B 3 3  G 2 1  A 3 3                   
+ENDTUNE STORETUNE                       
+                                        
+1 1 ' MMULT D!                          
+9 STARTTUNE \ Step 8 - Jump             
+  G 2 20 B 3 20 D 3 20  G 3 19          
+  B 4 15 D 4 14 G 4 13  D 4 14          
+  B 4 15 D 4 14 B 4 15  G 3 19          
+  D 3 20 B 3 20 A 3 40                  
+ENDTUNE STORETUNE                       
+                                        
+-->                                     
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 094
+( 6: MUSIC cont          <10/24/86>234) 
+                                        
+NDEF 7  1 ' MMULT D! 0 ' NDEL !         
+10 STARTTUNE \ bow                      
+  D 3 4  E 3 2  C 3 2  A 3 2  E 3 2     
+  D 3 2  C 3 2  G 2 2  B 3 2  C 3 2     
+  A 3 2  D 2 2  C 3 2  B 3 2  D 3 2     
+  G 2 4  A 3 2  C 3 2  B 3 2  A 3 2     
+  D 3 2  B 3 2  G 2 2  B 3 2  A 3 2     
+  A 3 2  D 3 2  D 2 2  A 3 2  G 2 8     
+ENDTUNE STORETUNE                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 095
+( 6: TEXT                <12/ 2/87>235) 
+                                        
+:$ MESSAGES                             
+   .$ I can dance to your$              
+   .$ special messages. Type $          
+   .$ one in and press RETURN.$         
+   .$ Press ESC to end.$                
+   .$ Happy Holiday's!$                 
+;$                                      
+                                        
+MESSAGES STORETEXT                      
+                                        
+FORGET MESSAGES                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 096
+( 6: FRAME AND BRANCHES  <10/28/86>236) 
+\ draw frame and branches on the back   
+\ invisible page, don't show it         
+                                        
+1 STARTCODE                             
+                                        
+  DVPAGE DALT FULLWIN CLEAR             
+  GRAPHIC 0 0 17   GRAPHIC 266 0 18     
+  GRAPHIC 0 184 19 GRAPHIC 266 184 20   
+  GRAPHIC 0 8 21   GRAPHIC 0 88 21      
+  GRAPHIC 266 8 22 GRAPHIC 266 88 22    
+  GRAPHIC 14 0 23  GRAPHIC 14 189 23    
+  GRAPHIC 0 145 24 GRAPHIC 266 145 25   
+  GRAPHIC 14 153 23                     
+  GRAPHIC 14 3 16                       
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 097
+( 6: ASK FOR MESSAGE     <10/28/86>237) 
+\ draw the bear and the text bubble     
+\ on the current draw page              
+\ then switch to it                     
+                                        
+2 STARTCODE                             
+                                        
+  GRAPHIC 114 61 15                     
+  VALT COPYV                            
+  BBUB 88 6 264 52                      
+  WBUB 90 7 260 50                      
+  WLHOOK 168 190 56 10 30               
+  TINV                                  
+  MESSAGE 100 13 1                      
+  MESSAGE 100 23 2                      
+  MESSAGE 100 33 3                      
+  MESSAGE 100 43 4                      
+  VALT                                  
+\ TEST ONLY                             
+\ WAIT 5000 VALT COPYV                  
+                                        
+ENDCODE                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 098
+( 6: STEP 1              <10/25/86>238) 
+\ do dance step 1 - spin                
+                                        
+3 STARTCODE                             
+                                        
+MUSIC 1                                 
+GRAPHIC 112 53 1 VDALT                  
+CLRBEAR WAIT 40                         
+GRAPHIC 112 53 2 VDALT                  
+CLRBEAR WAIT 40                         
+GRAPHIC 112 53 3 VDALT                  
+CLRBEAR WAIT 40                         
+GRAPHIC 112 53 4 VDALT                  
+CLRBEAR WAIT 40                         
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 099
+( 6: STEP 2              <10/28/86>239) 
+\ do dance step 2 - kick right          
+                                        
+4 STARTCODE                             
+                                        
+MUSIC 3                                 
+GRAPHIC 112 61 5 VDALT                  
+CLRBEAR WAIT 1300                       
+GRAPHIC 114 61 15 VDALT                 
+CLRBEAR WAIT 1300                       
+GRAPHIC 112 61 12 VDALT                 
+CLRBEAR WAIT 1300                       
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 100
+( 6: STEP 3              <10/26/86>240) 
+                                        
+5 STARTCODE                             
+MUSIC 8                                 
+GRAPHIC 112 53 1  VDALT                 
+CLRBEAR WAIT 1800                       
+GRAPHIC 98 77 11 VDALT                  
+CLRBEAR WAIT 1800                       
+ENDCODE                                 
+                                        
+EXIT \ removed to save space            
+\ do dance step 3 - kick left           
+MUSIC 4                                 
+GRAPHIC 112 61 5 VDALT                  
+CLRBEAR WAIT 1300                       
+GRAPHIC 114 61 18 VDALT                 
+CLRBEAR WAIT 1300                       
+GRAPHIC 112 61 13 VDALT                 
+CLRBEAR WAIT 1300                       
+                                        
+ENDCODE                                 
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 101
+( 6: STEP 4              <10/25/86>241) 
+\ do dance step 4 - split left          
+                                        
+6 STARTCODE                             
+                                        
+MUSIC 5                                 
+GRAPHIC 112 53 1 VDALT                  
+CLRBEAR WAIT 1500                       
+GRAPHIC 92  85 13 VDALT                 
+CLRBEAR WAIT 1500                       
+                                        
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 102
+( 6: STEP 5              <10/26/86>242) 
+                                        
+7 STARTCODE                             
+MUSIC 8                                 
+GRAPHIC 112 53 1  VDALT                 
+CLRBEAR WAIT 1800                       
+GRAPHIC 98 77 11 VDALT                  
+CLRBEAR WAIT 1800                       
+                                        
+ENDCODE                                 
+                                        
+EXIT \ ---- removed to save space ---   
+                                        
+\ do dance step 5 - split right         
+                                        
+MUSIC 6                                 
+GRAPHIC 112 53 1 VDALT                  
+CLRBEAR WAIT 1800                       
+GRAPHIC 92  85 15 VDALT                 
+CLRBEAR WAIT 1800                       
+                                        
+ENDCODE                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 103
+( 6: STEP 6              <10/25/86>243) 
+\ do dance step 6 - split prance        
+                                        
+8 STARTCODE                             
+                                        
+MUSIC 7                                 
+GRAPHIC 108 53 10 VDALT                 
+CLRBEAR WAIT 1400                       
+GRAPHIC 116 49 14 VDALT                 
+CLRBEAR WAIT 1400                       
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 104
+( 6: STEP 7              <10/25/86>244) 
+\ do dance step 7 - houla left          
+                                        
+9 STARTCODE                             
+                                        
+MUSIC 8                                 
+GRAPHIC 112 53 1  VDALT                 
+CLRBEAR WAIT 1800                       
+GRAPHIC 98 77 11 VDALT                  
+CLRBEAR WAIT 1800                       
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 105
+( 6: STEP 8              <10/25/86>245) 
+\ do dance step 8 - jump                
+                                        
+10 STARTCODE                            
+                                        
+MUSIC 9                                 
+GRAPHIC 108 45 7 VDALT                  
+CLRBEAR WAIT 1350                       
+GRAPHIC 110 61 8 VDALT                  
+CLRBEAR WAIT 1350                       
+GRAPHIC 110 61 9 VDALT                  
+CLRBEAR WAIT 1350                       
+GRAPHIC 108 53 10 VDALT                 
+CLRBEAR WAIT 1350                       
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 106
+( 6: DOUBLE SPIN         <10/24/86>246) 
+\ do double spin                        
+                                        
+11 STARTCODE                            
+                                        
+MUSIC 2                                 
+1START 1                                
+   GRAPHIC 112 53 1 VDALT               
+   CLRBEAR WAIT 40                      
+   GRAPHIC 112 53 2 VDALT               
+   CLRBEAR WAIT 40                      
+   GRAPHIC 112 53 3 VDALT               
+   CLRBEAR WAIT 40                      
+   GRAPHIC 112 53 4 VDALT               
+   CLRBEAR WAIT 40                      
+1LOOP                                   
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 107
+( 6: BOW                 <10/24/86>247) 
+\ bow and play tune                     
+                                        
+12 STARTCODE                            
+                                        
+MUSIC 10                                
+CLRBEAR                                 
+GRAPHIC 112 85 6 VALT                   
+WAIT 18000                              
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 108
+( 6: CARD SCENE          <10/28/86>248) 
+\ draw frame ,branches and bear         
+                                        
+13 STARTCODE                            
+                                        
+  DVPAGE DALT FULLWIN CLEAR TNORM       
+  GRAPHIC 0 0 17   GRAPHIC 266 0 18     
+  GRAPHIC 0 184 19 GRAPHIC 266 184 20   
+  GRAPHIC 0 8 21   GRAPHIC 0 88 21      
+  GRAPHIC 266 8 22 GRAPHIC 266 88 22    
+  GRAPHIC 14 0 23  GRAPHIC 14 189 23    
+  GRAPHIC 0 145 24 GRAPHIC 266 145 25   
+  GRAPHIC 14 153 23                     
+  GRAPHIC 14 3 16                       
+  GRAPHIC 112 53 1                      
+  MESSAGE 77 168 5                      
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 110
+( 7: GRAPHICS            <10/25/86>250) 
+                                        
+7 MARKINIT                              
+MPIC" BRANCHES"                         
+MPIC" BOX1"       MPIC" BOX2"           
+MPIC" BOX3"       MPIC" BOX4"           
+MPIC" BOX5"                             
+MPIC" BOX6A"      MPIC" BOX6B"          
+MPIC" BOX7A"      MPIC" BOX7B"          
+MPIC" BOX8"                             
+MPIC" BOX8ELF"    MPIC" BOX8ELFB"       
+MPIC" FLYA1"      MPIC" FLYA2"          
+MPIC" LANDA"      MPIC" STANDA"         
+MPIC" FLYB1"      MPIC" FLYB2"          
+MPIC" LANDB"      MPIC" STANDB"         
+MPIC" FLIPB"      MPIC" STANDB2"        
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 111
+( 7: MUSIC               <10/25/86>251) 
+                                        
+3 MUSICINIT                             
+1 STARTTUNE \ 1 jumps                   
+  NDEF 0 ' NDEL ! 1 1 ' MMULT D!        
+  G 3 13  A 4 13  B 4 13  C 4 12        
+  D 4 13  C 4 12  B 4 13  A 4 13        
+  G 3 18  C 1 8                         
+ENDTUNE STORETUNE                       
+                                        
+2 STARTTUNE \ 2 jumps                   
+  D 3 13  E 3 13  Gb 3 13  G 3 13       
+  A 4 13  G 3 13  Gb 3 13  E 3 13       
+  D 3 18  C 1 8                         
+ENDTUNE STORETUNE                       
+                                        
+3 STARTTUNE \ 2 flips                   
+  8 ' NOFF !                            
+  C 3 7   Db 3 7  D 3 7    Eb 3 7       
+  E 3 7   F 3 7   Gb 3 7                
+  Gb 3 7  F 3 7   E 3 7    Eb 3 7       
+  D 3 7   Db 3 7  C 3 7                 
+ENDTUNE STORETUNE                       
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 112
+( 7: MUSIC cont          <10/25/86>252) 
+EXIT --- MOVED TO PART 2 ----           
+                                        
+4 STARTTUNE \ dance tune                
+  NDEF 0 ' NDEL ! 1 1 ' MMULT D!        
+  G 3 14 D 3 14 G 3 14 B 4 14 A 4 14    
+  D 3 14 A 4 14 C 4 13 A 4 14 C 4 13    
+  B 4 14 G 3 14 B 4 14 D 4 13 C 4 13    
+  B 4 14 A 4 14 B 4 14 C 4 13 Gb 3 14   
+  G 3 14 A 4 14 G 3 14 D 3 14 G 3 14    
+  B 4 14 G 3 14 B 4 14 A 4 14 D 3 14    
+  A 4 14 C 4 13 A 4 14 C 4 13 B 4 14    
+  A 4 14 G 3 14 D 3 14 G 3 14 Gb 3 14   
+  G 3 14 D 3 14 B 3 14 G 2 42           
+ENDTUNE STORETUNE                       
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 113
+( 7: TEXT                <10/26/86>253) 
+                                        
+:$ MESSAGES                             
+  .$ NONE$                              
+;$                                      
+                                        
+MESSAGES STORETEXT                      
+                                        
+FORGET MESSAGES                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 114
+( 7: OPEN BOX            <10/26/86>254) 
+                                        
+1 STARTCODE                             
+  DVPAGE DALT FULLWIN CLEAR             
+  GRAPHIC 0 0 1                         
+  GRAPHIC 0 103 2                       
+\ now draw BOX2                         
+  VALT COPYV WAIT 6600                  
+  GRAPHIC 0 87 3                        
+\ now BOX3                              
+  VDALT WAIT 600                        
+  GRAPHIC 0 79 4                        
+\ now BOX4                              
+  VDALT WAIT 600                        
+  GRAPHIC 0 89 5                        
+\ now BOX5                              
+  VDALT WAIT 500                        
+  BBAR 0 79 70 111                      
+  GRAPHIC 0 111 6                       
+                                        
+-->                                     
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 115
+( 7: OPEN BOX CONT..     <10/26/86>255) 
+                                        
+                                        
+\ now BOX6                              
+  VALT COPYV                            
+  GRAPHIC 0 167 7                       
+  GRAPHIC 70 135 8                      
+  BBAR 50 111 70 122                    
+  WBAR 0 130 30 167                     
+  BBAR 83 115 100 135                   
+\ now BOX7                              
+  VALT COPYV                            
+  GRAPHIC 0 183 9                       
+  GRAPHIC 70 159 10                     
+  WBAR 0 167 30 183                     
+  BBAR 100 135 130 159                  
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 116
+( 7: JUMP ELF 1          <10/26/86>256) 
+                                        
+  VALT COPYV                            
+\ open the box                          
+  GRAPHIC 0 95 11                       
+  VALT COPYV WAIT 1000                  
+\ jump elf out                          
+  GRAPHIC 14 87 12 \ BOX8ELF            
+  MUSIC 1 VDALT WAIT 700                
+  GRAPHIC 84 40 14 \ FLYA1              
+  VDALT WAIT 700                        
+  GRAPHIC 0 95 11 \ BOX88               
+  BBAR 0 75 80 95 \ erase BOX8ELF       
+  GRAPHIC 126 70 15 \ FLYA2             
+  VDALT WAIT 700                        
+  BBAR 84 40 140 94 \ erase FLYA1       
+  GRAPHIC 150 129 16 \ LANDA            
+  VDALT WAIT 700                        
+  BBAR 126 70 180 119 \ erase FLYA2     
+  GRAPHIC 140 119 17                    
+  VALT WAIT 700                         
+-->                                     
+                                        
+                                        
+-------------------------------------------- SCREEN 117
+( 7: JUMP ELF 2          <10/26/86>257) 
+                                        
+  COPYV                                 
+\ jump elf 2 out                        
+  GRAPHIC 14 87 13 \ BOX8ELFB           
+  MUSIC 2 VDALT WAIT 700                
+  GRAPHIC 96 40 18 \ FLYB1              
+  VDALT WAIT 400                        
+  GRAPHIC 0 95 11 \ BOX88               
+  BBAR 0 75 80 95 \ erase BOX8ELFB      
+  GRAPHIC 150 45 19 \ FLYB2             
+  VDALT WAIT 400                        
+  BBAR 96 40 152 94 \ erase FLYB1       
+  GRAPHIC 190 70 19 \ FLYB2             
+  VDALT WAIT 400                        
+  BBAR 150 45 216 114 \ erase FLYB1 #2  
+  GRAPHIC 218 131 20 \ LANDB            
+  VDALT WAIT 400                        
+  BBAR 190 70 244 129 \ erase FLYB2     
+  GRAPHIC 210 112 21 \ STANDB           
+  VALT WAIT 700                         
+                                        
+-->                                     
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 118
+( 7: FLIP ELF 2          <10/26/86>258) 
+                                        
+                                        
+WAIT 2500                               
+MUSIC 3                                 
+WAIT 500                                
+VALT WAIT 500 \ switch back to LANDB    
+GRAPHIC 210 96 22 \ FLIPB               
+BBAR 220 161 260 185                    
+VDALT WAIT 1000                         
+GRAPHIC 210 112 23 \ STANDB             
+BBAR 250 112 270 180                    
+VALT WAIT 500                           
+                                        
+                                        
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 119
+( 7: CARD SCENE          <10/26/86>259) 
+                                        
+2 STARTCODE                             
+  DVPAGE DALT FULLWIN CLEAR             
+  GRAPHIC 0 0 1                         
+  GRAPHIC 0 103 2                       
+  GRAPHIC 0 111 6                       
+  GRAPHIC 0 183 9                       
+  GRAPHIC 70 159 10                     
+  WBAR 0 130 30 183                     
+  BBAR 100 135 130 159                  
+  GRAPHIC 0 95 11                       
+  BBAR 83 125 120 155                   
+  WBAR 70 140 83 159                    
+  GRAPHIC 140 119 17                    
+  GRAPHIC 210 112 23                    
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 120
+( 8: GRAPHICS            <10/25/86>260) 
+                                        
+8 MARKINIT                              
+                                        
+MPIC" DANCE1"     MPIC" DANCE2"         
+MPIC" DANCE3"     MPIC" DANCE4"         
+MPIC" CLAP1"      MPIC" CLAP2"          
+MPIC" DUO1"       MPIC" DUO2"           
+MPIC" SPIN1"      MPIC" SPIN2"          
+MPIC" SPIN3"      MPIC" SPIN4"          
+MPIC" SPIN5"      MPIC" SPIN6"          
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 121
+( 8: MUSIC               <10/25/86>261) 
+                                        
+2 MUSICINIT                             
+                                        
+1 STARTTUNE \ dance tune                
+  NDEF 0 ' NDEL ! 1 1 ' MMULT D!        
+  G 3 14 D 3 14 G 3 14 B 4 14 A 4 14    
+  D 3 14 A 4 14 C 4 13 A 4 14 C 4 13    
+  B 4 14 G 3 14 B 4 14 D 4 13 C 4 13    
+  B 4 14 A 4 14 B 4 14 C 4 13 Gb 3 14   
+  G 3 14 A 4 14 G 3 14 D 3 14 G 3 14    
+  B 4 14 G 3 14 B 4 14 A 4 14 D 3 14    
+  A 4 14 C 4 13 A 4 14 C 4 13 B 4 14    
+  A 4 14 G 3 14 D 3 14 G 3 14 Gb 3 14   
+  G 3 14 D 3 14 B 3 14 G 2 42           
+ENDTUNE STORETUNE                       
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 122
+( 8: MUSIC CONT          <10/25/86>262) 
+                                        
+                                        
+2 STARTTUNE \ spin tune                 
+  E 4 11   G 4 12   E 4 11   C 4 13     
+  A 4 11   C 4 12   D 4 10   Gb 4 10    
+  D 4 12   B 4 13   G 3 14   B 4 12     
+  C 4 12   E 4 11   C 4 12   A 4 11     
+  Gb 3 14  A 4 11   B 4 13   D 4 10     
+  B 4 13   G 3 14   B 4 13   G 3 14     
+  Gb 3 14  D 3 14   Gb 3 14  G 3 14     
+  D 3 14   G 3 14   A 4 11   D 3 14     
+  A 4 14   B 4 13   D 3 14   B 4 13     
+  C 4 12   B 4 13   A 4 11   B 4 13     
+  A 4 11   G 3 14   D 3 14   G 3 14     
+  Gb 3 14  G 3 42                       
+ENDTUNE STORETUNE                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 123
+( 8: TEXT                <10/25/86>263) 
+                                        
+:$ MESSAGES                             
+  .$ NONE$                              
+;$                                      
+                                        
+MESSAGES STORETEXT                      
+                                        
+FORGET MESSAGES                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 124
+( 8: CLAP DANCE          <10/25/86>264) 
+                                        
+                                        
+1 STARTCODE                             
+DVPAGE                                  
+GRAPHIC 200 115 6 WAIT 400              
+MUSIC 1                                 
+1START 5                                
+  GRAPHIC 200 115 5                     
+  GRAPHIC 140 112 1 WAIT 400            
+  GRAPHIC 140 112 3 WAIT 300            
+  GRAPHIC 200 115 6                     
+  GRAPHIC 140 112 2 WAIT 400            
+  GRAPHIC 140 112 4 WAIT 300            
+1LOOP                                   
+WAIT 2500                               
+                                        
+-->                                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 125
+( 8: SPIN DANCE          <10/25/86>265) 
+                                        
+COPYV BBAR 140 114 260 185              
+GRAPHIC 140 114 7 WAIT 2000             
+VALT COPYV                              
+BBAR 140 114 260 185                    
+GRAPHIC 140 114 8 WAIT 2000 VDALT       
+MUSIC 2                                 
+1START 4                                
+  ADDFX 4 CLRELF REDRAW 10 VDALT        
+  ADDFX 4 CLRELF REDRAW 11 VDALT        
+  ADDFX 4 CLRELF REDRAW 12 VDALT        
+  ADDFX 4 CLRELF REDRAW 13 VDALT        
+  ADDFX 4 CLRELF REDRAW 14 VDALT        
+  ADDFX 4 CLRELF REDRAW 8 VDALT         
+  ADDFX 4                               
+1LOOP                                   
+ENDCODE                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 126
+( TEST LOAD ELVES PART 1 <10/24/86>256) 
+                                        
+7 MARKINIT                              
+MPIC" BRANCHES"                         
+MPIC" BOX1"       MPIC" BOX2"           
+MPIC" BOX3"       MPIC" BOX4"           
+MPIC" BOX5"       MPIC" BOX6"           
+MPIC" BOX7"       MPIC" BOX8"           
+MPIC" BOX8ELF"                          
+MPIC" FLYA1"      MPIC" FLYA2"          
+MPIC" LANDA"      MPIC" STANDA"         
+MPIC" FLYB1"      MPIC" FLYB2"          
+MPIC" LANDB"      MPIC" STANDB"         
+MPIC" FLIPB"      MPIC" STANDB2"        
+                                        
+MARKDONE                                
+\ 16224 TOTAL A3D4                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 127
+\ 13780 TOTAL A3D4                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 130
+( 9: GRAPHICS            <10/26/86>270) 
+                                        
+9 MARKINIT                              
+                                        
+MPIC" ST1"        MPIC" ST2"            
+MPIC" ST3"        MPIC" ST4"            
+MPIC" BBALL"                            
+MPIC" BTL"        MPIC" BTR"            
+MPIC" BBL"        MPIC" BBR"            
+MPIC" BVER"       MPIC" BRVER"          
+MPIC" BHOR"                             
+MPIC" BLM"        MPIC" BRM"            
+MPIC" MELF"                             
+                                        
+MARKDONE                                
+GETPICS                                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 131
+( 9: MUSIC               <10/28/86>271) 
+                                        
+2 MUSICINIT                             
+1 STARTTUNE                             
+  C 3 4   D 3 4   E 3 6   C 3 2         
+  G 3 2   E 3 4   A 4 8   G 3 2         
+  C 4 8   G 3 2   E 3 4   C 3 8         
+ENDTUNE STORETUNE                       
+                                        
+2 STARTTUNE                             
+  G 3 2   E 3 6                         
+ENDTUNE STORETUNE                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 132
+( 9: TEXT                <10/28/86>272) 
+                                        
+:$ MESSAGES                             
+  .$ Position ball with arrow keys,$    
+  .$ then press RETURN to shoot.$       
+  .$ Enter shot angle (25-80),$         
+  .$ Enter shot speed (1-10),$          
+  .$ then press RETURN: $               
+  .$ Good shot!$                        
+  .$ Missed!$                           
+  .$ Try another (Y/N)? $               
+  .$ Now you play elf:$                 
+  .$ Print a card$                      
+  .$ Produce a disk$                    
+  .$ Press SPACE to move cursor,$       
+  .$ Press RETURN to choose,$           
+  .$ Press ESC to quit.$                
+  .$ Who is this card for?$             
+  .$ To:$                               
+  .$ Enter name and press RETURN.$      
+  .$ Press ESC to quit.$                
+  .$ Who is this card from?$            
+  .$ From:$                             
+-->                                     
+-------------------------------------------- SCREEN 133
+( 9: TEXT cont...        <10/28/86>273) 
+                                        
+  .$ What kind of printer$              
+  .$ do you have?$                      
+  .$ Apple Imagewriter$                 
+  .$ Epson (with Graftrax)$             
+  .$ Okidata ML92, 93$                  
+  .$ Choose print quality.$             
+  .$ Try light if you are$              
+  .$ using a new ribbon.$               
+  .$ Dark$                              
+  .$ Light$                             
+  .$ Opps! A tricky question.$          
+  .$ Try 1 the first time through.$     
+  .$ Didn't work? Try number 2.$        
+  .$ Send CR only$                      
+  .$ Send CR & LF$                      
+  .$ Press SPACE to see another graphic 
+for$                                    
+     .$ the outside of your card. Press 
+RETURN$                                 
+  .$ to choose. Press ESC to quit.$     
+-->                                     
+                                        
+-------------------------------------------- SCREEN 134
+( 9: TEXT cont...        <10/28/86>274) 
+                                        
+    .$ Press RETURN when you printer is 
+ready.$                                 
+  .$ Your printer is not ready.$        
+  .$ A PRINTER ERROR HAS OCCURRED!$     
+  .$ Position the paper for a new$      
+  .$ card then press RETURN or$         
+  .$ Type the message$                  
+  .$ you'd like me to$                  
+  .$ dance, then press$                 
+  .$ RETURN, or press$                  
+  .$ ESC to quit$                       
+  .$ Insert a blank disk into drive 1$  
+  .$ WARNING: THE DISK WILL BE ERASED!$ 
+  .$ Press RETURN to continue$          
+  .$ or ESC to quit.$                   
+  .$ One disk with$                     
+  .$ Dancing Bear$                      
+  .$ Coming up...$                      
+  .$ Disk done! Put CHEER!$             
+  .$ Back in drive A and$               
+  .$ press RETURN.$                     
+;$                             ( FAH  ) 
+-------------------------------------------- SCREEN 135
+( BG                     <10/26/86>275) 
+                                        
+: BG                                    
+   SWAP-BSM                             
+   0 0 5 <TD>      266 0 6 <TD>         
+   0 184 7 <TD>    266 184 8 <TD>       
+   0 8 9 <TD>      0 88 9  <TD>         
+   266 8 10 <TD>   266 88 10 <TD>       
+   14 0 11 <TD>    14 189 11 <TD>       
+   0 145 12 <TD>   14 153 11 <TD>       
+   266 145 13 <TD>                      
+   SWAP-BSM                             
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 138
+(                        <10/25/86>278) 
+                                        
+                                        
+: SKEY                                  
+  BEGIN 1HG HG QTERM UNTIL              
+  <KEY> ;                               
+                                        
+: SK                                    
+  ' SKEY CFA ' KEY ! ;                  
+                                        
+: NK ' <KEY> CFA ' KEY ! ;              
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 139
+(                        <10/25/86>279) 
+                                        
+                                        
+: G1                                    
+  HGR                                   
+  8192 72 1 32 RWSEC# ;                 
+                                        
+: TR                                    
+  G1 T2 ;                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        

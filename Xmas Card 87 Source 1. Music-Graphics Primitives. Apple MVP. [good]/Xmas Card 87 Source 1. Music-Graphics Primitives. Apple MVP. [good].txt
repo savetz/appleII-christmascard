@@ -1,0 +1,3200 @@
+-------------------------------------------- SCREEN 001
+( LOADBLOCK              <10/12/86>141) 
+\ see next scr for instruc on how       
+\ to create basic forth from PAI v3.00  
+                                        
+APPENDIX FORGET AMARK CREATE AMARK      
+MAIN     FORGET  MARK CREATE  MARK      
+  148     LOAD \ zero page variables    
+APPENDIX CREATE AFORG MAIN              
+  149     LOAD \ main page variables    
+  146 147 THRU \ PATABLE SUBR S;        
+  155     LOAD \ table driven YADDR     
+  242 254 THRU \ Music words            
+  160 164 THRU \ dual-page words        
+  150 154 THRU \ useful code words      
+  165 174 THRU \ shift tables           
+  175 198 THRU \ doline routines        
+  199     LOAD \ doline jump table      
+  200 209 THRU \ DRAWFIG routines       
+  210 235 THRU \ DRAWCHAR routines      
+  240     LOAD \ window words           
+  255 273 THRU \ bar bubble hook        
+  277     LOAD \ brody font             
+96 music C!                             
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 002
+( CREATE BASIC FORTH     <12/27/85>142) 
+                                        
+FORTH DEFINITIONS                       
+  FORGET APP-AUX                        
+                                        
+ROOT DEFINITIONS                        
+  FORGET ORDER                          
+  24576 10 + DP !                       
+  : ORDER <ORDER> ;                     
+                                        
+FORTH DEFINITIONS                       
+' EXIT CFA ' <!APPENDIX> !              
+  APPENDIX CREATE AMARK                 
+  MAIN     CREATE MARK                  
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( bobp ) 
+-------------------------------------------- SCREEN 004
+( RECVFIG                < 9/ 9/86>164) 
+                                        
+VARIABLE FWID \ width of fig in bytes   
+                                        
+: RECVFIG                               
+  SET-I/O PAGE HGR 1HG 0 20 XYTAB       
+  ." Start SENDFIG now" CR              
+  XIN 5 = NOT ABORT" Bad ID"            
+  230 XOUT                              
+  XIN DUP FWID ! XIN 255 XOR = NOT >R   
+  XIN DUP XIN 255 XOR = NOT R> OR       
+  IF 44 XOUT ( indicate error to send)  
+   1 ABORT" Err recieving size"         
+  THEN                                  
+  211 XOUT ( go to sender )             
+  BEGIN XIN 8 = UNTIL                   
+  0 DO I YADDR FWID @ SPECRECV          
+  LOOP ;                                
+                                        
+: R RECVFIG ;                           
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 005
+( MENU-MUSIC             <10/ 2/86>145) 
+                                        
+                                        
+CREATE M                                
+  G 3 8   Gb 3 6  E 3 2   D 3 12        
+  C 3 4   B 3 8   A 3 8   G 2 12        
+                                        
+  D 3 4   E 3 2   C 3 2   B 3 2         
+  C 3 2   A 3 2   C 3 2   B 3 2         
+  A 3 2   D 3 2   B 3 2   A 3 2         
+  B 3 2   G 2 2   B 3 2   A 3 2         
+  G 2 2   A 3 2   B 3 2   C 3 2         
+  A 3 2   B 3 6   A 3 2   G 2 4         
+  Gb 2 4  G 2 8                         
+                                        
+  0 C, 255 C,                           
+                                        
+: MM M PLAY ;                           
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 006
+( PATABLE                <10/ 9/86>146) 
+                                        
+APPENDIX                                
+DVARIABLE TLOS                          
+\ set here to start on a page boundry   
+: PALIGN                                
+  256 HERE 255 AND - 256 MOD DUP ALLOT  
+  OUT @ IF CR THEN DUP .                
+  ." bytes lost to page align ("        
+  0 TLOS D@ D+ DDUP TLOS D! D. ." tot)" 
+  CR ;                                  
+                                        
+                                        
+\ create a table that starts on a page  
+\ boundry, store address in a constant  
+\ that is in the appendix               
+: PATABLE                               
+  PALIGN GET-A&E ?MAIN                  
+  HERE [APPN] CONSTANT [MAIN]           
+;                                       
+                                        
+MAIN                                    
+                                        
+                                        
+-------------------------------------------- SCREEN 007
+( SUBR S; LOBYTE HIBYTE  <10/11/86>147) 
+\ things to make assembler more useful  
+                                        
+GET-A&E APPENDIX                        
+: SUBR                                  
+  GET-A&E ?MAIN                         
+  HERE 255 AND 255 = ALLOT              
+  HERE [APPN] CONSTANT SMUDGE           
+  [COMPILE] ASSEMBLER                   
+  ASSEMBLER MEM !CSP FORTH [MAIN] ;     
+                                        
+: S;                                    
+  ?CSP [APPN] SMUDGE [MAIN]             
+  CURRENT @ CONTEXT ! ;                 
+                                        
+: S'                                    
+  ?FIND DROP @ [COMPILE] LITERAL        
+; IMMEDIATE                             
+                                        
+: LOBYTE 255 AND ;                      
+: HIBYTE SP@ 1+ C@ SWAP DROP ;          
+                                        
+MAIN                                    
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 008
+( ZERO PAGE USAGE        <10/ 9/86>148) 
+HEX APPENDIX                            
+                                        
+ 0E0 CONSTANT GBASE  ( >Y address )     
+ 0E2 CONSTANT 0ADR   ( >something )     
+ 0E4 CONSTANT GFIG   ( >fig data  )     
+ 0E6 CONSTANT TCLR   ( text format)     
+ 0E7 CONSTANT &QUO   ( quocient )       
+ 0E8 CONSTANT &REM   ( remainder)       
+ 0E9 CONSTANT MINX   ( min byte bound)  
+ 0EA CONSTANT MAXX   ( max byte bound)  
+ 0EB CONSTANT MINY   ( min Y value)     
+ 0EC CONSTANT MAXY   ( max Y value)     
+ 0ED CONSTANT >PRO   ( "IP" for code)   
+DECIMAL EXIT                            
+--------------------------------------- 
+Locations D0 through EF are not used    
+by MVP-PADS, to allow use of the        
+Applesoft ram floating-point and        
+graphics routines.                      
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 009
+( NORMAL VARIABLES       <10/ 9/86>149) 
+                                        
+  \ holds value to add to hi byte of    
+  \ YADDR to offset to another page     
+  \ 0=PAGE 1   32=PAGE 2                
+XVARIABLE DPAGE                         
+                                        
+  \ holds number of the current page    
+  \ being viewed (0=page 1 1=page 2)    
+XVARIABLE VPAGE                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 010
+( b/mod  unsigned divide <10/ 2/86>150) 
+\ entry:YA/X=&QUO &REM                  
+\ exit: All regs preserved              
+                                        
+SUBR b/mod \ [TIME:284]    \ 6          
+  &REM STX, ( divisor )     \ 3         
+  &QUO STA, ( dividend lsb) \ 3         
+  PHA, TYA, PHA, ( msb )    \ 3 2 3     
+  # 8 LDY,                  \ 2         
+  BEGIN, &QUO ASL, .A ROL,  \ 5 2       
+   &REM CMP, CS             \ 3         
+   IF, &REM SBC, &QUO INC,  \ <2 3 5 3> 
+   ELSE, NOP, NOP, NOP,     \ <3 2 2 2  
+     NOP, NOP, THEN,        \  2 2>     
+   DEY, 0=                  \ 2         
+  UNTIL,                    \ 2/3       
+  &REM STA, PLA, TAY, PLA,  \ 3 4 2 4   
+  RTS, S;                   \ 6         
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 011
+( fast CLS               <10/11/86>151) 
+SUBR cls # 0 LDX, # 0 LDA,              
+ BEGIN, # 0 LDY, yaddr JSR,             
+  BEGIN, \ inline code is faster loop   
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  GBASE )Y STA, INY, GBASE )Y STA, INY, 
+  # 40 CPY, 0= UNTIL,                   
+ INX, # 192 CPX, 0= UNTIL,              
+ RTS, S;                                
+: CLS FORGET-SYS S' cls CALL ;          
+: ZW C@ DROP ; HEX                      
+: VP C055 VPAGE @ + ZW ;                
+: HG C050 ZW C057 ZW C052 ZW ;          
+: 1HG C050 ZW C057 ZW C053 ZW ;         
+: HGR S' vdinit CALL CLS HG ;           
+DECIMAL                                 
+-------------------------------------------- SCREEN 012
+( mub/mod                <10/ 1/86>152) 
+\ YA/X = &QUO &REM                      
+\ kill 40 clocks before calling (don't  
+\ count the JSR) leaves with 82         
+\ clocks used (counting the RTS)        
+                                        
+SUBR mub/mod                \ 40 6      
+  &REM STX, ( divisor )     \ 3         
+  &QUO STA, ( dividend lsb) \ 3         
+  PHA, TYA, PHA, ( msb )    \ 3 2 3=60  
+                                        
+  &QUO ASL, \ shift 1                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=83   
+  &QUO ASL, \ shift 2                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=106  
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 013
+( mub/mod cont...        < 9/29/86>153) 
+                                        
+  &QUO ASL, \ shift 3                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=129  
+  &QUO ASL, \ shift 4                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=152  
+  &QUO ASL, \ shift 5                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=175  
+                                        
+\M NOP, NOP, NOP,          \ 2 2 2=181  
+\M music JSR,                           
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 014
+( mub/mod cont...        < 9/28/86>154) 
+                                        
+  &QUO ASL, \ shift 6                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=23   
+  &QUO ASL, \ shift 7                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=46   
+  &QUO ASL, \ shift 8                   
+  .A ROL, &REM CMP, CS     \ 5 2 3      
+  IF, &REM SBC, &QUO INC,  \ <2 3 5 3>  
+  ELSE, NOP, NOP, NOP,     \ <3 2 2 2   
+   NOP, NOP, THEN,         \  2 2>=69   
+                                        
+  &REM STA,                \ 3          
+  PLA, TAY, PLA,           \ 4 2 4      
+  RTS, S;                  \ 6=82       
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 015
+( TABLE DRIVEN YADDR     <10/ 1/86>155) 
+\ loading this screen will load         
+\ the table driven version of yaddr     
+\ load the 156-157 to use the           
+\ computed version                      
+                                        
+\ if tables cross page boundries it     
+\ screws up the timing in $yaddr        
+PATABLE LYADDR 256 ALLOT                
+PATABLE HYADDR 256 ALLOT                
+                                        
+156 157 THRU  \ use to fill table       
+    158 LOAD  \ word to fill table      
+FILLTAB       \ fill the table          
+FORGET $YADDR \ forget old routine      
+    159 LOAD  \ table drive $YADDR      
+\   157 LOAD  \ YADDR is same for both  
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 016
+( $YADDR SUBROUTINE      <10/ 1/86>156) 
+\ computes values                       
+\ entry: line# in X reg.                
+\ exit:  address in GBASE               
+\ all registers are preserved           
+HEX                                     
+CODE $YADDR                             
+   PHA, TXA, # C0  AND, GBASE STA,      
+             .A LSR, .A LSR,            
+             GBASE ORA, GBASE STA,      
+        TXA, GBASE 1+ STA, .A ASL,      
+             .A ASL, .A ASL,            
+             GBASE 1+ ROL, .A ASL,      
+             GBASE 1+ ROL, .A ASL,      
+             GBASE ROR,                 
+             GBASE 1+ LDA, # 1F AND,    
+             # 20 ORA, GBASE 1+ STA,    
+   PLA, RTS, C;                         
+                                        
+DECIMAL EXIT                            
+--------------------------------------- 
+Note: only valid for 0 <= line# <= 191  
+BOMBS FORTH when -1 or 255              
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 017
+( YADDR code version     < 9/ 9/86>157) 
+                                        
+CODE YADDR ( y -- yaddr )               
+     XSAVE STX, BOT LDA, TAX,           
+     ' $YADDR JSR,                      
+     XSAVE LDX,                         
+     GBASE    LDA, BOT    STA,          
+     GBASE 1+ LDA, BOT 1+ STA,          
+     NEXT JMP, C;                       
+                                        
+EXIT                                    
+--------------------------------------- 
+Algorithm in Basic:                     
+                                        
+ INPUT Y                                
+ Y1 = INT(Y /8) : YR = Y  - Y1*8        
+ Y2 = INT(Y1/8) : YS = Y1 - Y2*8        
+ L  = 8192 + 40*Y2 + 128*YS + 1024*YR   
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 018
+( CREATE YADDR TABLES    < 9/16/86>158) 
+\ this word will fill LYADDR and HYADDR 
+\ with the proper values                
+                                        
+\ all values above 191 return the       
+\ address of the last scan line         
+\ to avoid crashes                      
+                                        
+0 FWARNING !                            
+: FILLTAB                               
+  192 0 \ do for the real values        
+  DO I YADDR DROP                       
+     GBASE C@ LYADDR I + C!             
+     GBASE 1+ C@ HYADDR I + C!          
+  LOOP                                  
+  \ fill remainder of table with adr    
+  \ scan line 191 (already in GBASE)    
+  256 192                               
+  DO GBASE C@ LYADDR I + C!             
+     GBASE 1+ C@ HYADDR I + C!          
+  LOOP                                  
+;                                       
+                                        
+1 FWARNING !                   ( FAH  ) 
+-------------------------------------------- SCREEN 019
+( yaddr  - TABLE DRIVEN  < 9/16/86>159) 
+\ entry: line# in X reg.                
+\ exit:  address in GBASE               
+\ all registers are preserved           
+                                        
+\ [TIME:42]                             
+SUBR yaddr                 \ 6          
+  PHA,                     \ 3          
+  LYADDR ,X LDA,           \ 4          
+  GBASE STA,               \ 3          
+  HYADDR ,X LDA,           \ 4          
+  CLC, DPAGE ADC,          \ 2 4        
+  GBASE 1+ STA,            \ 3          
+  0 CMP, ( time killer )   \ 3          
+  PLA,                     \ 4          
+  RTS,                     \ 6          
+S;                                      
+                                        
+EXIT                                    
+--------------------------------------- 
+Note: only valid for 0 <= line# <= 191  
+returns addr of 191 for vals >191       
+                                        
+                                        
+-------------------------------------------- SCREEN 020
+( two page notes         <10/ 9/86>160) 
+                                        
+EXIT ----------------------------- EXIT 
+                                        
+When using two graphics pages, there    
+are two variables to keep track of:     
+the current page being viewed and the   
+page to draw to (they may be different) 
+                                        
+the following routines are previded     
+to maintain screen displayes            
+                                        
+vdinit  \ init - view & draw page 1     
+valt    \ view oppisite page            
+dalt    \ draw to oppisite page         
+vdpage  \ view draw page                
+dvpage  \ draw to view page             
+                                        
+All words assume that the HIRES         
+graphics mode has been set elsewhere    
+                                        
+no registers are altered by any         
+of these words                          
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 021
+( vdinit                 <10/ 9/86>161) 
+                                        
+HEX SUBR vdinit \ [33]     \ 6          
+  PHA, # 0 LDA, DPAGE STA, \ 2 3 4      
+  VPAGE STA,               \ 4          
+  C054 LDA,                \ 4          
+  PLA, RTS, S;             \ 4 6        
+                                        
+SUBR valt \ [38]           \ 6          
+  PHA, VPAGE LDA, 0=       \ 3 4        
+  IF, C055 LDA, # 1 LDA,   \ <2 4 2 3>  
+  ELSE, C054 LDA, # 0 LDA, \ <3 4 2     
+   NOP, THEN,              \  2>        
+  VPAGE STA,               \ 4          
+  PLA, RTS, S;             \ 4 6        
+                                        
+SUBR dalt \ [34]           \ 6          
+  PHA, DPAGE LDA, 0=       \ 3 4        
+  IF, # 20 LDA,            \ <2 2 3>    
+  ELSE, # 0 LDA, NOP,      \ <3 2 2>    
+  THEN,                                 
+  DPAGE STA,               \ 4          
+  PLA, RTS, S;             \ 4 6        
+DECIMAL                        ( FAH  ) 
+-------------------------------------------- SCREEN 022
+( vdpage dvpage          <10/16/86>162) 
+                                        
+                                        
+HEX                                     
+SUBR vdpage \ [38]         \ 6          
+  PHA, DPAGE LDA, 0=       \ 3 4        
+  IF, C054 LDA, # 0 LDA,   \ <2 4 2 3>  
+  ELSE, C055 LDA, # 1 LDA, \ <3 4 2     
+   NOP, THEN,              \  2>        
+  VPAGE STA,               \ 4          
+  PLA, RTS, S;             \ 4 6        
+                                        
+SUBR dvpage \ [34]         \ 6          
+  PHA, VPAGE LDA, 0=       \ 3 4        
+  IF, # 0 LDA,             \ <2 2 3>    
+  ELSE, # 20 LDA, NOP,     \ <3 2 2>    
+  THEN,                                 
+  DPAGE STA,               \ 4          
+  PLA, RTS, S;             \ 4 6        
+                                        
+DECIMAL                                 
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 023
+( copyv                  <10/16/86>163) 
+\ copies view page to the other         
+\ page sets draw to the other page      
+HEX SUBR copyv \ [25-28]     \ 6        
+  VPAGE LDA, 0=              \ 4        
+  IF, # 20 LDA,              \ <2 2 3>  
+  ELSE, # 0 LDA, NOP, THEN,  \ <3 2 2>  
+  DPAGE STA, CLC, # 20 ADC,  \ 4 2 2    
+\M music JSR, 0 CMP,         \ -- 3     
+  N 1+ STA, # 60 EOR,        \ 3 2      
+  GBASE 1+ STA, # 0 LDA,     \ 3 2      
+  N STA, GBASE STA,          \ 3 3      
+  # 20 LDX, # 0 LDY,         \ 2 2      
+  BEGIN,                       \ <      
+   BEGIN,                      \  <     
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+DECIMAL                                 
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 024
+( copyv cont.            <10/20/86>164) 
+                                        
+HEX                                     
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+    GBASE )Y LDA, N )Y STA, INY, \ 13   
+\M  DELEND 15 - JSR, \ 21 dec \ 54      
+\M  music JSR,                \ --      
+    # 0 CPY, 0= NOT           \  2      
+   WHILE,                     \  <2     
+\M  DELEND 2- JSR,            \  16     
+   REPEAT,                    \  3>     
+   N 1+ INC, GBASE 1+ INC,    \  3 5 5  
+   0 CMP, DEX, 0=             \  3 2    
+  UNTIL, RTS,                 \  3/2 6  
+S; DECIMAL                              
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 025
+( shift table notes      < 9/12/86>165) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+the following shift tables are used     
+within doline to shift the accum        
+2 to 6 bits right (graphicaly)          
+preserving the hibit                    
+                                        
+The trick is that the value to be       
+shifted is masked so that all bits      
+that would be shifted out are removed   
+(except the hibit) that value is then   
+used as an index into the aprropriate   
+table                                   
+                                        
+the table is constructed so that it is  
+not necessary to save the hibit then    
+merge it back in later                  
+the constants after the table point to  
+the starts of the respective subtables  
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 026
+( lrotmasks              < 9/16/86>166) 
+PATABLE lrotmasks                       
+HEX \ left mask hi bit clear            
+   0 C,  2 C,  4 C,  6 C, \ 1 bit       
+   8 C,  A C,  C C,  E C,               
+  10 C, 12 C, 14 C, 16 C,               
+  18 C, 1A C, 1C C, 1E C,               
+  20 C, 22 C, 24 C, 26 C,               
+  28 C, 2A C, 2C C, 2E C,               
+  30 C, 32 C, 34 C, 36 C,               
+  38 C, 3A C, 3C C, 3E C,               
+  40 C, 42 C, 44 C, 46 C,               
+  48 C, 4A C, 4C C, 4E C,               
+  50 C, 52 C, 54 C, 56 C,               
+  58 C, 5A C, 5C C, 5E C,               
+  60 C, 62 C, 64 C, 66 C,               
+  68 C, 6A C, 6C C, 6E C,               
+  70 C, 72 C, 74 C, 76 C,               
+  78 C, 7A C, 7C C, 7E C,               
+                                        
+DECIMAL                                 
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 027
+( lrotmasks cont...      < 9/16/86>167) 
+                                        
+HEX \ left mask hi bit clear cont..     
+   0 C,  4 C,  8 C,  C C, \ 2 bits      
+  10 C, 14 C, 18 C, 1C C,               
+  20 C, 24 C, 28 C, 2C C,               
+  30 C, 34 C, 38 C, 3C C,               
+  40 C, 44 C, 48 C, 4C C,               
+  50 C, 54 C, 58 C, 5C C,               
+  60 C, 64 C, 68 C, 6C C,               
+  70 C, 74 C, 78 C, 7C C,               
+   0 C,  8 C, 10 C, 18 C, \ 3 bits      
+  20 C, 28 C, 30 C, 38 C,               
+  40 C, 48 C, 50 C, 58 C,               
+  60 C, 68 C, 70 C, 78 C,               
+   0 C, 10 C, 20 C, 30 C, \ 4 bits      
+  40 C, 50 C, 60 C, 70 C,               
+   0 C, 20 C, 40 C, 60 C, \ 5 bits      
+   0 C, 40 C,             \ 6 bits      
+   0 C,  0 C,             \ filler      
+                                        
+DECIMAL                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 028
+( lrotmasks cont..       < 9/16/86>168) 
+                                        
+HEX \ left masks hi bit set             
+  80 C, 82 C, 84 C, 86 C, \ 1 bit       
+  88 C, 8A C, 8C C, 8E C,               
+  90 C, 92 C, 94 C, 96 C,               
+  98 C, 9A C, 9C C, 9E C,               
+  A0 C, A2 C, A4 C, A6 C,               
+  A8 C, AA C, AC C, AE C,               
+  B0 C, B2 C, B4 C, B6 C,               
+  B8 C, BA C, BC C, BE C,               
+  C0 C, C2 C, C4 C, C6 C,               
+  C8 C, CA C, CC C, CE C,               
+  D0 C, D2 C, D4 C, D6 C,               
+  D8 C, DA C, DC C, DE C,               
+  E0 C, E2 C, E4 C, E6 C,               
+  E8 C, EA C, EC C, EE C,               
+  F0 C, F2 C, F4 C, F6 C,               
+  F8 C, FA C, FC C, FE C,               
+                                        
+                                        
+DECIMAL                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 029
+( lrotmasks cont...      < 9/16/86>169) 
+                                        
+HEX \ left masks hi bit set             
+  80 C, 84 C, 88 C, 8C C, \ 2 bits      
+  90 C, 94 C, 98 C, 9C C,               
+  A0 C, A4 C, A8 C, AC C,               
+  B0 C, B4 C, B8 C, BC C,               
+  C0 C, C4 C, C8 C, CC C,               
+  D0 C, D4 C, D8 C, DC C,               
+  E0 C, E4 C, E8 C, EC C,               
+  F0 C, F4 C, F8 C, FC C,               
+  80 C, 88 C, 90 C, 98 C, \ 3 bits      
+  A0 C, A8 C, B0 C, B8 C,               
+  C0 C, C8 C, D0 C, D8 C,               
+  E0 C, E8 C, F0 C, F8 C,               
+  80 C, 90 C, A0 C, B0 C, \ 4 bits      
+  C0 C, D0 C, E0 C, F0 C,               
+  80 C, A0 C, C0 C, E0 C, \ 5 bits      
+  80 C, C0 C,             \ 6 bits      
+                                        
+DECIMAL                                 
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 030
+( rrotmasks              < 9/16/86>170) 
+                                        
+PATABLE rrotmasks                       
+HEX \ right rotation masks (interwoven) 
+   0 C,  0 C,  1 C,  0 C,               
+   2 C,  1 C,  3 C,  0 C,               
+   4 C,  2 C,  5 C,  1 C,               
+   6 C,  3 C,  7 C,  0 C,               
+   8 C,  4 C,  9 C,  2 C,               
+   A C,  5 C,  B C,  1 C,               
+   C C,  6 C,  D C,  3 C,               
+   E C,  7 C,  F C,  0 C,               
+  10 C,  8 C, 11 C,  4 C,               
+  12 C,  9 C, 13 C,  2 C,               
+  14 C,  A C, 15 C,  5 C,               
+  16 C,  B C, 17 C,  1 C,               
+  18 C,  C C, 19 C,  6 C,               
+  1A C,  D C, 1B C,  3 C,               
+  1C C,  E C, 1D C,  7 C,               
+  1E C,  F C, 1F C,  0 C,               
+                                        
+DECIMAL                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 031
+( rrotmasks cont...      < 9/16/86>171) 
+                                        
+                                        
+HEX \ hi bit clear cont...              
+  20 C, 10 C, 21 C,  8 C,               
+  22 C, 11 C, 23 C,  4 C,               
+  24 C, 12 C, 25 C,  9 C,               
+  26 C, 13 C, 27 C,  2 C,               
+  28 C, 14 C, 29 C,  A C,               
+  2A C, 15 C, 2B C,  5 C,               
+  2C C, 16 C, 2D C,  B C,               
+  2E C, 17 C, 2F C,  1 C,               
+  30 C, 18 C, 31 C,  C C,               
+  32 C, 19 C, 33 C,  6 C,               
+  34 C, 1A C, 35 C,  D C,               
+  36 C, 1B C, 37 C,  3 C,               
+  38 C, 1C C, 39 C,  E C,               
+  3A C, 1D C, 3B C,  7 C,               
+  3C C, 1E C, 3D C,  F C,               
+  3E C, 1F C, 3F C,  1 C,               
+                                        
+DECIMAL                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 032
+( rrotmasks cont...      < 9/16/86>172) 
+                                        
+                                        
+HEX \ hi bit set                        
+  80 C, 80 C, 81 C, 80 C,               
+  82 C, 81 C, 83 C, 80 C,               
+  84 C, 82 C, 85 C, 81 C,               
+  86 C, 83 C, 87 C, 80 C,               
+  88 C, 84 C, 89 C, 82 C,               
+  8A C, 85 C, 8B C, 81 C,               
+  8C C, 86 C, 8D C, 83 C,               
+  8E C, 87 C, 8F C, 80 C,               
+  90 C, 88 C, 91 C, 84 C,               
+  92 C, 89 C, 93 C, 82 C,               
+  94 C, 8A C, 95 C, 85 C,               
+  96 C, 8B C, 97 C, 81 C,               
+  98 C, 8C C, 99 C, 86 C,               
+  9A C, 8D C, 9B C, 83 C,               
+  9C C, 8E C, 9D C, 87 C,               
+  9E C, 8F C, 9F C, 80 C,               
+                                        
+DECIMAL                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 033
+( rrotmasks cont...      < 9/16/86>173) 
+                                        
+                                        
+HEX \ hi bit set cont...                
+  A0 C, 90 C, A1 C, 88 C,               
+  A2 C, 91 C, A3 C, 84 C,               
+  A4 C, 92 C, A5 C, 89 C,               
+  A6 C, 93 C, A7 C, 82 C,               
+  A8 C, 94 C, A9 C, 8A C,               
+  AA C, 95 C, AB C, 85 C,               
+  AC C, 96 C, AD C, 8B C,               
+  AE C, 97 C, AF C, 81 C,               
+  B0 C, 98 C, B1 C, 8C C,               
+  B2 C, 99 C, B3 C, 86 C,               
+  B4 C, 9A C, B5 C, 8D C,               
+  B6 C, 9B C, B7 C, 83 C,               
+  B8 C, 9C C, B9 C, 8E C,               
+  BA C, 9D C, BB C, 87 C,               
+  BC C, 9E C, BD C, 8F C,               
+  BE C, 9F C, BF C, 81 C,               
+                                        
+DECIMAL                                 
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 034
+( POINTERS TO TBALES     < 9/17/86>174) 
+                                        
+\ once graphics code has been compiled  
+\ the heads definitions will be         
+\ forgotten                             
+APPENDIX                                
+                                        
+lrotmasks     CONSTANT l1msks           
+l1msks 64 +   CONSTANT l2msks           
+l2msks 32 +   CONSTANT l3msks           
+l3msks 16 +   CONSTANT l4msks           
+l4msks  8 +   CONSTANT l5msks           
+l5msks  4 +   CONSTANT l6msks           
+                                        
+                                        
+rrotmasks     CONSTANT r6msks           
+r6msks  1 +   CONSTANT r5msks           
+r5msks  2 +   CONSTANT r4msks           
+r4msks  4 +   CONSTANT r3msks           
+r3msks  8 +   CONSTANT r2msks           
+r2msks 16 +   CONSTANT r1msks           
+                                        
+MAIN                                    
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 035
+( shift routine notes    < 9/17/86>175) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+The following screens contain code      
+fragments that will shift the           
+accumulator 1 to 6 bits to the right    
+(graphically)                           
+                                        
+Note that all routines have a           
+consitent execution time for all paths  
+(for cycle counting)                    
+                                        
+Be very careful when changing any code  
+in this program as they have been       
+carefully timed to get the best music   
+timing                                  
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 036
+( WIN-STA,               < 9/22/86>176) 
+APPENDIX \ forgotten later              
+\ macro to store A at GBASE)Y           
+\ checking x window bounds              
+\ equal time for all paths              
+: WIN-STA, ASSEMBLER     \ [TIME: 19]   
+  MINX CPY, CS           \ 3            
+  IF, MAXX CPY, CS NOT   \ 2 3          
+   IF, \ get figure byte \ 2            
+    GBASE )Y STA,        \ 6 3          
+   \ 1st IF branches here               
+   DSWAP ELSE,           \ 3            
+    NOP,                 \ 2            
+   \ 2nd IF branches here               
+   DSWAP THEN, \ 2nd IF  \ 3*           
+   0 CMP, NOP, NOP,      \ 3 2 2        
+   NOP, NOP,             \ 2 2          
+  THEN, ;                               
+FORTH MAIN                              
+EXIT ****************************       
+                                        
+* the 3 is the time for the branch      
+  that was taken in the IF,             
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 037
+( doline notes           < 9/15/86>177) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+The purpose of the doline               
+is to move a line of figure data        
+to the screen shifting it if necessary  
+                                        
+times for the routines will be          
+expressed in terms of the number        
+of bytes in the figure line (n)         
+They include the overhead for the       
+JSR and RTS instructions as well        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 038
+( more doline notes      < 9/16/86>178) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+ENTRY:                                  
+-----                                   
+      Y - set to initial byte offset    
+  (N+1) - count of bytes/fig line - 1   
+ (GFIG) - address of first byte of      
+          current figure line           
+(GBASE) - start adr of screen line      
+                                        
+EXIT:                                   
+----                                    
+    A,X - destroyed                     
+      Y - incremented (N+1)+1 times     
+  (N+1) - decremented to zero           
+ (GFIG) - points to start of next line  
+                                        
+USES:                                   
+  (N+2) - holds right part of shift     
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 039
+( 0dol                   < 9/30/86>179) 
+                                        
+\ the easy one, simply a byte mover     
+SUBR  0dol                 \            
+\M music JSR,                           
+\M # 3 LDA, MTC STA,       \ 2 3        
+   # 0 LDX, N 1+ INC,      \ 2 5=12     
+   BEGIN, GFIG X) LDA,     \ 6          
+    WIN-STA, INY,          \ 19 2       
+    GFIG INC, 0= NOT       \  5         
+    IF, 0 CMP,             \  <2 3 3>   
+    ELSE, GFIG 1+ INC, THEN, \ <3 5>    
+\M  MTC DEC, 0=            \  5         
+\M  IF, # 3 LDA, MTC STA,  \ <2 2 3     
+\M   0 CMP, NOP,           \ 3 2        
+\M   music JSR,            \ --         
+\M   NOP, NOP,             \  4>        
+\M  THEN,                  \ <3>        
+    N 1+ DEC, 0=           \ 5          
+   UNTIL,                  \ 3/2        
+                                        
+\ MORE...                               
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 040
+( 0dol                   < 9/30/86>180) 
+                                        
+\ 11 +56n                               
+\M MTC LDX,                \ 3          
+                                        
+\M BEGIN, # 1 CPX, 0= NOT  \ 2          
+\M WHILE, 0 CMP,           \ 2 3        
+\M  DELEND 16 - JSR,       \ 44         
+\M  DEX,                   \ 2          
+\M REPEAT,                 \ 3          
+                           \ 3          
+\ 128 clocks to here                    
+\M 0 CMP, DELEND 19 - JSR, \ 3 50       
+\M music JSR,              \ --         
+                                        
+   RTS, S;                              
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 041
+( 1dol                   < 9/30/86>181) 
+PALIGN SUBR 1dol                        
+\M music JSR,            \ --           
+\M # 1 LDA, MTC STA,     \ 2 3          
+\ do the first byte                     
+  # 129 LDA,             \ 2            
+  GBASE )Y AND,          \ 5            
+  N 2+ STA,              \ 3            
+  # 0 LDX,               \ 2            
+  GFIG X) LDA, PHA,      \ 6 3          
+  # 191 AND, TAX,        \ 2 2          
+  l1msks ,X LDA,         \ 4            
+  N 2+  ORA,             \ 3            
+  WIN-STA,               \ 19           
+  PLA, # 192 AND, TAX,   \ 4 2 2        
+  r1msks ,X LDA,         \ 4            
+  N 2+ STA,              \ 3            
+  INY,                   \ 2            
+  GFIG INC, 0= NOT       \ 5            
+  IF, 0 CMP, \ kill time \ <2 3 3>      
+  ELSE, GFIG 1+ INC,     \ <3 5>        
+  THEN,                                 
+\M 0 CMP, 0 CMP, 0 CMP,  \ 9            
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 042
+( 1dol cont...           < 9/30/86>182) 
+                                        
+  BEGIN, \ do the middle bytes          
+    0 # LDX, GFIG X) LDA, \ 2 6         
+    PHA, # 191 AND, TAX,  \ 3 2         
+    l1msks ,X LDA,        \ 4           
+    N 2+ ORA,             \ 3           
+    WIN-STA,              \ 19          
+    PLA, # 192 AND, TAX,  \ 4 2 2       
+    r1msks ,X LDA,        \ 4           
+    N 2+ STA,             \ 3           
+    INY, GFIG INC, 0= NOT \ 2 5         
+    IF, 0 CMP,            \ <2 3 3>     
+    ELSE, GFIG 1+ INC,    \ <3 5>       
+    THEN,                               
+\M  MTC DEC, 0=           \ 5           
+\M  IF, # 2 LDA, MTC STA, \ <2 2 3      
+\M   0 CMP, NOP,          \ 3 2         
+\M   music JSR,           \ --          
+\M   NOP,                 \  2>         
+\M  THEN,                 \ <3>         
+    N 1+ DEC, 0=          \ 5           
+  UNTIL,                  \ 3/2         
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 043
+( 1dol cont...           < 9/30/86>183) 
+                                        
+\ do the last byte                      
+   # 254 LDA,             \ 2           
+   GBASE )Y AND,          \ 5           
+   N 2+ ORA,              \ 3           
+   WIN-STA,               \ 19          
+                                        
+\ 38+85n                                
+\M MTC LDA, # 2 CMP, 0=   \ 3 2         
+\M IF,                    \ 2           
+\M  DELEND 37 - JSR,      \ 86>         
+\M THEN,                  \ <3>         
+\M DELEND 19 - JSR,       \ 50          
+\M music JSR,                           
+   RTS,                   \ 6           
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 044
+( 2dol                   < 9/30/86>184) 
+PALIGN \ see 1dol for timing details    
+SUBR  2dol                              
+\M music JSR,                           
+\M # 1 LDA, MTC STA,                    
+\ do the first byte                     
+  # 131 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ STA,                             
+  # 0 LDX,                              
+  GFIG X) LDA, PHA,                     
+  # 159 AND, TAX,                       
+  l2msks ,X LDA,                        
+  N 2+  ORA,                            
+  WIN-STA,                              
+  PLA, # 224 AND, TAX,                  
+  r2msks ,X LDA,                        
+  N 2+ STA,                             
+  INY, GFIG INC, 0= NOT                 
+  IF, 0 CMP,                            
+  ELSE, GFIG 1+ INC,                    
+  THEN,                                 
+\M 0 CMP, 0 CMP, 0 CMP,                 
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 045
+( 2dol cont...           < 9/30/86>185) 
+                                        
+  BEGIN, \ do the middle bytes          
+    0 # LDX, GFIG X) LDA, PHA,          
+    # 159 AND, TAX,                     
+    l2msks ,X LDA,                      
+    N 2+ ORA, WIN-STA,                  
+    PLA, # 224 AND, TAX,                
+    r2msks ,X LDA,                      
+    N 2+ STA,                           
+    INY, GFIG INC, 0= NOT               
+    IF, 0 CMP,                          
+    ELSE, GFIG 1+ INC,                  
+    THEN,                               
+\M  MTC DEC, 0=                         
+\M  IF, # 2 LDA, MTC STA,               
+\M   0 CMP, NOP,                        
+\M   music JSR,                         
+\M   NOP,                               
+\M  THEN,                               
+    N 1+ DEC, 0=                        
+  UNTIL,                                
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 046
+( 2dol cont...           < 9/30/86>186) 
+                                        
+\ do the last byte                      
+  # 252 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ ORA,                             
+  WIN-STA,                              
+                                        
+\M MTC LDA, # 2 CMP, 0=                 
+\M IF, DELEND 37 - JSR,                 
+\M THEN,                                
+\M DELEND 19 - JSR,                     
+\M music JSR,                           
+                                        
+  RTS,                                  
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 047
+( 3dol                   < 9/30/86>187) 
+PALIGN \ see 1dol for timing details    
+SUBR  3dol                              
+\M music JSR,                           
+\M # 1 LDA, MTC STA,                    
+\ do the first byte                     
+  # 135 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ STA,                             
+  # 0 LDX,                              
+  GFIG X) LDA, PHA,                     
+  # 143 AND, TAX,                       
+  l3msks ,X LDA,                        
+  N 2+  ORA,                            
+  WIN-STA,                              
+  PLA, # 240 AND, TAX,                  
+  r3msks ,X LDA,                        
+  N 2+ STA,                             
+  INY, GFIG INC, 0= NOT                 
+  IF, 0 CMP,                            
+  ELSE, GFIG 1+ INC,                    
+  THEN,                                 
+\M 0 CMP, 0 CMP, 0 CMP,                 
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 048
+( 3dol cont...           < 9/30/86>188) 
+                                        
+  BEGIN, \ do the middle bytes          
+    0 # LDX, GFIG X) LDA, PHA,          
+    # 143 AND, TAX,                     
+    l3msks ,X LDA,                      
+    N 2+ ORA, WIN-STA,                  
+    PLA, # 240 AND, TAX,                
+    r3msks ,X LDA,                      
+    N 2+ STA,                           
+    INY, GFIG INC, 0= NOT               
+    IF, 0 CMP,                          
+    ELSE, GFIG 1+ INC,                  
+    THEN,                               
+\M  MTC DEC, 0=                         
+\M  IF, # 2 LDA, MTC STA,               
+\M   0 CMP, NOP,                        
+\M   music JSR,                         
+\M   NOP,                               
+\M  THEN,                               
+    N 1+ DEC, 0=                        
+  UNTIL,                                
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 049
+( 3dol cont...           < 9/30/86>189) 
+                                        
+\ do the last byte                      
+  # 248 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ ORA,                             
+  WIN-STA,                              
+                                        
+\M MTC LDA, # 2 CMP, 0=                 
+\M IF, DELEND 37 - JSR,                 
+\M THEN,                                
+\M DELEND 19 - JSR,                     
+\M music JSR,                           
+                                        
+  RTS,                                  
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 050
+( 4dol                   < 9/30/86>190) 
+PALIGN \ see 1dol for timing details    
+SUBR  4dol                              
+\M music JSR,                           
+\M # 1 LDA, MTC STA,                    
+\ do the first byte                     
+  # 143 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ STA,                             
+  # 0 LDX,                              
+  GFIG X) LDA, PHA,                     
+  # 135 AND, TAX,                       
+  l4msks ,X LDA,                        
+  N 2+  ORA,                            
+  WIN-STA,                              
+  PLA, # 248 AND, TAX,                  
+  r4msks ,X LDA,                        
+  N 2+ STA,                             
+  INY, GFIG INC, 0= NOT                 
+  IF, 0 CMP,                            
+  ELSE, GFIG 1+ INC,                    
+  THEN,                                 
+\M 0 CMP, 0 CMP, 0 CMP,                 
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 051
+( 4dol cont...           < 9/30/86>191) 
+                                        
+  BEGIN, \ do the middle bytes          
+    0 # LDX, GFIG X) LDA, PHA,          
+    # 135 AND, TAX,                     
+    l4msks ,X LDA,                      
+    N 2+ ORA, WIN-STA,                  
+    PLA, # 248 AND, TAX,                
+    r4msks ,X LDA,                      
+    N 2+ STA,                           
+    INY, GFIG INC, 0= NOT               
+    IF, 0 CMP,                          
+    ELSE, GFIG 1+ INC,                  
+    THEN,                               
+\M  MTC DEC, 0=                         
+\M  IF, # 2 LDA, MTC STA,               
+\M   0 CMP, NOP,                        
+\M   music JSR,                         
+\M   NOP,                               
+\M  THEN,                               
+    N 1+ DEC, 0=                        
+  UNTIL,                                
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 052
+( 4dol cont...           < 9/30/86>192) 
+                                        
+\ do the last byte                      
+  # 240 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ ORA,                             
+  WIN-STA,                              
+                                        
+\M MTC LDA, # 2 CMP, 0=                 
+\M IF, DELEND 37 - JSR,                 
+\M THEN,                                
+\M DELEND 19 - JSR,                     
+\M music JSR,                           
+                                        
+  RTS,                                  
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 053
+( 5dol                   < 9/30/86>193) 
+PALIGN \ see 1dol for timing details    
+SUBR  5dol                              
+\M music JSR,                           
+\M # 1 LDA, MTC STA,                    
+\ do the first byte                     
+  # 159 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ STA,                             
+  # 0 LDX,                              
+  GFIG X) LDA, PHA,                     
+  # 131 AND, TAX,                       
+  l5msks ,X LDA,                        
+  N 2+  ORA,                            
+  WIN-STA,                              
+  PLA, # 252 AND, TAX,                  
+  r5msks ,X LDA,                        
+  N 2+ STA,                             
+  INY, GFIG INC, 0= NOT                 
+  IF, 0 CMP,                            
+  ELSE, GFIG 1+ INC,                    
+  THEN,                                 
+\M 0 CMP, 0 CMP, 0 CMP,                 
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 054
+( 5dol cont...           < 9/30/86>194) 
+                                        
+  BEGIN, \ do the middle bytes          
+    0 # LDX, GFIG X) LDA, PHA,          
+    # 131 AND, TAX,                     
+    l5msks ,X LDA,                      
+    N 2+ ORA, WIN-STA,                  
+    PLA, # 252 AND, TAX,                
+    r5msks ,X LDA,                      
+    N 2+ STA,                           
+    INY, GFIG INC, 0= NOT               
+    IF, 0 CMP,                          
+    ELSE, GFIG 1+ INC,                  
+    THEN,                               
+\M  MTC DEC, 0=                         
+\M  IF, # 2 LDA, MTC STA,               
+\M   0 CMP, NOP,                        
+\M   music JSR,                         
+\M   NOP,                               
+\M  THEN,                               
+    N 1+ DEC, 0=                        
+  UNTIL,                                
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 055
+( 5dol cont...           < 9/30/86>195) 
+                                        
+\ do the last byte                      
+  # 224 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ ORA,                             
+  WIN-STA,                              
+                                        
+\M MTC LDA, # 2 CMP, 0=                 
+\M IF, DELEND 37 - JSR,                 
+\M THEN,                                
+\M DELEND 19 - JSR,                     
+\M music JSR,                           
+                                        
+  RTS,                                  
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 056
+( 6dol                   < 9/30/86>196) 
+PALIGN \ see 1dol for timing details    
+SUBR  6dol                              
+\M music JSR,                           
+\M # 1 LDA, MTC STA,                    
+\ do the first byte                     
+  # 191 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ STA,                             
+  # 0 LDX,                              
+  GFIG X) LDA, PHA,                     
+  # 129 AND, TAX,                       
+  l6msks ,X LDA,                        
+  N 2+  ORA,                            
+  WIN-STA,                              
+  PLA, # 254 AND, TAX,                  
+  r6msks ,X LDA,                        
+  N 2+ STA,                             
+  INY, GFIG INC, 0= NOT                 
+  IF, 0 CMP,                            
+  ELSE, GFIG 1+ INC,                    
+  THEN,                                 
+\M 0 CMP, 0 CMP, 0 CMP,                 
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 057
+( 6dol cont...           < 9/30/86>197) 
+                                        
+  BEGIN, \ do the middle bytes          
+    0 # LDX, GFIG X) LDA, PHA,          
+    # 129 AND, TAX,                     
+    l6msks ,X LDA,                      
+    N 2+ ORA, WIN-STA,                  
+    PLA, # 254 AND, TAX,                
+    r6msks ,X LDA,                      
+    N 2+ STA,                           
+    INY, GFIG INC, 0= NOT               
+    IF, 0 CMP,                          
+    ELSE, GFIG 1+ INC,                  
+    THEN,                               
+\M  MTC DEC, 0=                         
+\M  IF, # 2 LDA, MTC STA,               
+\M   0 CMP, NOP,                        
+\M   music JSR,                         
+\M   NOP,                               
+\M  THEN,                               
+    N 1+ DEC, 0=                        
+  UNTIL,                                
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 058
+( 6dol cont...           < 9/30/86>198) 
+                                        
+\ do the last byte                      
+  # 192 LDA,                            
+  GBASE )Y AND,                         
+  N 2+ ORA,                             
+  WIN-STA,                              
+                                        
+\M MTC LDA, # 2 CMP, 0=                 
+\M IF, DELEND 37 - JSR,                 
+\M THEN,                                
+\M DELEND 19 - JSR,                     
+\M music JSR,                           
+                                        
+  RTS,                                  
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 059
+( dols                   < 9/24/86>199) 
+                                        
+\ address of the doline routines        
+                                        
+XCREATE dols                            
+  0dol , 1dol , 2dol ,                  
+  3dol , 4dol , 5dol ,                  
+  6dol ,                                
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 060
+( DRAWFIG NOTES          < 9/15/86>200) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+DRAWFIG is simply a loop that calls     
+one of the doline routines the number   
+of times in the figure.                 
+                                        
+USES:                                   
+  &QUO  -- starting value for Y         
+  (N+3) -- Starting value for (N+1)     
+  (N+4) -- current line number          
+  (N+5) -- count of lines in fig        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 061
+( drawfig variables      <10/ 1/86>201) 
+                                        
+                                        
+\ figure draw location                  
+XVARIABLE FX                            
+XVARIABLE FY                            
+                                        
+\ save X Y variables                    
+XVARIABLE DFX                           
+XVARIABLE DFY                           
+                                        
+                                        
+APPENDIX \ forgotten later              
+  0 CONSTANT ^dol                       
+MAIN                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 062
+( <drawfig>              < 9/29/86>202) 
+                                        
+\ subroutine to drawfig                 
+\ A,(N+1)-(N+5) destroyed               
+\ X,Y are loaded from DFX, DFY          
+\ which was stored by drawfig           
+SUBR <drawfig> \ [time:6-6]             
+\M music JSR,                           
+\M 0 CMP, DELEND 1- JSR,    \ 3 14      
+   BEGIN, &QUO LDY,         \ 3         
+    N 3 + LDA, N 1+ STA,    \ 3 3       
+    N 4 + LDX, N 4 + INC,   \ 3 5       
+    MINY CPX, CS NOT        \ 3         
+    IF, NOP, NOP,           \ <2 2 2 3> 
+    ELSE,                   \ <3        
+     MAXY CPX, CS NOT       \  3        
+     IF, yaddr JSR,         \  2 42=84  
+\M    DELEND 38 - JSR,      \  88       
+\     0 CMP,                \  3        
+      HERE 1+ ' ^dol !                  
+      0dol JSR,             \  6-6 3>   
+     ELSE,                  \ <3        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 063
+( <drawfig> cont...      < 9/29/86>203) 
+                                        
+\ outer if braches here                 
+    DSWAP THEN, \ 46 to here            
+      CLC, # 1 LDA,         \ 2 2       
+      N 3 + ADC,            \ 3         
+      GFIG ADC, GFIG STA,   \ 3 3       
+      GFIG 1+ LDA, # 0 ADC, \ 3 2       
+      GFIG 1+ STA,          \ 3 -67     
+\M    DELEND 51 - JSR,      \ 114       
+\M    music JSR,                        
+\M    0 CMP, 0 CMP, 0 CMP,  \ 9         
+     THEN, ( "inner" IF, )              
+    N 5 + DEC, 0=           \ 5         
+   UNTIL,                   \ 3/2       
+\ 16 to here                            
+\M 0 CMP,                   \ 3         
+\M DELEND 71 - JSR,         \ 154       
+   DFX LDX, DFY LDY,        \ 8         
+\M music JSR,                           
+   RTS,                                 
+S;                                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 064
+( DRAWFIG                < 9/28/86>204) 
+EXIT ---------  NOT USED --------- EXIT 
+                                        
+CODE DRAWFIG ( X Y ADR -- )             
+\ set pointers to figure                
+  BOT LDA, GFIG STA,                    
+  BOT 1+ LDA, GFIG 1+ STA,              
+  INX, INX,                             
+\ set starting line number              
+  BOT LDA, N 4 + STA,                   
+  INX, INX, XSAVE STX,                  
+\ get figure width/height               
+  # 2 LDY, GFIG )Y LDA, N 5 + STA,      
+  # 0 LDY, GFIG )Y LDA, TAX,            
+  INY, GFIG )Y LDA, TAY, TXA,           
+  # 7 LDX, b/mod JSR,                   
+  &REM LDA, 0=                          
+  IF, &QUO DEC, THEN,                   
+  &QUO LDA, N 3 + STA,                  
+\ inc past header information           
+  CLC, GFIG LDA, # 3 ADC, GFIG STA,     
+  GFIG 1+ LDA, # 0 ADC, GFIG 1+ STA,    
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 065
+( DRAWFIG cont.          < 9/28/86>205) 
+EXIT ---------  NOT USED --------- EXIT 
+                                        
+\ get x cordinate in pixels             
+  XSAVE LDX,                            
+  BOT LDA, BOT 1+ LDY,                  
+  INX, INX,                             
+                                        
+\ convert to bytes                      
+  # 7 LDX, b/mod JSR,                   
+                                        
+\ figure out which shift routine to use 
+  &REM LDA, .A ASL, TAX,                
+  dols ,X LDA, ^dol STA,                
+  dols 1+ ,X LDA, ^dol 1+ STA,          
+                                        
+  <drawfig> JSR,                        
+                                        
+  XSAVE LDX,                            
+  POP JMP, C;                           
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 066
+( drawfig                <10/ 1/86>206) 
+\ GFIG = points to figure               
+\   FX = x coordinate                   
+\   FY = y coord                        
+\ X,Y regs preserved,                   
+\ A,(N+1)-(N+5) destroyed               
+SUBR drawfig \ [time:6-6]               
+\M music JSR,                           
+   DFX STX, DFY STY,       \ 4 4        
+   \ get figure width/height            
+   # 2 LDY, GFIG )Y LDA,   \ 2 5        
+   N 5 + STA,              \ 3          
+   # 0 LDY, GFIG )Y LDA,   \ 2 5        
+   TAX,                    \ 2          
+   # 1 LDY, GFIG )Y LDA,   \ 2 5        
+   TAY, TXA,               \ 2 2        
+   # 7 LDX,                \ 2=40       
+   mub/mod JSR,            \ =82        
+   &REM LDA, 0= NOT        \ 3          
+   IF, 0 CMP,              \ <2 3 3>    
+   ELSE, &QUO DEC, THEN,   \ <3 5>      
+   &QUO LDA, N 3 + STA,    \ 3 3=99     
+                                        
+\ MORE...                      ( FAH  ) 
+-------------------------------------------- SCREEN 067
+( drawfig cont...        <10/ 1/86>207) 
+                                        
+   \ inc past header information        
+   GFIG LDA, CLC,            \ 3 2      
+   # 4 ADC, GFIG STA,        \ 2 3      
+   GFIG 1+ LDA,              \ 3        
+   # 0 ADC, GFIG 1+ STA,     \ 2 3      
+   \ get y cordinate                    
+    FY LDA, N 4 + STA,        \ 4 3     
+   \ get x cordinate in pixels          
+   FX LDA, FX 1+ LDY,        \ 4 4=132  
+   \ delay and do music                 
+\M 0 CMP, DELEND 17 - JSR,   \ 3 46     
+\M music JSR,                \ --       
+\M DELEND 13 - JSR,          \ 38       
+   \ convert to bytes                   
+   # 7 LDX,                  \ 2=40     
+   mub/mod JSR,              \ =82      
+                                        
+                                        
+\ MORE...                               
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 068
+( drawfig cont...        < 9/29/86>208) 
+                                        
+                                        
+\ figure out which shift routine to use 
+   &REM LDA,                 \ 3        
+   .A ASL, TAX,              \ 2 2      
+   dols ,X LDA,              \ 4        
+   ^dol STA,                 \ 4        
+   dols 1+ ,X LDA,           \ 4        
+   ^dol 1+ STA,              \ 4=105    
+\M 0 CMP,                    \ 3        
+\M DELEND 29 - JSR,          \ 70       
+                                        
+  <drawfig> JMP,             \ 3-6      
+                                        
+\ <drawfig> restores x and y regs       
+\ that are stored at the start of       
+\ this routine                          
+                                        
+S;                                      
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 069
+( TEST WORD              <10/ 2/86>209) 
+  EXIT ************************* EXIT / 
+  FORGET hh \ FORGET hh                 
+CODE hh music JSR, NOP, NOP, \ 4        
+ XSAVE STX, ' REPC LDX,        \ 3 4    
+ BEGIN, # 0  LDA, FX STA,      \ 2 4    
+  # ELF LOBYTE LDA, GFIG STA,    \ 2 3  
+  # ELF HIBYTE LDA, GFIG 1+ STA, \ 2 3  
+  DELEND 68 - JSR,             \ 148    
+  drawfig JSR,                 \ 6-6    
+  # 1  LDA, FX STA,            \ 2 4    
+  # ELF LOBYTE LDA, GFIG STA,    \ 2 3  
+  # ELF HIBYTE LDA, GFIG 1+ STA, \ 2 3  
+  0 CMP, DELEND 69 - JSR,      \ 3 150  
+  drawfig JSR,                 \ 6-6    
+  DEX, 0=                      \ 2      
+ UNTIL, XSAVE LDX,             \ 3      
+ N 3 + LDA, FX STA, NEXT JMP, C;        
+: HH                                    
+  HGR 1HG M >MUS !                      
+  1 MPER C! 3 MCNT C! 198 music C!      
+  10 MDLP C! 1 MDUR C!                  
+  0 FY ! hh ;                           
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 070
+( CDRAW notes            < 9/16/86>210) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+This is an attempt to reuse the shift   
+tables used in the figure draw          
+(DRAWFIG) for the character draw        
+routines.                               
+                                        
+Beyond any speed improvements this      
+should also result in a singnificantly  
+smaller code size for the character     
+draw routines as well as allowing       
+me to remain independent of Bob's       
+graphic package which will not be       
+needed in the xmas card.                
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 071
+( CDRAW TABLES           <10/ 2/86>211) 
+                                        
+XCREATE rscr \ remove 0->7 pix r to l   
+  255 C, 254 C, 252 C, 248 C,           
+  240 C, 224 C, 192 C, 128 C,           
+                                        
+XCREATE irscr \ remove 0->7 pix r to l  
+    0 C,   1 C,   3 C,   7 C,           
+   15 C,  31 C,  63 C, 127 C,           
+                                        
+CREATE lscr \ remove 7->0 pix l to r    
+  128 C, 129 C, 131 C, 135 C,           
+  143 C, 159 C, 191 C, 255 C,           
+                                        
+EXIT --- not used in this ver --- EXIT  
+                                        
+CREATE lmsk \ masks for shift tbls 0->6 
+    0 C, 191 C, 159 C, 143 C,           
+  135 C, 131 C, 129 C,                  
+                                        
+CREATE rmsk \ masks for shift tbls 0->6 
+    0 C, 192 C, 224 C, 240 C,           
+  248 C, 252 C, 254 C,                  
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 072
+( CDRAW register usage   < 9/17/86>212) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+ENTRY:                                  
+-----                                   
+      Y - set to initial byte offset    
+    (N) - working ver of (n+4)          
+  (N+2) - current line number           
+ (GFIG) - address of character          
+(GBASE) - start adr of screen line      
+                                        
+EXIT:                                   
+----                                    
+  A,X,Y - destroyed                     
+ (GFIG) - points to start of next line  
+                                        
+USES: (and destroys)                    
+  (N-1) - Working inverse mask          
+  (N+1) - holds right part of shift     
+  (N+3) - heigth of character           
+  (N+4) - width of char in pixels       
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 073
+( 0doc                   < 9/30/86>213) 
+PALIGN \ draw character with no shift   
+SUBR 0doc \ [TIME:6-6]                  
+\M music JSR,               \ --        
+   # 3 LDA, MTC STA,        \ 2 3       
+   BEGIN, \ while moving full bytes     
+    N LDA,                  \ 3         
+    SEC, # 7 SBC, CS        \ 2 2       
+   WHILE, ( bcc)            \ 3/2       
+    N STA,                  \ 3         
+    0 # LDX, GFIG X) LDA,   \ 2 6       
+    TCLR EOR,               \ 3         
+    GBASE )Y STA, INY,      \ 5 2       
+    GFIG INC, 0= NOT        \ 5         
+    IF, 0 CMP,              \ <2 3 3>   
+    ELSE, GFIG 1+ INC, THEN, \ <3 5>    
+\M  MTC DEC, 0=             \ 5         
+\M  IF, # 3 LDA, MTC STA,   \ <2 2 3    
+\M   256 CMP, 256 CMP,      \  4 4      
+\M   0 CMP, NOP, music JSR, \  3 2 --   
+\M   NOP,                   \  2>       
+\M  THEN,                   \ <3>       
+   REPEAT, ( jmp)           \ 3=46      
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 074
+( 0doc cont...           < 9/30/86>214) 
+                                        
+\ [15+54n]                              
+\ if character is done                  
+   N LDX, 0=               \ 3          
+   IF,                     \ <2         
+\ [20+54n]                              
+\M MTC LDX,                \  3         
+\M BEGIN, # 1 CPX, 0= NOT  \  2         
+\M WHILE, 0 CMP, DEX,      \ <2 3       
+\M  DELEND 15 - JSR,       \  42        
+\M REPEAT,                 \  3>        
+\M                         \ <3>        
+\ [28+54+54=138]                        
+\M 0 CMP, DELEND 15 - JSR, \  3 42      
+\M music JSR,              \  --        
+   RTS,                    \  6>        
+  THEN,                   \ <3>         
+                                        
+\ now do the last part of the character 
+                                        
+\ MORE...                               
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 075
+( 0doc cont...           < 9/30/86>215) 
+                                        
+\ [21+54n]                              
+\ handle remainder of character         
+  TCLR LDA, 0=                \ 3       
+  IF, rscr ,X LDA,            \ <2 4    
+   GBASE )Y AND, NOP,         \  5 3 2> 
+  ELSE, rscr ,X LDA,          \ <3 4    
+   GBASE )Y AND,              \  5      
+   irscr ,X ORA, THEN,        \  4>     
+  0 # LDX, GFIG X) EOR,       \ 2 6     
+  GBASE )Y STA,               \ 5       
+  GFIG INC, 0= NOT            \ 5       
+  IF, 0 CMP,                  \ <2 3 3> 
+  ELSE, GFIG 1+ INC, THEN,    \ <3 5>   
+                                        
+                                        
+\ MORE...                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 076
+( 0doc cont...           < 9/30/86>216) 
+                                        
+\ [66+54n]                              
+\M MTC LDX, # 1 CPX, 0=     \ 3 2       
+\M IF, music JSR, RTS,      \ <2 -- 6>  
+\M THEN,                    \ <3>       
+\ [74+54n] (n=2 or 3)                   
+\M # 2 CPX, 0=              \ 2         
+\M IF, 0 CMP,               \ <2 3      
+\M  DELEND 17 - JSR,        \  46       
+\M  music JSR, RTS,         \  -- 6>    
+\M THEN,                    \ <3>       
+\ [79]                                  
+\M DELEND 45 - JSR,         \ 102       
+\M music JSR,                           
+                                        
+  RTS, S;                   \ 6         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 077
+( ndoc pointers          < 9/30/86>217) 
+                                        
+\ these constants holds the addresses   
+\ of the tables in ndoc.  They are      
+\ patched to the appropriate table      
+\ by ndoc.                              
+\ once csetup is compiled the           
+\ constants are forgotten               
+                                        
+APPENDIX                                
+                                        
+0 CONSTANT LM1                          
+0 CONSTANT LM2                          
+0 CONSTANT LM3                          
+0 CONSTANT LM4                          
+0 CONSTANT RM1                          
+0 CONSTANT RM2                          
+0 CONSTANT ^doc \ used by drawchar      
+                                        
+MAIN                                    
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 078
+( ndoc                   <10/ 1/86>218) 
+\ code for all character shifts         
+SUBR ndoc \ [TIME:6-6]                  
+\M music JSR,                \ --       
+  \ is char all in this byte?           
+  SPE 1+ LDA, N CMP, CS      \ 3 3      
+  IF, N LDA, CLC,            \ <2 3 2   
+   SPE ADC, TAX, DEX,        \  3 2 2   
+   rscr ,X LDA, SPE 2+ ORA,  \  4 3     
+   TAX, GBASE )Y AND, N STA, \  2 5 3   
+   TXA, # 255 EOR,           \  2 2     
+   TCLR AND, N 1- STA,       \  3 3     
+   0 # LDX, GFIG X) LDA,     \  2 6     
+   SPE 4 + AND, TAX,         \  3 2     
+HERE 1+ ' LM1 !                         
+   l2msks ,X LDA, N 1- EOR,  \  4 3     
+   N ORA, GBASE )Y STA,      \  3 6     
+   GFIG INC, 0= NOT          \  5       
+   IF, 0 CMP,                \  <2 3 3> 
+   ELSE, GFIG 1+ INC, THEN,  \  <3 5>   
+\M DELEND 40 - JSR,          \  92      
+\M music JSR, RTS,           \ -- 6>    
+   THEN,                     \ <3>      
+\ MORE...                      ( FAH  ) 
+-------------------------------------------- SCREEN 079
+( ndoc cont...           <10/ 1/86>219) 
+\ [9]                                   
+  \ spans bytes - do first byte         
+  SPE 2+ LDA, # 255 EOR,    \ 3 2       
+  TCLR AND, N 1- STA,       \ 3 3       
+  SPE 2+ LDA,               \ 3         
+  GBASE )Y AND, N 1+ STA,   \ 5 3       
+  # 0 LDX, GFIG X) LDA,     \ 2 6       
+  PHA, SPE 4 + AND, TAX,    \ 3 3 2     
+HERE 1+ ' LM2 !                         
+  l2msks ,X LDA, N 1- EOR,  \ 4 3       
+  N 1+ ORA, GBASE )Y STA,   \ 3 6       
+  PLA, SPE 5 + AND, TAX,    \ 4 3 2     
+HERE 1+ ' RM1 !                         
+  r2msks ,X LDA, N 1+ STA,  \ 4 3       
+  N LDA, SEC, SPE 1+ SBC,   \ 3 2 3     
+  N STA, INY,               \ 3 2       
+  GFIG INC, 0= NOT          \ 5         
+  IF, GFIG CMP,             \ <2 3 3>   
+  ELSE, GFIG 1+ INC, THEN,  \ <3 5>     
+  # 1 LDA, MTC STA,         \ 2 3       
+\ MORE...                               
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 080
+( ndoc cont...           <10/ 1/86>220) 
+\ [110]                                 
+  BEGIN, N LDA,              \ 3        
+   SEC, # 7 SBC, CS          \ 2 3      
+  WHILE, N STA,              \ 2 3      
+   # 0 LDX, GFIG X) LDA,     \ 2 6      
+   PHA, SPE 4 + AND, TAX,    \ 3 3 2    
+HERE 1+ ' LM3 !                         
+   l2msks ,X LDA, N 1+ ORA,  \ 4 3      
+   TCLR EOR, GBASE )Y STA,   \ 3 6      
+   PLA, SPE 5 + AND, TAX,    \ 4 3 2    
+HERE 1+ ' RM2 !                         
+   r2msks ,X LDA, N 1+ STA,  \ 4 3      
+\M MTC DEC, 0=               \ 5        
+\M IF, 0 CMP, music JSR,     \ <2 3 --  
+\M  # 2 LDA, MTC STA,        \  2 3     
+\M THEN,                     \ <3>      
+   INY, GFIG INC, 0= NOT     \ 2 5      
+   IF, GFIG CMP,             \ <2 3 3>  
+   ELSE, GFIG 1+ INC, THEN,  \ <3 5>    
+  REPEAT,                    \ 3        
+\ MORE...                               
+                                        
+                                        
+-------------------------------------------- SCREEN 081
+( ndoc cont...           <10/ 1/86>221) 
+\ [34+87n]                              
+                                        
+\ n is # pixels remaining in figure     
+\M MTC LDA, # 2 CMP, 0=    \ 3 2        
+\M IF, DELEND 29 - JSR,    \ <2 1 87>   
+\M THEN,                   \ <3>=129    
+                                        
+  N LDX, 0=                \ 2          
+  IF,                      \ <2         
+\M DELEND 18 - JSR,        \  48        
+\M music JSR,              \  --        
+    RTS,                   \  6>        
+  THEN,                    \ <3>=134    
+                                        
+  rscr ,X LDA,             \ 4          
+  # 255 EOR, TCLR AND,     \ 2 3        
+  N 1- STA, rscr ,X LDA,   \ 3 4        
+  GBASE )Y AND, N 1+ ORA,  \ 5 3=158    
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 082
+( ndoc cont...           <10/ 1/86>222) 
+\ [158] if more in the next byte        
+   SPE CPX, CS NOT           \ 3        
+   IF, N 1- EOR,             \ <2 3     
+    GBASE )Y STA,            \  6       
+\M  0 CMP, 0 CMP, 0 CMP,     \  9       
+\M  music JSR,               \  --      
+    RTS,                     \  6>      
+   THEN,                     \ <3>=164  
+   N 1+ STA,                 \ 2 3      
+   # 0 LDX, GFIG X) LDA,     \ 2 6      
+\M NOP, NOP, music JSR,      \ 4 --     
+   SPE 4 + AND, TAX,         \ 3 2      
+HERE 1+ ' LM4 !                         
+   l2msks ,X LDA,            \ 4        
+   N 1+ ORA,                 \ 3        
+   GFIG INC, 0= NOT          \ 5        
+   IF, GFIG CMP,             \ <2 3 3>  
+   ELSE, GFIG 1+ INC, THEN,  \ <3 5>    
+   N 1- EOR, GBASE )Y STA,   \ 3 6      
+   0 CMP, DELEND 66 - JSR,   \ 3 144    
+\M music JSR,                \ --       
+  RTS,                       \ 6        
+S;                                      
+-------------------------------------------- SCREEN 084
+( chsft                  <10/ 1/86>224) 
+PALIGN                                  
+XCREATE cshft                           
+\ #shf rem  lscr   rscr   lmsk   rmsk   
+  2 C, 6 C, 129 C, 254 C, 191 C, 192 C, 
+  l1msks , r1msks ,                     
+  3 C, 5 C, 131 C, 252 C, 159 C, 224 C, 
+  l2msks , r2msks ,                     
+  4 C, 4 C, 135 C, 248 C, 143 C, 240 C, 
+  l3msks , r3msks ,                     
+  5 C, 3 C, 143 C, 240 C, 135 C, 248 C, 
+  l4msks , r4msks ,                     
+  6 C, 2 C, 159 C, 224 C, 131 C, 252 C, 
+  l5msks , r5msks ,                     
+  7 C, 1 C, 191 C, 192 C, 129 C, 254 C, 
+  l6msks , r6msks ,                     
+                                        
+EXIT ---                                
+                                        
+#shf is the number of bits to shift +1  
+rem is the number of bits left in the   
+original byte after shifting            
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 085
+( csetup notes           < 9/30/86>225) 
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+csetup is called by all character       
+draw routines except 0doc to patch      
+ndoc with the proper values for the     
+shift desired.                          
+                                        
+The accum has the desire shift amount   
+(1-6).  It is used to create and index  
+to chsft.                               
+                                        
+csetup the copies the first 6 values    
+to SPE (end of stack in zero page)      
+and plants the table vectors into the   
+proper places in the code.              
+                                        
+SPE is used as a work area as it        
+a guaranteed safe area in zero page.    
+If the stack is that close to full you  
+are about to crash anyway.              
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 086
+( csetup                 < 9/30/86>226) 
+                                        
+\ .A is shift amount (1-6)              
+\ destroys: .A, Y, N, N+1.              
+SUBR csetup \ [87-82]         \ 6       
+\ first make index into cshft table     
+  SEC, # 1 SBC,               \ 2 2     
+  .A ASL, N STA,              \ 2 3     
+  .A ASL, .A ASL,             \ 2 2     
+  CLC, N ADC, TAY,            \ 2 3 2   
+\ Y=A*8+A*2=A*10                        
+\ set pointer to start of table         
+  # cshft LOBYTE LDA, N STA,  \ 2 3     
+  # cshft HIBYTE LDA, N 1+ STA, \ 2 3   
+\ copy 1st 6 items to zero page         
+       N )Y LDA, SPE     STA, \ 5 3     
+  INY, N )Y LDA, SPE 1 + STA, \ 2 5 3   
+  INY, N )Y LDA, SPE 2 + STA, \ 2 5 3   
+  INY, N )Y LDA, SPE 3 + STA, \ 2 5 3   
+  INY, N )Y LDA, SPE 4 + STA, \ 2 5 3   
+  INY, N )Y LDA, SPE 5 + STA, \ 2 5 3   
+  music JSR,                  \ --      
+\ MORE....                              
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 087
+( csetup cont...         < 9/30/86>227) 
+                                        
+\ [0 ]                                  
+  \ now plant table vectors             
+  \ lmsk lo byte                        
+  INY, N )Y LDA,             \ 2 5      
+  LM1 STA, LM2 STA,          \ 4 4      
+  LM3 STA, LM4 STA,          \ 4 4      
+  \ lmsk hi byte                        
+  INY, N )Y LDA,             \ 2 5      
+  LM1 1+ STA, LM2 1+ STA,    \ 4 4      
+  LM3 1+ STA, LM4 1+ STA,    \ 4 4      
+  \ rmsk lo byte                        
+  INY, N )Y LDA,             \ 2 5      
+  RM1 STA, RM2 STA,          \ 4 4      
+  \ rmsk hi byte                        
+  INY, N )Y LDA,             \ 2 5      
+  RM1 1+ STA, RM2 1+ STA,    \ 4 4      
+  RTS, S;                    \ 6        
+\ [82]                                  
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 088
+( drawchar               < 9/30/86>228) 
+                                        
+\ [6-22]                                
+SUBR drawchar                 \ 6       
+\M music JSR,                 \ --      
+\M DELEND 1- JSR,             \ 14      
+   BEGIN,                     \         
+    &QUO LDA, TAY,            \ 3 2     
+    N 4 + LDA, N STA,         \ 3 3     
+    N 2+ LDX, N 2+ INC,       \ 3 5     
+    yaddr JSR,                \ 42      
+    DELEND 44 - JSR,          \ 100     
+    HERE 1+ ' ^doc !                    
+     0doc JSR,                \ 6--6    
+\ 30 YADDR    ' ^doc !                  
+\ NOP, NOP, NOP,                        
+\ music JSR,                            
+\ NOP, NOP, NOP,                        
+    N 3 + DEC, 0=             \ 5       
+  UNTIL,                      \ 3/2     
+  0 CMP,                      \ 3       
+  RTS,                        \ 6       
+S;                                      
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 089
+( gemit variables/notes  <10/ 1/86>229) 
+                                        
+\ start position for next character     
+XVARIABLE GX                            
+XVARIABLE GY                            
+                                        
+\ number of pixels between characters   
+1 CONSTANT DX                           
+                                        
+\ pointer to font table                 
+0 CONSTANT ASCTAB                       
+                                        
+EXIT ---------- notes ------------ EXIT 
+                                        
+X & Y are preserved                     
+A is destroyed                          
+                                        
+memory locations used:                  
+N-1 to N+4 (239-244)                    
+SPE to SPE+7 (80-87)                    
+&REM &QUO (230-232)                     
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 090
+( gemit                  < 9/30/86>230) 
+PALIGN \ print .A                       
+SUBR gemit \ [80-61]        \ 6         
+  NOP, 0 CMP,               \ 2 3       
+  \ save X,Y                            
+  SPE 6 + STX, SPE 7 + STY, \ 3 3       
+  \ make index into table               
+  .A ASL, TAY,              \ 2 2       
+  \ point to table start                
+  ' ASCTAB LDA,             \ 4         
+  GFIG STA,                 \ 3         
+  ' ASCTAB 1+ LDA,          \ 4         
+  GFIG 1+ STA,              \ 3         
+  \ check if char exists                
+  GFIG )Y LDA, 0=           \ 5         
+  IF,                       \ <2        
+   SPE 6 + LDX, SPE 7 + LDY, \ 6        
+\M DELEND 19 - JSR,         \  3 50     
+\M music JSR,               \  --       
+\M 0 CMP, DELEND 20 - JSR,  \  3 52     
+   RTS,                     \  6>       
+  THEN,                     \ <3>       
+\ MORE...                               
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 091
+( gemit cont...          < 9/30/86>231) 
+\ [123]                                 
+\ add offset of character               
+  CLC, GFIG ADC, TAX,        \ 2 3 2    
+  INY, GFIG )Y LDA,          \ 2 4      
+  GFIG 1+ ADC,               \ 3        
+  GFIG 1+ STA, GFIG STX,     \ 3 3      
+                                        
+\ add 270 (length of index table)       
+  # 14 LDA,                  \ 2        
+  CLC, GFIG ADC, GFIG STA,   \ 2 3 3    
+  # 1 LDA,                   \ 2        
+  GFIG 1+ ADC, GFIG 1+ STA,  \ 3 3      
+\ gfig now points to character data     
+                                        
+\ get starting line number              
+  GY LDA, N 2+ STA,          \ 4 3      
+                                        
+\ MORE...                               
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 092
+( gemit cont...          <10/ 1/86>232) 
+\ [170]                                 
+   \ get figure width/height            
+   # 1 LDY, GFIG )Y LDA,      \ 2 4     
+   N 3 + STA, # 0 LDY,        \ 3 2     
+\M music JSR,                 \ --      
+   GFIG )Y LDA, N 4 + STA,    \ 4 3     
+   \ inc past header information        
+   CLC, GFIG LDA, # 2 ADC,    \ 2 3 2   
+   GFIG STA, GFIG 1+ LDA,     \ 3 3     
+   # 0 ADC, GFIG 1+ STA,      \ 2 3     
+   \ get x cordinate in pixels          
+   GX LDA, GX 1+ LDY,         \ 4 4     
+   # 7 LDX, \ convert to bytes\ 2       
+    0 CMP, NOP,               \ 2 3=40  
+   mub/mod JSR,               \ =82     
+  \ &QUO is initial byte offset         
+                                        
+\ MORE...                               
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 093
+( gemit cont...          < 9/30/86>233) 
+\ [82]                                  
+\ figure out which shift routine to use 
+  &REM LDA, 0= NOT \  shift?  \ 3       
+  IF, csetup JSR,             \ <2=82   
+   0 CMP,                     \  3      
+   # ndoc LOBYTE LDA,         \  2      
+   # ndoc HIBYTE LDX,         \  2 3>   
+  ELSE, # 0doc LOBYTE LDA,    \ <3 2    
+   # 0doc HIBYTE LDX,         \  2>     
+  THEN,                                 
+  ^doc STA, ^doc 1+ STX,      \ 4 4     
+  0 CMP, DELEND 30 - JSR,     \ 3 72    
+  drawchar JSR,               \ 6--22   
+  \ increment GX                        
+  N 4 + LDA, CLC, ' DX ADC,   \ 3 2 4   
+  GX ADC, GX STA,             \ 4 4     
+  GX 1+ LDA, # 0 ADC,         \ 4 2     
+  GX 1+ STA,                  \ 4       
+  \ restore X/Y                         
+  SPE 6 + LDX, SPE 7 + LDY,   \ 3 3     
+  RTS, S;                     \ 6       
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 094
+( gtype                  <10/16/86>234) 
+                                        
+\ 0ADR points to start of string        
+\ X is the number of characters         
+\ Y is destroyed                        
+\ CALLS: gemit                          
+                                        
+SUBR gtype \ [131-73]       \ 6         
+  # 0 LDY,                  \ 2         
+  BEGIN,                                
+   0ADR )Y LDA, INY,        \ 5 2       
+   0 CMP, NOP,              \ 3 2       
+   gemit JSR,               \ 101-61    
+   NOP, DEX, 0=             \ 2 2       
+  UNTIL,                    \ 2/3       
+  RTS,                      \ 6         
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 095
+( GEMIT                  <10/ 1/86>235) 
+EXIT --- NOT USED ----                  
+CODE GEMIT ( C -- )                     
+  BOT LDA,                              
+  XSAVE STX,                            
+  gemit JSR,                            
+  XSAVE LDX,                            
+  POP JMP, C;                           
+                                        
+CODE GTYPE ( ADR CNT -- )               
+  XSAVE STX,                            
+  SEC LDA, 0ADR STA,                    
+  SEC 1+ LDA, 0ADR 1+ STA,              
+  BOT LDA, TAX,                         
+  gtype JSR,                            
+  XSAVE LDX,                            
+  POPTWO JMP, C;                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 096
+(                        < 9/30/86>236) 
+\ FORGET y \  FORGET y                  
+CREATE y 40 ALLOT y 40 65 FILL          
+VARIABLE RC                             
+CODE yy                                 
+ XSAVE STX, # 200 LDA, RC STA, \        
+ BEGIN, 0 # LDA,               \ 2 3    
+  GX STA, GX 1+ STA, GY STA,   \ 4 4 4  
+  # y LOBYTE LDA, 0ADR STA,    \ 2 3    
+  # y HIBYTE LDA, 0ADR 1+ STA, \ 2 3=30 
+  DELEND 9 - JSR,              \ 30=58  
+  # 2  LDX, gtype JSR,         \ =73    
+\ # 66  LDA, DELEND 18 - JSR,  \ 50=80  
+\ gemit JSR, DELEND JSR,       \ =61 12 
+  DELEND 48 - JSR,             \ 108    
+  music JSR,                            
+ AGAIN, XSAVE LDX,             \ 3      
+ NEXT JMP, C;                           
+: YY                                    
+  HGR 1HG M >MUS !                      
+  1 MPER C! 3 MCNT C! 198 music C!      
+  10 MDLP C! 1 MDUR C! yy ;             
+                                        
+                                        
+-------------------------------------------- SCREEN 100
+( WINDOW words           <10/ 3/86>240) 
+                                        
+                                        
+APPENDIX                                
+\ set full screen draw window           
+: FULL                                  
+  0 MINX C! 40 MAXX C!                  
+  0 MINY C! 192 MAXY C! ;               
+                                        
+MAIN                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 102
+( MUSIC NOTES            <10/ 1/86>242) 
+                                        
+EXIT ---------- notes ----------- EXIT  
+                                        
+The key to music on the Apple is to     
+place calls to the music routine        
+at precise intervals. The main music    
+routine is designed to be called every  
+200 apple clocks.  There are sub calls  
+for routines which loop at greater      
+speed that use a counter to decide when 
+to call the main music routine.         
+                                        
+The music routine must be called every  
+200-n cycles, where n is the number of  
+cycles the music routine takes itself.  
+When starting a new note cycle for a    
+note more time will be taken to adjust  
+for the wave period                     
+                                        
+\ N=19                                  
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 103
+( MUSIC table compiler   <10/ 1/86>243) 
+\ 51=is minimum overhead to start new   
+APPENDIX                                
+: ,L 4 0                                
+  DO BL WORD NUMBER 200 U/MOD           
+   SWAP DUP 51 > NOT                    
+   IF 200 + SWAP 1-                     
+   ELSE SWAP THEN                       
+   C, 51 - 2/ C,                        
+  LOOP ; \ ^^ from MUSIC                
+MAIN                                    
+                                        
+EXIT --------- notes ---------- EXIT    
+                                        
+MUTBL is the number of periods          
+require for each note. order is:        
+                                        
+1-Ab  2-A  3-Bb 4-B  5-C  6-Cb 7-D      
+8-Db  9-E  10-F 11-G 12-Gb              
+                                        
+value repeat for next octave (ie        
+13 is Ab one octave above 1)            
+0 is a rest (no noise)                  
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 104
+( MUSIC tables           <10/ 1/86>244) 
+                                        
+CREATE MUTBL                            
+\ octave 1 A=110                        
+255 C, 80 C, \ see last screen          
+,L  4928  4650  4391  4141              
+,L  3910  3690  3484  3289              
+,L  3103  2930  2766  2611              
+\ octave 2 A=220                        
+,L  2463  2325  2224  2070              
+,L  1955  1845  1742  1644              
+,L  1551  1465  1383  1305              
+\ octave 3 A=440                        
+,L  1232  1163  1098  1035              
+,L   978   922   871   822              
+,L   776   732   692   650              
+\ octave 4 A=880                        
+,L   616   581   549   518              
+,L   489   461   436   411              
+,L   388   366   346   326              
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 105
+( MUSIC vars             <10/ 1/86>245) 
+                                        
+APPENDIX HEX                            
+  \ number of music cycles left in wave 
+    DF CONSTANT MPER                    
+  \ low count of duration               
+    DE CONSTANT MCNT                    
+  \ duration of note                    
+    DD CONSTANT MDUR                    
+  \ current note number playing         
+    DC CONSTANT NOTE#                   
+  \ Pointer to music                    
+    DA CONSTANT >MUS                    
+  \ for use by other routines           
+    D9 CONSTANT MTC                     
+DECIMAL MAIN                            
+  \ starting value for MPER             
+  XVARIABLE SMPER                       
+  \ used in time duration mult of SMPER 
+  XVARIABLE MDLP                        
+  \ storage hole for y register         
+  XVARIABLE MYSAVE                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 106
+( delay notes            <10/ 1/86>246) 
+                                        
+EXIT ---------- notes ----------- EXIT  
+                                        
+the table of nop's on the next screen   
+is used to provide a variable timed     
+delay from 6 to 200 clocks in incs of 2 
+                                        
+fixed delay (computed at compile time)  
+of 2n+12 "DELEND n - JSR," if the       
+delay occurs at the end of a routine    
+you may use DELEND n - JMP, instead     
+of a RTS and it will give you a delay   
+of 2n+9 and return                      
+                                        
+See music for an example on how         
+to use the table to produce delays      
+that change as the program executes     
+                                        
+max delay required is 200+part2         
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 107
+( delay                  <10/ 1/86>247) 
+APPENDIX \ end of delay                 
+ 0 CONSTANT DELEND                      
+MAIN                                    
+SUBR delay 0 JMP,                       
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+NOP, NOP, NOP, NOP, NOP, NOP, NOP, NOP, 
+RTS, S; HERE 1- TO DELEND               
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 108
+( music NOTES            <10/ 1/86>248) 
+                                        
+EXIT ---------- notes ---------- EXIT   
+                                        
+Part 1 of the code simply decremnts     
+a counter to time for the end of a      
+period. 200 - time_part_1 is the number 
+of clocks that must be used elsewhere   
+to provide the time base of 200 clocks  
+need to make notes come out properly.   
+                                        
+Part 2 is responisible for toggling     
+the speaker, telling when the note      
+is done, and performing the period      
+adjustment delay (PADel). The time      
+taken to execute part 2 is part of      
+PADdel.  IF PADel is m, mjmp JSR,       
+should take m-n clocks where n is the   
+number of clocks for part 2             
+                                        
+Part 3 loades in the next note values   
+and sets up mjmp see code for more      
+notes about part 3                      
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 109
+( music                  <10/ 1/86>249) 
+                                        
+SUBR mjmp   \ jump to delay table for   
+  0 JMP, S; \ rem of current wave per.  
+                                        
+\ preserves all registers (not STATUS)  
+SUBR music                  \ 6         
+\ check if time to toggle speaker       
+  MPER DEC, 0= NOT          \ 5         
+  IF,                       \ <2        
+   RTS,                     \  6>=19    
+  THEN,                                 
+                                        
+\ *** END PART 1 ** BEGIN PART 2 *** /  
+  PHA,                      \ 3         
+\   don't toggle speaker if rest        
+  NOTE# LDA, 0=             \ 3         
+  IF, NOP,                  \ <2 2 3>   
+  ELSE, 49200 LDA,          \ <3 4>     
+  THEN,                                 
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 110
+( music cont...          <10/ 1/86>250) 
+                                        
+\ check if end of note                  
+  MCNT LDA, SEC, MDLP SBC,   \ 3 2 4    
+  MCNT STA, CS               \ 3        
+  IF, \ time killer          \ <2       
+   GFIG CMP, NOP,            \  3 2 3>  
+  ELSE,                      \ <3       
+   MDUR DEC, 0= NOT          \  5       
+   IF, \ continue same note  \  2>      
+  DSWAP THEN,                \          
+    SMPER LDA, MPER STA,     \ 4 3      
+    \ do period adjustment delay        
+    mjmp JSR,                \ 15+PADel 
+    PLA,                     \ 4        
+    RTS,                     \ 6=51     
+   THEN,                                
+\ *** END PART 2 ****                   
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 111
+( music cont...          <10/13/86>251) 
+                                        
+\ get the next note. Time used here     
+\ is not counted as it only happens     
+\ between notes, not during them.       
+    MYSAVE STY,                         
+    1 # LDY, >MUS )Y LDA,               
+ \ check for end of tune                
+    # 255 CMP, 0=                       
+    IF, \ disable routine               
+     # 96 LDA,  ( RTS opcd)             
+     APP-LATEST @ 2+ PFA @ STA,         
+    THEN,                               
+    MDUR STA,                           
+ \ get note number (*2)                 
+    DEY, >MUS )Y LDA,                   
+    NOTE# STA,                          
+    TAY, MUTBL ,Y LDA,   \ mucycs       
+    SMPER STA, MPER STA, \ delay        
+    .A ASL, .A ASL, .A ASL,             
+    MDLP STA, INY,                      
+  \ MUTBL ,Y is PADel                   
+\ MORE....                              
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 112
+( music cont...          <10/ 1/86>252) 
+                                        
+\ compute mjmp for PADdel               
+   # DELEND LOBYTE LDA,                 
+   SEC, MUTBL ,Y SBC,                   
+   mjmp 1+ STA,                         
+   # DELEND HIBYTE LDA,                 
+   # 0 SBC, mjmp 2+ STA,                
+\ mjmp JSR, = Per*2+12 clcks            
+                                        
+\ point to next note                    
+   >MUS LDA, CLC, # 2 ADC,              
+   >MUS STA, >MUS 1+ LDA,               
+   # 0 ADC, >MUS 1+ STA,                
+                                        
+\ set variables                         
+   # 0 LDA, MCNT STA,                   
+                                        
+   MYSAVE LDY,                          
+   PLA,                                 
+   RTS,                                 
+S;                                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 113
+( \M                     <10/ 1/86>253) 
+                                        
+: \M ( compiles music code )            
+;                                       
+                                        
+                                        
+EXIT ******* OTHER VERSION ********     
+                                        
+: \M ( skips music code )               
+  [COMPILE] \                           
+; IMMEDIATE                             
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 115
+( line variables         <10/ 3/86>255) 
+                                        
+\ parameters for these functions        
+XVARIABLE LX1 \ start X                 
+XVARIABLE LX2 \ end X                   
+XVARIABLE LY1 \ start Y                 
+XVARIABLE LY2 \ end Y                   
+                                        
+XVARIABLE lxy \ register save areas     
+XVARIABLE bxy                           
+                                        
+XVARIABLE llmsk \ b/wline working vars  
+XVARIABLE llimsk                        
+XVARIABLE lloff                         
+XVARIABLE lrmsk                         
+XVARIABLE lrimsk                        
+XVARIABLE lroff                         
+                                        
+XVARIABLE hlinc \ hook working vars     
+XVARIABLE hrinc                         
+XVARIABLE hdir  \ 0=left, else right    
+XVARIABLE htemp                         
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 116
+( moveline               <10/ 1/86>256) 
+\ go till Y=lroff (150)                 
+SUBR moveline \ [31-6]       \ 6        
+\M NOP, 0 CMP,               \ 2 3      
+   # 0 LDX, MTC STX,         \ 2 3      
+   BEGIN, lroff CPY, 0= NOT  \ 4        
+   WHILE,                    \ <2       
+\M  MTC DEC, 0<              \  5       
+\M  IF, NOP,                 \  <2 2    
+\M   music JSR,              \   --     
+\M   # 6 LDX, MTC STX,       \   2 3    
+\M  THEN,                    \  <3>     
+    GBASE )Y STA, INY,       \  6 2 3>  
+   REPEAT,                   \ <3>      
+\ [23+25n]                              
+\M MTC LDX,                  \ 3        
+\M BEGIN, # 0 CPX, 0= NOT    \ 2        
+\M WHILE, DEX,               \ <2 2     
+\M  DELEND 2 - JSR,          \  16 3>   
+\M REPEAT,                   \ <3>      
+\M music JSR,                           
+RTS, S;                                 
+                                        
+                                        
+-------------------------------------------- SCREEN 117
+( wline                  <10/ 2/86>257) 
+\ draw line setup by lsetup in white    
+\ GBASE points to start of line         
+\ x & y preserved                       
+SUBR wline \ [80-39]           \ 6      
+   lxy STX, lxy 1+ STY,        \ 4 4    
+   lloff LDY, lroff CPY, 0= NOT \ 4 4   
+   IF, llimsk LDA,             \ <2 4   
+    GBASE )Y ORA, GBASE )Y STA, \ 5 6   
+    INY, # 255 LDA,            \  2 2   
+\M  0 CMP, 0 CMP,              \  3 3   
+    moveline JSR,              \  31-6  
+    lrimsk LDA, NOP, NOP,      \  4 4   
+    GBASE )Y ORA, GBASE )Y STA, \ 5 6   
+    lxy LDX, lxy 1+ LDY, RTS,  \ 4 4 6> 
+   THEN,                       \ <3>    
+   llimsk LDA, lrimsk AND,     \ 4 4    
+   GBASE )Y ORA, GBASE )Y STA, \ 5 6    
+\M DELEND 12 - JSR,            \ 36     
+\M music JSR,                  \ --     
+\M 0 CMP, DELEND 5 - JSR,      \ 3 22   
+   lxy LDX, lxy 1+ LDY, RTS,   \ 4 4 6> 
+S;                                      
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 118
+( bline                  <10/26/86>258) 
+\ draw line setup by lsetup in white    
+\ GBASE points to start of line         
+\ x & y preserved                       
+SUBR bline \ [80-39]           \ 6      
+   lxy STX, lxy 1+ STY,        \ 4 4    
+   lloff LDY, lroff CPY, 0= NOT \ 4 4   
+   IF, llmsk LDA,              \ <2 4   
+    GBASE )Y AND, GBASE )Y STA, \ 5 6   
+    INY, # 0   LDA,            \  2 2   
+\M  0 CMP, 0 CMP,              \  6     
+    moveline JSR,              \  31-6  
+    lrmsk LDA, NOP, NOP,       \  4 4   
+    GBASE )Y AND, GBASE )Y STA, \ 5 6   
+    lxy LDX, lxy 1+ LDY, RTS,  \ 4 4 6> 
+   THEN,                       \ <3>    
+   llmsk LDA, lrmsk ORA,       \ 4 4    
+   GBASE )Y AND, GBASE )Y STA, \ 5 6    
+\M DELEND 12 - JSR,            \ 36     
+\M music JSR,                  \ --     
+\M 0 CMP, DELEND 5 - JSR,      \ 22     
+   lxy LDX, lxy 1+ LDY, RTS,   \ 4 4 6> 
+S;                             \ 6      
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 119
+( lsetup                 <10/ 2/86>259) 
+                                        
+\ set variables to draw a line from     
+\ LX1 to LX2. x,y are preserved         
+SUBR lsetup \ [165-120]     \ 6         
+   lxy STX, lxy 1+ STY,    \ 4 4        
+   LX1 LDA, LX1 1+ LDY,    \ 4 4        
+   # 7 LDX,                \ 2          
+   mub/mod JSR,            \ [141-82]   
+   &QUO LDA, lloff STA,    \ 3 4        
+   &REM LDX,               \ 3          
+   lscr ,X LDA, llmsk STA, \ 4 4        
+   # 255 EOR, llimsk STA,  \ 2 4        
+\M 0 CMP,                  \ 3          
+\M DELEND 30 - JSR,        \ 72         
+\M music JSR,              \ --         
+                                        
+\ MORE...                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 120
+( lsetup cont...         <10/ 2/86>260) 
+                                        
+                                        
+   LX2 LDA, LX2 1+ LDY,    \ 4 4        
+   # 7 LDX,                \ 2          
+\M DELEND 9 - JSR,         \ 30         
+   mub/mod JSR,            \ 40-82      
+   &QUO LDA, lroff STA,    \ 3 4        
+   &REM LDX,               \ 3          
+   rscr ,X LDA, lrmsk STA, \ 4 4        
+   # 255 EOR, lrimsk STA,  \ 2 4        
+   lxy LDX, lxy 1+ LDY,    \ 4 4        
+   RTS,                    \ 6          
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 121
+( wbar                   <10/ 1/86>261) 
+\ draw a white bar from LX1-LY1 to      
+\ LX2-LY2. y preserved                  
+                                        
+SUBR wbar \ [171-53]        \ 6         
+   lsetup JSR,              \ [165-120] 
+   LY1 LDX,                 \ 4         
+\M 0 CMP, DELEND 21 - JSR,  \ 3 54      
+\M music JSR,               \ --        
+\M DELEND 18 - JSR,         \ 48        
+   BEGIN, yaddr JSR,        \ 42        
+\M  0 CMP, 0 CMP, 0 CMP, NOP, \ 11      
+    wline JSR,              \ 80-39     
+    INX, LY2 CPX, 0=        \ 2 4       
+   UNTIL,                   \ 3/2       
+   RTS,                     \ 6         
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 122
+( bbar                   <10/ 1/86>262) 
+\ draw a black bar from LX1-LY1 to      
+\ LX2-LY2. y preserved                  
+                                        
+SUBR bbar \ [171-53]        \ 6         
+   lsetup JSR,              \ 165-120   
+   LY1 LDX,                 \ 4         
+\M 0 CMP, DELEND 21 - JSR,  \ 3 54      
+\M music JSR,               \ --        
+\M DELEND 18 - JSR,         \ 48        
+   BEGIN, yaddr JSR,        \ 42        
+\M  0 CMP, 0 CMP, 0 CMP, NOP, \ 11      
+    bline JSR,              \ 80-39     
+    INX, LY2 CPX, 0=        \ 2 4       
+   UNTIL,                   \ 3/2       
+   RTS,                     \ 6         
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 123
+( <bub>                  <10/ 2/86>263) 
+                                        
+SUBR bubln \ [83-39]                    
+  wline JMP, S;                         
+                                        
+SUBR <bub> \ [52-45]         \ 6        
+   LY1 LDX, yaddr JSR,       \ 4 42     
+\M music JSR,                \ --       
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   LX1 LDA, SEC, # 2 SBC,    \ 4 2 2    
+   LX1 STA, LX2 LDA, CLC,    \ 4 4 2    
+   # 2 ADC, LX2 STA,         \ 2 4      
+   INX, yaddr JSR,           \ 2 42     
+\M DELEND 31 - JSR,          \ 74       
+\M music JSR,                \ --       
+                                        
+\ MORE...                               
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 124
+( <bub> cont...          <10/ 2/86>264) 
+\ [0]                                   
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   LX1 DEC, LX2 INC,         \ 5 5      
+   INX, yaddr JSR,           \ 2 42     
+\M DELEND 38 - JSR,          \ 88       
+\M music JSR,                \ --       
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   LX1 DEC, LX2 INC,         \ 5 5      
+   INX, yaddr JSR,           \ 2 42     
+\M DELEND 38 - JSR,          \ 88       
+\M music JSR,                \ --       
+\M DELEND 2 - JSR,           \ 16       
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 125
+( <bub> cont...          <10/ 2/86>265) 
+                                        
+   lsetup JSR,               \ 165-120  
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   INX, yaddr JSR,           \ 2 42     
+\M 0 CMP, DELEND JSR,        \ 3 12     
+   bubln JSR,                \ 83-39    
+   LX1 DEC, LX2 INC,         \ 5 5      
+\M DELEND 60 - JSR,          \ 132      
+\M music JSR,                \ --       
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 21 - JSR,          \ 54       
+   BEGIN, INX, yaddr JSR,    \ 2 42     
+    bubln JSR,               \ 83-39    
+    NOP, NOP, NOP, NOP,      \ 8        
+    LY2 CPX, 0=              \ 4        
+   UNTIL,                    \ 3        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 126
+( <bub> cont...          <10/ 2/86>266) 
+\ [54]                                  
+   LX1 INC, LX2 DEC,         \ 5 5      
+\M 0 CMP, DELEND 51 - JSR,   \ 3 114    
+\M music JSR,                \ --       
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+   INX, yaddr JSR,           \ 2 42     
+\M 0 CMP, DELEND 1- JSR,     \ 3 14     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   INX, yaddr JSR,           \ 2 42     
+\M 0 CMP, DELEND JSR,        \ 3 12     
+   bubln JSR,                \ 83-39    
+   LX1 INC, LX2 DEC,         \ 5 5      
+   INX, yaddr JSR,           \ 2 42     
+\M DELEND 38 - JSR,          \ 88       
+\M music JSR,                \ --       
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 127
+( <bub> cont...          <10/ 2/86>267) 
+\ [120]                                 
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   LX1 INC, LX2 DEC,         \ 5 5      
+   INX, yaddr JSR,           \ 2 42     
+\M DELEND 38 - JSR,          \ 88       
+\M music JSR,                           
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   LX1 LDA, CLC, # 2 ADC,    \ 4 2 2    
+   LX1 STA, LX2 LDA, SEC,    \ 4 4 2    
+   # 2 SBC, LX2 STA,         \ 2 4      
+   INX, yaddr JSR,           \ 2 42     
+\M 0 CMP, DELEND 31 - JSR,   \ 3  74    
+\M music JSR,                \ --       
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 128
+( <bub> cont...          <10/ 2/86>268) 
+\ [0]                                   
+                                        
+\M DELEND 2 - JSR,           \ 16       
+   lsetup JSR,               \ 165-120  
+\M 0 CMP, DELEND 23 - JSR,   \ 3 58     
+\M music JSR,                \ --       
+\M DELEND 43 - JSR,          \ 98       
+   bubln JSR,                \ 83-39    
+   RTS,                      \ 6        
+S;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 129
+( wbub bbub              <10/ 2/86>269) 
+                                        
+\ draw a white bubble, saves X, Y       
+SUBR wbub \ [78-59]        \ 6          
+  bxy STX, bxy 1+ STY,     \ 4 4        
+  # wline LOBYTE LDA,      \ 2          
+  bubln 1+ STA,            \ 4          
+  # wline HIBYTE LDA,      \ 2          
+  bubln 2+ STA,            \ 4          
+  <bub> JSR,               \ 52-45      
+  bxy LDX, bxy 1+ LDY,     \ 4 4        
+  RTS, S;                  \ 6          
+                                        
+\ draw a black bubble, saves X, Y       
+SUBR bbub \ [78-59]        \ 6          
+  bxy STX, bxy 1+ STY,     \ 4 4        
+  # bline LOBYTE LDA,      \ 2          
+  bubln 1+ STA,            \ 4          
+  # bline HIBYTE LDA,      \ 2          
+  bubln 2+ STA,            \ 4          
+  <bub> JSR,               \ 52-45      
+  bxy LDX, bxy 1+ LDY,     \ 4 4        
+  RTS, S;                  \ 6          
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 130
+( hinc                   <10/ 2/86>270) 
+                                        
+SUBR hinc \ [99-61]          \ 6        
+   htemp LDA,                \ 4        
+   CLC, hlinc ADC, N STA,    \ 2 4 3    
+   # 15 AND, htemp STA,      \ 2 4      
+   N LDA, # 16 CMP, CS       \ 3 2=30   
+   IF, .A ROR,               \ <2 2     
+    .A ROR, .A ROR, .A ROR,  \  2 2 2   
+    # 15 AND, N STA,         \  2 3     
+    hdir LDA, 0=             \  4       
+    IF, LX1 LDA, SEC, N SBC, \  <2 9    
+     LX1 STA, LX1 1+ LDA,    \   4 4    
+     # 0 SBC, LX1 1+ STA,    \   2 4 3> 
+    ELSE, LX1 LDA, CLC,      \  <3 4 2  
+      N ADC, LX1 STA,        \   3 4    
+      LX1 1+ LDA, # 0 ADC,   \   4 2    
+      LX1 1+ STA, NOP,       \   4 2>   
+    THEN,                    \  3>      
+   ELSE, \M 0 CMP,           \ <3 3     
+\M  DELEND 16 - JSR,         \  44>     
+   THEN,                     \ =80      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 131
+( hinc cont...           <10/ 2/86>271) 
+                                        
+   htemp 1+ LDA,             \ 4        
+   CLC, hrinc ADC, N STA,    \ 2 4 3    
+   # 15 AND, htemp 1+ STA,   \ 2 4=99   
+\M music JSR,                \ --       
+   N LDA, # 16 CMP, CS       \ 3 2=5    
+   IF, .A ROR,               \ <2 2     
+    .A ROR, .A ROR, .A ROR,  \  2 2 2   
+    # 15 AND, N STA,         \  2 3     
+    hdir LDA, 0=             \  4       
+    IF, LX2 LDA, SEC, N SBC, \  <2 9    
+     LX2 STA, LX2 1+ LDA,    \   4 4    
+     # 0 SBC, LX2 1+ STA,    \   2 4 3> 
+    ELSE, LX2 LDA, CLC,      \  <3 4 2  
+     N ADC, LX2 STA,         \   3 4    
+     LX2 1+ LDA, # 0 ADC,    \   4 2    
+     LX2 1+ STA, NOP,        \   4 2>   
+    THEN,                    \  3>      
+   ELSE, \M 0 CMP,           \ <3 3     
+\M  DELEND 16 - JSR,         \  44>     
+   THEN, RTS, S;             \ 6=61     
+                                        
+                                        
+-------------------------------------------- SCREEN 132
+( hook                   <10/ 2/86>272) 
+                                        
+SUBR hook \ [51-14]         \ 6         
+   bxy STX, bxy 1+ STY,     \ 4 4       
+   LY1 LDX, # 0 LDA,        \ 4 2       
+   htemp STA, htemp 1+ STA, \ 4 4       
+   BEGIN, SEC, LX2 LDA,     \ 2 4       
+    LX1 SBC, LX2 1+ LDA,    \ 4 4       
+    LX1 1+ SBC, CS          \ 4         
+   WHILE, \ while LX2>LX1   \ <2        
+\M  0 CMP, music JSR,       \  3 --     
+\M  0 CMP, DELEND JSR,      \  3 12     
+    lsetup JSR,             \  165-120  
+    yaddr JSR,              \  42       
+\M  0 CMP, DELEND 2- JSR,   \  3 16     
+    bubln JSR, INX,         \  83-39 2  
+\M  0 CMP, DELEND 13 - JSR, \  3 38     
+    hinc JSR,               \  99-61    
+\M  DELEND 41 - JSR,        \  94 3>    
+   REPEAT,                  \ <3>       
+\M NOP, music JSR,          \ 2 --      
+   bxy LDX, bxy 1+ LDY,     \ 4 4       
+   RTS, S;                  \ 6         
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 133
+( blhook brhook wlhook wr<10/ 2/86>273) 
+                                        
+SUBR blhook \ [78-14]       \ 6         
+  # 0 LDA, 0 CMP, hdir STA, \ 2 3 4     
+  # bline LOBYTE LDA,       \ 2         
+  bubln 1+ STA,             \ 4         
+  # bline HIBYTE LDA,       \ 2         
+  bubln 2+ STA,             \ 4         
+  hook JMP, S;              \ 51-14     
+SUBR brhook \ [78-14]       \ 6         
+  # 1 LDA, blhook 4 + JMP, S; \ 2 3     
+                                        
+SUBR wlhook \ [78-14]       \ 6         
+  # 0 LDA, 0 CMP, hdir STA, \ 2 3 4     
+  # wline LOBYTE LDA,       \ 2         
+  bubln 1+ STA,             \ 4         
+  # wline HIBYTE LDA,       \ 2         
+  bubln 2+ STA,             \ 4         
+  hook JMP, S;              \ 51-14     
+SUBR wrhook \ [78-14]       \ 6         
+  # 1 LDA, wlhook 4 + JMP,  \ 2         
+S;                                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 134
+( ii II                  <10/ 2/86>274) 
+\ FORGET ii                             
+CODE ii XSAVE STX, # 0 LDX,             
+  BEGIN,                                
+   # 40 LDA, LX1 STA,        \ 2 4      
+   # 60 LDA, LX2 STA,        \ 2 4      
+   wlhook JSR,               \ [78-14]  
+   0 CMP, DELEND 31 - JSR,   \ 3 74     
+   # 40 LDA, LX1 STA,        \ 2 4      
+   # 60 LDA, LX2 STA,        \ 2 4      
+   blhook JSR,               \ [78-14]  
+   DELEND 31 - JSR,          \ 74       
+  AGAIN,                     \ 3        
+  XSAVE LDX, NEXT JMP, C;               
+                                        
+: II                                    
+  FORGET-SYS 1HG M >MUS !               
+  1 MPER C! 3 MCNT C! 198 music C!      
+  10 MDLP C! 1 MDUR C!                  
+  4 llinc ! 1 lrinc ! ii ;              
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 135
+( ELF                    < 9/30/86>275) 
+                                        
+\ load up a figure                      
+                                        
+CREATE ELF                              
+600 ALLOT                               
+276 BLOCK ELF 600 CMOVE                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        

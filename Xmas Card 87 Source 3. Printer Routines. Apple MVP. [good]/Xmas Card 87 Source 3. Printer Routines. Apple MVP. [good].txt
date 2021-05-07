@@ -1,0 +1,1350 @@
+-------------------------------------------- SCREEN 001
+( LOADBLOCK              <10/28/86>141) 
+                                        
+                                        
+\ first word is PRERR                   
+150 LOAD \ grap-emit                    
+151 LOAD \ ser-emit                     
+                                        
+167 169 THRU \ Printer tables           
+                                        
+170 191 THRU \ the printer words        
+                                        
+200 219 THRU \ card maker               
+                                        
+\ forget heads                          
+FORGET grap-emit                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 010
+( grap-emit              <10/26/86>150) 
+                                        
+0 CONSTANT PRERR                        
+\ write Accum to grappler parallel      
+HEX SUBR grap-emit                      
+\ if printer error don't try again      
+  PHA, ' PRERR LDA, 0= NOT              
+  IF, PLA, RTS, THEN,                   
+  BEGIN, \ check for ESC while waiting  
+   \ for the printer to be ready        
+   C000 LDA, # 7F AND, # 1B CMP, 0=     
+   IF, # FF LDA, ' PRERR STA,           
+    PLA, RTS, THEN,                     
+   \ is it safe to print yet?           
+   C090 LDA, # 0F AND,                  
+   # 3 CMP, \ paper, not busy, selectd  
+  0= UNTIL,                             
+  PLA,                                  
+  \ write the character                 
+  C090 STA,                             
+  RTS,                                  
+S;                                      
+DECIMAL                                 
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 011
+( ser-emit               <10/26/86>151) 
+                                        
+HEX SUBR ser-emit                       
+\ if printer error don't try again      
+  PHA, ' PRERR LDA, 0= NOT              
+  IF, PLA, RTS, THEN,                   
+  BEGIN, \ check for ESC while waiting  
+   \ for the printer to be ready        
+   C000 LDA, # 7F AND, # 1B CMP, 0=     
+   IF, # FF LDA, ' PRERR STA,           
+    PLA, RTS, THEN,                     
+   \ is it safe to print yet?           
+   C099 LDA, # 30 AND,                  
+   # 10 CMP, \ empty, on-line           
+  0= UNTIL,                             
+  PLA,                                  
+  \ write the character                 
+  C098 STA,                             
+  RTS,                                  
+S;                                      
+DECIMAL                                 
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 012
+(                        <10/26/86> 12) 
+                                        
+CODE SEM ( C -- )                       
+  XSAVE STX, BOT LDA,                   
+  ser-emit JSR,                         
+  XSAVE LDX, POP JMP, C;                
+EXIT                                    
+: Q                                     
+  13 SEM 10 SEM                         
+  27 SEM 81 SEM                         
+  27 SEM 71 SEM                         
+  48 SEM 50 SEM 53 SEM 53 SEM           
+  256 0                                 
+  DO I SEM LOOP                         
+  13 SEM 10 SEM                         
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 020
+( PARAMETER BLOCKS       <10/26/86>160) 
+                                        
+EXIT                                    
+                                        
+  0-7 : shade pass 1                    
+ 8-15 : shade pass 2                    
+   16 : flag (see next screen)          
+17-19 : start graphics                  
+20-21 : end graphics                    
+22-24 : set lf amount                   
+25    : small lf amount (half pix ht)   
+26    : large lf amount (remainder)     
+27    : pixels per print line           
+28-29 : start ofs for left image        
+30-31 : start ofs for center tick mrk   
+32-33 : start ofs for right             
+34-35 : ofs for rt tick mark            
+36-38 : divline vals, top, mid, bot     
+39-40 : dash, len                       
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 021
+( FLAGS                  <10/26/86>161) 
+                                        
+EXIT                                    
+                                        
+The following bits are defined in       
+the flags register in th parameter      
+block                                   
+                                        
+                                        
+bit  meaning if true                    
+ 0   Send count with start graphics     
+ 1   Send 3 data byte as 3 3 (oki)      
+ 2   Hi bi in printer is on top         
+ 3   doule pixels accross               
+ 4   Send counts as ascii               
+     (imagewriter)                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 022
+( Pass parameters        <10/26/86>162) 
+                                        
+EXIT                                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 023
+( ZERO PAGE              <10/26/86>163) 
+                                        
+                                        
+EXIT                                    
+                                        
+  N points to printer table             
+N+2 points to pass table                
+N+4 points to output buffer             
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 027
+( IMAGEWRITER TABLE      <10/26/86> 27) 
+                                        
+XCREATE <IMWRI>                         
+  0 C, 0 C, 170 C, 85 C, 170 C, 85 C,   
+    255 C, 255 C, \ pass 1              
+  0 C, 0 C, 0 C, 0 C, 85 C, 170 C,      
+    255 C, 255 C, \ pass 2              
+  25 C,            \ 0011001b flag      
+  27 C, 71 C, 0 C, \ start grph         
+  0 C, 0 C,        \ end graphics       
+  27 C, 84 C, 0 C, \ Set lf n/144"      
+  1 C, 15 C,       \ sm/lg lf amt       
+  8 C,             \ pixs/print line    
+  20 ,             \ start left         
+  450 ,                                 
+  480 ,                                 
+  900 ,                                 
+  240 C, 254 C, 30 C, \ divline args    
+  16 C, 9 C,        \                   
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 028
+( MLINE TABLE            <10/26/86>168) 
+                                        
+XCREATE <MLINE>                         
+  0 C, 0 C, 170 C, 85 C, 170 C, 85 C,   
+    255 C, 255 C, \ pass 1              
+  0 C, 0 C, 0 C, 0 C, 85 C, 170 C,      
+    255 C, 255 C, \ pass 2              
+  2 C,             \ 0000010b flag      
+  30 C, 3 C, 0 C,  \ start grph         
+  3 C, 2 C,        \ end graphics       
+  27 C, 37 C, 57 C, \ Set lf n/144"     
+  1 C, 11 C,       \ sm/lg lf amt       
+  8 C,             \ pixs/print line    
+  20 ,             \ start left         
+  225 ,                                 
+  240 ,                                 
+  450 ,                                 
+  120 C, 127 C, 15 C, \ divline args    
+  8 C, 4 C,                             
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 029
+( EPSON TABLE            <10/28/86>169) 
+                                        
+XCREATE <EPSON>                         
+  0 C, 0 C, 170 C, 85 C, 170 C, 85 C,   
+    255 C, 255 C, \ pass 1              
+  0 C, 0 C, 0 C, 0 C, 85 C, 170 C,      
+    255 C, 255 C, \ pass 2              
+  13 C, \ 0001101b flag                 
+  27 C, 76 C, 0 C, \ start grph         
+  0 C, 0 C,        \ no end             
+  27 C, 51 C, 0 C, \ Set lf n/216"      
+  2 C, 22 C,       \ sm/lg lf amt       
+  8 C,             \ pixs/print line    
+  20 ,             \ start left         
+  450 ,                                 
+  480 ,                                 
+  900 ,                                 
+  30 C, 254 C, 240 C, \ divline args    
+  16 C, 9 C,        \                   
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 030
+( VARIABLES              <10/28/86>170) 
+                                        
+                                        
+XVARIABLE OBUF \ holds the start of     
+               \ the output buffer      
+XVARIABLE OCNT \ count of bytes to      
+               \ output in OBUF         
+VARIABLE LFW/CR \ t=send CR&LF          
+VARIABLE PRDEN \ t=two pass             
+XVARIABLE POFS  \ pass offset 0 or 8    
+XVARIABLE PMSK  \ current printer msk   
+                                        
+XVARIABLE SREPC \ controls repeating    
+XVARIABLE REPC  \ lines to correct      
+                \ aspect ratio          
+                                        
+XVARIABLE T/B   \ 1=printing top        
+                                        
+1 LFW/CR ! 1 PRDEN ! 4 SREPC !          
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 031
+( tolpt topr             <10/28/86>171) 
+                                        
+<MLINE> CONSTANT ^PRINTER               
+X: @PDATA ( N -- V ) ^PRINTER + @ X;    
+X: C@PDATA ( N -- V ) ^PRINTER + C@ X;  
+X: @PFLAG ( -- N ) 16 C@PDATA X;        
+                                        
+\ Write C with no translation           
+XCODE TOLPT ( C -- )                    
+  BOT LDA,                              
+  grap-emit JSR,                        
+  POP JMP,                              
+XC;                                     
+                                        
+\ write C with translation              
+X: TOPR ( C -- )                        
+  @PFLAG 2 AND                          
+  IF DUP 3 =                            
+   IF DUP TOLPT THEN                    
+  THEN                                  
+  TOLPT                                 
+X;                                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 032
+( SGRAPHICS              <10/28/86>172) 
+                                        
+X: ?TOLPT ( N -- )                      
+   C@PDATA ?DUP IF TOLPT THEN X;        
+                                        
+\ set printer to recieve N bytes        
+\ of graphics data                      
+X: SGRAPHICS ( N -- )                   
+   OCNT !                               
+   17 ?TOLPT 18 ?TOLPT 19 ?TOLPT        
+   @PFLAG 1 AND \ send count ?          
+   IF @PFLAG 16 AND \ send as ascii?    
+    IF OCNT @ 0 <#  # # # #  #> 0       
+     DO DUP C@ TOLPT 1+ LOOP DROP       
+    ELSE \ send as binary               
+     OCNT C@ TOLPT                      
+     OCNT 1+ C@ TOLPT                   
+    THEN                                
+   THEN                                 
+X;                                      
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 033
+( EGRAPHICS              <10/28/86>173) 
+                                        
+\ ends graphics modes                   
+X: EGRAPHICS                            
+   20 ?TOLPT                            
+   21 ?TOLPT X;                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 034
+( PRLINE                 <10/28/86>174) 
+                                        
+\ prints N characters starting          
+\ at PAD, first scans back from         
+\ end to determine minimum length       
+                                        
+X: PRLINE ( N -- )                      
+   DUP OCNT ! PAD + 1-                  
+   OCNT @ 0                             
+   DO DUP C@ 0=                         
+    IF -1 OCNT +! 1-                    
+    ELSE LEAVE THEN                     
+   LOOP DROP                            
+   OCNT @ 0>                            
+   IF OCNT @ SGRAPHICS                  
+    PAD OCNT @ 0                        
+    DO COUNT TOPR LOOP                  
+   DROP EGRAPHICS                       
+   THEN                                 
+X;                                      
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 035
+( SMCR LGCR              <10/28/86>175) 
+                                        
+\ set lf amount to n/? inches           
+X: NCR ( N -- )                         
+   22 ?TOLPT 23 ?TOLPT 24 ?TOLPT        
+   @PFLAG 16 AND \ send as ascii?       
+   IF 10 /MOD 48 + TOLPT                
+    48 + TOLPT                          
+   ELSE TOLPT                           
+   THEN                                 
+   13 TOLPT LFW/CR @                    
+   IF 10 TOLPT THEN                     
+X;                                      
+                                        
+X: SMCR \ do small cr                   
+   25 C@PDATA NCR X;                    
+                                        
+X: LGCR \ do large cr                   
+   26 C@PDATA NCR X;                    
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 036
+( DIVLINE                <10/28/86>176) 
+XVARIABLE VERPAT                        
+                                        
+X: DASHWID 40 C@PDATA X;                
+X: DASH ( -- ; print dash )             
+   39 C@PDATA \ byte                    
+   DASHWID 0 \ cnt                      
+   DO DUP TOPR LOOP DROP X;             
+                                        
+\ print dividing line                   
+X: DIVLINE ( N -- ; ver byte )          
+   VERPAT ! 34 @PDATA SGRAPHICS         
+   VERPAT @ TOPR DASH                   
+   30 @PDATA DASHWID 2* - 2- 0          
+   DO 0 TOPR LOOP                       
+   DASH VERPAT @ TOPR DASH              
+   34 @PDATA 30 @PDATA -                
+   DASHWID 2* - 1- 0                    
+   DO 0 TOPR LOOP                       
+   DASH VERPAT @ TOPR                   
+   EGRAPHICS SMCR LGCR X;               
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 037
+( TDIV MDIV BDIV         <10/28/86>177) 
+                                        
+X: TDIV                                 
+   36 C@PDATA DIVLINE X;                
+                                        
+X: MDIV                                 
+   37 C@PDATA DIVLINE X;                
+                                        
+X: BDIV                                 
+   38 C@PDATA DIVLINE X;                
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 038
+( GETPIX                 <10/28/86>178) 
+                                        
+XVARIABLE BYTE#                         
+XVARIABLE PIX#                          
+XVARIABLE LINE#                         
+XCREATE IMSK                            
+ 1 C, 2 C, 4 C, 8 C,                    
+ 16 C, 32 C, 64 C,                      
+                                        
+\ return 0-3 for color on screen in A.  
+SUBR GETPIX ( -- )                      
+  LINE# LDX, yaddr JSR,                 
+  PIX# LDY, IMSK ,Y LDA,                
+  BYTE# LDY, GBASE )Y AND, 0=           
+\ get first pixel                       
+  IF, # 0 LDA, ELSE, # 1 LDA, THEN,     
+  N STA, PIX# LDA, # 1 AND,             
+  BYTE# EOR, # 1 AND, 0= NOT            
+  IF, N ASL, THEN,                      
+                                        
+\ MORE...                               
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 039
+( GETPIX cont..          <10/28/86>179) 
+                                        
+\ check if next pixel is in next byte   
+  PIX# LDA, BYTE# LDY,                  
+  CLC, # 1 ADC, # 7 CMP, 0=             
+  IF, INY, 0 # LDA, THEN,               
+\ check if looking past the end         
+  # 40 CPY, 0=                          
+  IF, # 0 LDA,                          
+  ELSE, \ now get next pixel            
+   TAX, IMSK ,X LDA,                    
+   GBASE )Y AND, 0= NOT                 
+   IF, # 1 LDA, ELSE, # 0 LDA, THEN,    
+  THEN,                                 
+  N 1+ STA, PIX# LDA, # 1 AND,          
+  BYTE# EOR, # 1 AND, 0=                
+\ PIX# LDA, # 1 AND, 0=                 
+  IF, N 1+ ASL, THEN,                   
+                                        
+\ assemble the answer                   
+  N LDA, N 1+ ORA,                      
+  RTS,                                  
+S;                                      
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 040
+( PMAP PNORM PINV        <10/28/86>180) 
+                                        
+XCREATE PTRAN                           
+0 C, 1 C, 2 C, 3 C,                     
+                                        
+: PMAP ( c0 c1 c2 c3 -- )               
+  PTRAN 3 + C! PTRAN 2+ C!              
+  PTRAN 1+ C! PTRAN C! ;                
+                                        
+: PNORM ( -- ; set normal printing )    
+  0 1 2 3 PMAP ;                        
+                                        
+: PINV ( -- ; set inverse printing )    
+  3 2 1 0 PMAP ;                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 041
+( MAKEPIX                <10/28/86>181) 
+\ .A                                    
+\ store current pixel in ouput buffer   
+SUBR <MAKEPIX> ( -- )                   
+  TAY, PTRAN ,Y LDA, .A ASL,            
+  CLC, POFS ADC, TAY, N 1- STY,         
+  GFIG )Y LDA, \ get print mask         
+  PMSK AND, # 0 LDY,                    
+  0ADR )Y ORA, 0ADR )Y STA,             
+  0ADR INC, 0=                          
+  IF, 0ADR 1+ INC, THEN,                
+  # 16 LDY, GFIG )Y LDA,                
+  # 8 AND, 0= NOT                       
+  IF, N 1- LDY, INY,                    
+   GFIG )Y LDA, \ get print mask        
+   PMSK AND, # 0 LDY,                   
+   0ADR )Y ORA, 0ADR )Y STA,            
+   0ADR INC, 0=                         
+   IF, 0ADR 1+ INC, THEN,               
+  THEN,                                 
+  RTS, S;                               
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 042
+( BMAKEPIX TMAKEPIX      <10/28/86>182) 
+                                        
+CODE BMAKEPIX ( -- )                    
+  XSAVE STX,                            
+  # 191 LDA, LINE# STA,                 
+  BEGIN, GETPIX JSR,                    
+   <MAKEPIX> JSR,                       
+   LINE# DEC,                           
+   LINE# LDA, # 255 CMP, 0=             
+  UNTIL,                                
+  XSAVE LDX, NEXT JMP, C;               
+                                        
+CODE TMAKEPIX ( -- )                    
+  XSAVE STX,                            
+  # 0 LDA, LINE# STA,                   
+  BEGIN, GETPIX JSR,                    
+   <MAKEPIX> JSR,                       
+   LINE# INC,                           
+   LINE# LDA, # 192 CMP, 0=             
+  UNTIL,                                
+  XSAVE LDX, NEXT JMP, C;               
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 043
+( MAKELINE               <10/28/86>183) 
+                                        
+\ put one row of data in output buffer  
+\ starting at offset                    
+                                        
+X: MAKELINE ( OFS -- )                  
+   PAD + S' 0ADR !                      
+   ^PRINTER S' GFIG !                   
+   T/B @                                
+   IF TMAKEPIX                          
+   ELSE BMAKEPIX                        
+   THEN X;                              
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 044
+( <GETLINE>              <10/28/86>184) 
+                                        
+X: <GETLINE> ( offs -- 1; 1=DONE)       
+   MAKELINE                             
+   1 REPC +!                            
+   REPC @ SREPC @ =                     
+   IF 0 REPC !                          
+   ELSE T/B @                           
+    IF PIX# @ 1- DUP 0<                 
+     IF DROP 6 BYTE# @ 1- DUP 0< SWAP   
+      BYTE# ! IF DROP 1 EXIT THEN       
+     THEN                               
+    ELSE PIX# @ 1+ DUP 6 >              
+     IF DROP 0 BYTE# @ 1+ DUP 39 > SWAP 
+      BYTE# ! IF DROP 1 EXIT THEN       
+     THEN                               
+    THEN                                
+    PIX# !                              
+  THEN \ now rotate printer mask        
+  PMSK @ @PFLAG 4 AND                   
+  IF 2/ ELSE 2* THEN                    
+  PMSK !                                
+  0 X;                                  
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 045
+( GETLINE                <10/28/86>185) 
+                                        
+\ asemble an output line                
+X: GETLINE ( offs -- )                  
+   PAD 34 @PDATA 0 FILL \ clear it      
+   @PFLAG 4 AND                         
+   IF 128 ELSE 1 THEN                   
+   PMSK !                               
+   27 C@PDATA 0                         
+   DO DUP <GETLINE>                     
+    IF LEAVE THEN                       
+   LOOP                                 
+   DROP X;                              
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 046
+( DOLINE                 <10/28/86>186) 
+                                        
+\ adr is the starting address of the    
+\ where to put the data in the buffer   
+X: DOLINE ( OFS -- )                    
+   GETLINE                              
+   T/B @                                
+   IF 34 ELSE 32 THEN                   
+   @PDATA PRLINE                        
+X;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 047
+( PIMG                   <10/28/86>187) 
+                                        
+XCREATE OVL 8 ALLOT                     
+\ print image given offset into buffer  
+X: PIMG ( ofs -- )                      
+   >R 0 REPC !                          
+   BEGIN                                
+    REPC @ BYTE# @ OVL D!               
+    PIX# @ OVL 4 + !                    
+    0 POFS ! R@ DOLINE SMCR             
+    PRERR IF R> DROP EXIT THEN          
+    PRDEN @                             
+    IF OVL D@ BYTE# ! REPC !            
+     OVL 4 + @ PIX# !                   
+     8 POFS ! R@ DOLINE                 
+    THEN                                
+    LGCR                                
+    PRERR IF R> DROP EXIT THEN          
+    BYTE# @ 40 U< NOT                   
+   UNTIL                                
+   R> DROP                              
+X;                                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 048
+( PTOP                   <10/28/86>188) 
+                                        
+: PTOP                                  
+   TDIV 1 T/B !                         
+   39 BYTE# ! 6 PIX# !                  
+   32 @PDATA PIMG                       
+   MDIV ;                               
+                                        
+: PBOT                                  
+   0 T/B !                              
+   0 BYTE# ! 0 PIX# !                   
+   28 @PDATA PIMG                       
+   BDIV ;                               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 049
+( IW-INIT                <10/28/86>189) 
+                                        
+\ Hope that that does enough to         
+\ initailize all the interface          
+\ functions                             
+X: ALL-INIT                             
+   1 PR# CR MODE40                      
+X;                                      
+                                        
+\ These commands are used to initialize 
+\ the imagewriter                       
+X: IW-INIT                              
+   27 TOLPT 113 TOLPT \ 15CPI           
+   27 TOLPT 62 TOLPT \ kill bi-direc    
+X;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 050
+( SETPR                  <10/28/86>190) 
+                                        
+\ set routines to run the proper        
+\ printer                               
+                                        
+\ 0=image writer, 1=epson, 2=oki        
+: SETPR ( N -- )                        
+   ALL-INIT                             
+   DUP 0=                               
+   IF DROP IW-INIT <IMWRI>              
+   ELSE 1 =                             
+    IF <EPSON>                          
+    ELSE <MLINE>                        
+    THEN                                
+   THEN                                 
+   ' ^PRINTER !                         
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 051
+( SETINT                 <10/28/86>191) 
+                                        
+\ set interface to use                  
+                                        
+\ 0=parallel, 1=serial                  
+: SETINT ( N -- )                       
+   0=                                   
+   IF S' grap-emit                      
+   ELSE S' ser-emit                     
+   THEN                                 
+   X' TOLPT 3 + !                       
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 055
+(                        <10/26/86> 55) 
+                                        
+: Q                                     
+  1 SETINT                              
+  0 SETPR                               
+  255 SGRAPHICS                         
+  256 0                                 
+  DO I TOLPT LOOP                       
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 060
+( PICKONE                <10/28/86>200) 
+                                        
+DVARIABLE PXY                           
+XVARIABLE PN                            
+                                        
+X: TI                                   
+  127 S' TCLR C! X;                     
+                                        
+\ pick one from a list of n starting    
+\ at X Y                                
+X: PICKONE ( X Y N -- )                 
+  PN ! PXY D! TI                        
+  ?TERMINAL DROP 0                      
+  BEGIN PXY D@ SWAP GX !                
+   OVER 12 * + GY ! CURSOR KEY          
+   DUP BL =                             
+   IF SWAP 1+ PN @ MOD SWAP THEN        
+   DUP 13 = OVER 27 = OR NOT            
+  WHILE DROP REPEAT                     
+  27 = IF DROP -1 THEN                  
+X;                                      
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 061
+( DOYOU                  <10/28/86>201) 
+                                        
+XCREATE TWHO 0 C, 30 ALLOT              
+XCREATE FWHO 0 C, 30 ALLOT              
+                                        
+X: DOYOU ( -- N/-1 )                    
+  1 RUNCODE \ FRAME                     
+  7 RUNCODE \ MAKER MAIN MENU           
+  85 36 2 PICKONE X;                    
+                                        
+X: <T/FWHO> ( ADR N -- T/F;t=abort)     
+  1 ' ESC? !                            
+  ( N ) RUNCODE                         
+  121 GX ! 50 GY ! TI                   
+  GIRM >R 240 ' GIRM !                  
+  ( ADR ) 29 GINPUT 0=                  
+  R> ' GIRM ! 0 ' ESC? ! X;             
+                                        
+X: TOWHO TWHO 8 <T/FWHO> X;             
+X: FROMWHO FWHO 9 <T/FWHO> X;           
+                                        
+X: GFILE ( N -- )                       
+  @FILE DROP X;                         
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 062
+( PICKPRIMS              <10/28/86>202) 
+                                        
+                                        
+X: INTPICK ( -- N/-1 )                  
+  19 RUNCODE \ pick printer menu        
+  75 51 2 PICKONE X;                    
+                                        
+X: PRNPICK ( -- N/-1 )                  
+  10 RUNCODE \ pick printer menu        
+  75 40 3 PICKONE X;                    
+                                        
+X: DENPICK ( -- N/-1 )                  
+  11 RUNCODE \ pick print quality       
+  75 51 2 PICKONE X;                    
+                                        
+X: LFCR?                                
+  12 RUNCODE \ pick LF w/ CR            
+  75 51 2 PICKONE X;                    
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 063
+( INSIDE                 <10/28/86>203) 
+                                        
+\ stand alone inside/opening            
+X: INSIDE                               
+  PNORM                                 
+  S' vdinit CALL S' cls CALL HG         
+  0 GFILE 3 RUNCODE 0 S' TCLR C!        
+  TWHO C@                               
+  IF 92 GX ! 100 GY ! 84 GEMIT          
+   111 GEMIT 58 GEMIT BL GEMIT          
+   TWHO COUNT GTYPE                     
+  THEN                                  
+  FWHO C@                               
+  IF 76 GX ! 115 GY ! 70 GEMIT          
+   114 GEMIT 111 GEMIT 109 GEMIT        
+   58 GEMIT BL GEMIT                    
+   FWHO COUNT GTYPE                     
+  THEN                                  
+  S' valt CALL                          
+X;                                      
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 064
+( DOC'S                  <10/28/86>204) 
+                                        
+XVARIABLE C#                            
+                                        
+XCREATE CS ( file c, rout c, map c, )   
+  1 C, 2 C, 1 C,                        
+  4 C, 10 C, 1 C,                       
+  5 C, 3 C, 0 C,                        
+  6 C, 13 C, 0 C,                       
+\ 7 C, 2 C, 0 C,                        
+                                        
+X: DOC'S                                
+  C# @ 3 * CS + >R                      
+  R@ 2+ C@                              
+  IF PINV ELSE PNORM THEN               
+  R@ C@ GFILE                           
+  R> 1+ C@ RUNCODE                      
+X;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 065
+( CPYCARD                <10/28/86>205) 
+\ copys from draw page to view page     
+\ the area that would have been         
+\ draw in the window, leaving the       
+\ complete image in the invis page      
+                                        
+XCODE CPYCRD                            
+  XSAVE STX, # 6 LDX,                   
+  BEGIN, yaddr JSR,                     
+   GBASE LDA, N STA,                    
+   GBASE 1+ LDA, # 96 EOR,              
+   N 1+ STA, 1 # LDY,                   
+   BEGIN,                               
+    GBASE )Y LDA, N )Y STA, INY,        
+    GBASE )Y LDA, N )Y STA, INY,        
+    # 39 CPY, 0=                        
+   UNTIL,                               
+   INX, # 149 CPX, 0=                   
+  UNTIL,                                
+  XSAVE LDX,                            
+  NEXT JMP,                             
+XC;                                     
+                                        
+                                        
+-------------------------------------------- SCREEN 066
+( CARDPICK               <10/28/86>206) 
+                                        
+X: .MESS ( N X Y -- )                   
+  GY ! GX ! ^MESS# COUNT GTYPE X;       
+                                        
+X: CARDPICK ( -- N/-1 )                 
+  S' copyv CALL                         
+  10 LX1 ! 270 LX2 !                    
+  157 LY1 ! 185 LY2 ! S' bbar CALL      
+  0 S' TCLR ! 36 12 160 .MESS           
+  37 12 169 .MESS 38 50 178 .MESS       
+  S' valt CALL                          
+  BEGIN DOC'S CPYCRD                    
+   BEGIN KEY DUP BL = OVER 13 = OR      
+    OVER 27 = OR NOT                    
+   WHILE DROP REPEAT                    
+   DUP BL =                             
+  WHILE DROP C# @ 1+ 4 MOD C# !         
+  REPEAT                                
+  27 =                                  
+  IF -1 ELSE C# @ THEN                  
+  7 GFILE                               
+X;                                      
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 067
+( PREADY?                <10/28/86>207) 
+                                        
+                                        
+X: PREADY? ( -- N; -1=print not ready)  
+  1                                     
+X;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 068
+( PCARD                  <10/28/86>208) 
+                                        
+X: ?EXIT DUP -1 =                       
+  IF R> DDROP THEN X;                   
+X: ?DONE                                
+   IF R> DROP THEN X;                   
+                                        
+X: PCARD                                
+  TOWHO ?DONE FROMWHO ?DONE             
+  INTPICK  ?EXIT SETINT                 
+  PRNPICK  ?EXIT SETPR HG               
+  DENPICK  ?EXIT 0= PRDEN !             
+  LFCR?    ?EXIT 0= LFW/CR !            
+  CARDPICK ?EXIT DROP                   
+  PREADY?  ?EXIT DROP                   
+  S' valt CALL S' dvpage CALL           
+  0 ' PRERR !                           
+  PTOP PRERR NOT                        
+  IF S' dalt CALL                       
+   INSIDE                               
+   PBOT                                 
+  THEN                                  
+  7 GFILE X;                            
+                                        
+-------------------------------------------- SCREEN 071
+(                        <10/28/86>211) 
+                                        
+X: SYSLEN ( -- #SECTS )                 
+  HERE COLDSTART - 0 256 U/MOD          
+  SWAP DROP 1+ DUP SYS-SECTS ! X;       
+                                        
+X: SAVE-SYS                             
+  EMPTY-BUFFERS                         
+  0 ?BOOT ! 0 APP-SECTS !               
+  [COMPILE] FORTH DEFINITIONS           
+  DOSWR DOSRD 16 CMOVE                  
+  COLDSTART 49620 !                     
+  SYSLEN DUP 47072 C!                   
+  COLDSTART 0 256 U/MOD SWAP            
+  DROP OVER + 47079 C!                  
+  15 + 16 /MOD 46869 C! 46874 C!        
+  46592 6 0 0 0 0 10 RWTS               
+  COLDSTART 6 0 0 1 0 SYSLEN            
+  RWTS                                  
+X;                                      
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 072
+(                        <10/28/86>212) 
+                                        
+                                        
+X: RE!FILE ( N -- )                     
+  0 FR/W !                              
+  @FILE DROP X;                         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 073
+( @MESSG                 <10/28/86>213) 
+                                        
+X: @MESSG \ -- T/F; t=escape pressed    
+  13 RUNCODE                            
+  15 GX !                               
+  170 GY ! 0 S' TCLR C!                 
+  ESC? >R 1 ' ESC? !                    
+  YOURORIG 50 GINPUT 0=                 
+  R> ' ESC? !                           
+X;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 074
+( DCPY                   <10/28/86>214) 
+                                        
+                                        
+\ execute the copy                      
+: DCPY                                  
+  BEGIN                                 
+   INSIDE                               
+   BEAROPEN                             
+   CLOSING                              
+  AGAIN                                 
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 075
+(                        <10/28/86>215) 
+                                        
+                                        
+X: PSP                                  
+  XY@ SWAP DROP 8 SWAP 4 + XYTAB        
+  ." PRESS SPACE TO CONTINUE"           
+  XY@ SWAP DROP 1+ 19 SWAP XYTAB        
+  BEGIN KEY BL = UNTIL                  
+X;                                      
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 076
+( INCHEER                <10/28/86>216) 
+                                        
+X: INCHEER                              
+  BEGIN                                 
+   PAGE 7 8 XYTAB                       
+   ." PUT CHEER! BACK IN DRIVE 1."      
+   PSP                                  
+   ' DISKERR @ >R                       
+   ' NOOP CFA ' DISKERR !               
+   PAD 270 + 400 1 1 RWSEC#             
+   R> ' DISKERR !                       
+   PAD 270 + @ PAD 256 + @ =            
+   DISK-ERROR @ 0= AND                  
+  UNTIL                                 
+X;                                      
+                                        
+                                        
+X: INSCOPY                              
+  PAGE 6 8 XYTAB                        
+  ." PUT NEW DISK BACK IN DRIVE 1."     
+  PSP                                   
+X;                                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 077
+( INSCHEER               <10/28/86>217) 
+                                        
+X: INBLNK                               
+  PAGE 5 5 XYTAB                        
+." INSERT A BLANK DISK IN DRIVE 1"      
+  12  8 XYTAB 63 50 C!                  
+."  *** WARNING *** " 255 50 C!         
+  7 10 XYTAB                            
+." ALL INFORMATION ON THE DISK"         
+  13 12 XYTAB                           
+." WILL BE ERASED!"                     
+  PSP                                   
+PAGE                                    
+13 8 XYTAB                              
+." ONE DISK WITH"                       
+13 10 XYTAB                             
+." DANCING BEAR"                        
+14 12 XYTAB                             
+."  COMING UP!"                         
+                                        
+X;                                      
+                                        
+                                        
+                                        
+-------------------------------------------- SCREEN 078
+( CCARD                  <10/28/86>218) 
+                                        
+X: CCARD                                
+  TOWHO ?DONE FROMWHO ?DONE             
+  @MESSG ?DONE                          
+  PAGE MODE40                           
+\ get ID val from the disk              
+  PAD 256 + 400 1 1 RWSEC#              
+  6 @FILE                               
+  INBLNK                                
+  PAD 6 0 0 0 4 1 RWTS \ init it        
+  PAD 12 0 1 RWSEC# \ write directory   
+  6 RE!FILE                             
+  INCHEER 0 @FILE                       
+  INSCOPY 0 RE!FILE                     
+  ' EXIT CFA ' LOGO !                   
+  ' DCPY CFA ' START-SYS !              
+  ' DCPY CFA ' BRK-RETN !               
+  SAVE-SYS                              
+  INCHEER 7 GFILE                       
+  HG S' valt CALL S' valt CALL          
+X;                                      
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 079
+( DOMAKER                <10/28/86>219) 
+                                        
+                                        
+: DOMAKER                               
+  7 GFILE 0 FLIPRATE !                  
+  BEGIN DOYOU DUP 0< NOT                
+  WHILE 0=                              
+   IF PCARD                             
+   ELSE CCARD                           
+   THEN                                 
+  REPEAT                                
+  DROP                                  
+;                                       
+                                        
+' DOMAKER CFA ' MAKER !                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 138
+(                        <10/28/86>278) 
+                                        
+                                        
+: TT                                    
+  HGR SWAP-BSM                          
+  9 @FILE                               
+  1 RUNCODE                             
+  7 RUNCODE                             
+  0 @FILE                               
+  3 RUNCODE                             
+  SWAP-BSM                              
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                               ( FAH  ) 
+-------------------------------------------- SCREEN 139
+(                        <10/26/86>180) 
+                                        
+: FS ( N -- )                           
+  ?NUM                                  
+  DUP 4 * DUP 4 * DUP 4 * + + +         
+  DUP 127 AND 8192 C!                   
+  2/ 8193 C!                            
+  8192 8194 8192 CMOVE                  
+;                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
